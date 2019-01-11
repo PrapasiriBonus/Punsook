@@ -1,0 +1,62 @@
+body {
+    background-color: #E5E5E5;
+}
+
+.navbar {
+    background-color: #39588A;
+}
+
+.navbar_top {
+    height: 170px;  
+}
+
+.navbar_home {
+    height: 650px;  
+}
+
+img.Punsook_logo_white {
+    width: 17%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+img.Home {
+    width: 35%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.container-fluid {
+    background-color: white;
+	box-shadow: 0 8px 20px -1px gray;
+}
+
+h1 {
+    color: #39588A;
+    font-size: 55px;
+    margin-left: 60px;
+}
+
+h2 {
+    font-size: 40px;
+    text-align: left;
+    padding-top: 30px;
+}
+
+.logo {
+    margin-left: 70px;
+}
+
+img.Record ,img.Manual ,img.Profile ,img.Logout {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 90px;
+    height: auto;
+}
+
+.col-8 {
+    border-top: 3px solid #E5E5E5;
+}
+
