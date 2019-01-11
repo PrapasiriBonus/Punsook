@@ -99,7 +99,7 @@
         queryParameterForSignInSuccessUrl: 'signInSuccessUrl',
         // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
         signInFlow: 'popup',
-        signInSuccessUrl: 'hello.html',
+        signInSuccessUrl: 'home.html',
         signInOptions: [
           // // Leave the lines as is for the providers you want to offer your users.
           {
@@ -116,11 +116,11 @@
         // tosUrl and privacyPolicyUrl accept either url string or a callback
         // function.
         // Terms of service url/callback.
-        tosUrl: 'hello.html',
-        // Privacy policy url/callback.
-        privacyPolicyUrl: function() {
-          window.location.assign('hello.html');
-        }
+        // tosUrl: 'hello.html',
+        // // Privacy policy url/callback.
+        // privacyPolicyUrl: function() {
+        //   window.location.assign('hello.html');
+        // }
       };
 
       // Initialize the FirebaseUI Widget using Firebase.
