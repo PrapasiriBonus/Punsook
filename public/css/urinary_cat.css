@@ -1,5 +1,6 @@
 body {
     background-color: #E5E5E5;
+    font-family: "athiti";
 }
 
 .navbar {
@@ -24,10 +25,12 @@ img.Punsook_logo_white {
     margin-right: auto;
 }
 
-.container-fluid {
+.container {
     background-color: white;
 	box-shadow: 0 8px 20px -1px gray;
 }
+
+@media(min-width:900px){.container{margin: auto}}
 
 h1 {
     color: #39588A;
@@ -35,13 +38,18 @@ h1 {
     padding-left: 60px;
     padding-bottom: 20px;
     margin-right: 100px;
+    font-weight: bold;
 }
+
+@media(min-width:900px){h1{font-size: 400%}}
 
 h2 {
     font-size: 45px;
     text-align: left;
     margin-left: 30px;
 }
+
+@media(min-width:900px){h2{font-size: 300%}}
 
 h2.step {
     font-weight: bold;

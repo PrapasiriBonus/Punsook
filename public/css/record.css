@@ -1,5 +1,7 @@
 body {
     background-color: #E5E5E5;
+    font-family: "athiti";
+
 }
 
 .navbar {
@@ -28,11 +30,13 @@ img.Punsook_logo_white {
 
 h1.topic {
     color: #39588A;
-    font-size: 40px;
+    font-size: 300%;
     margin-left: 30px;
     font-weight: bold;
     margin-bottom: 20px;
 }
+
+@media(min-width:900px){h1.topic{font-size: 400%}}
 
 h1.profile {
     font-size: 40px;
@@ -40,6 +44,8 @@ h1.profile {
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
+@media(min-width:900px){h1.profile{font-size: 300%}}
 
 .col-3 {
     padding-right: 0px;
@@ -67,13 +73,6 @@ img.Select {
   margin-top: 10px;
   padding: 0px;
   margin-left: 20px;
-}
-
-h2.Gender {
-  font-size: 40px;
-  height: 80px;
-  margin-top: 10px;
-  margin-bottom: 0px;
 }
 
 .row {
@@ -120,18 +119,11 @@ label.form-check-label {
     margin-left: 100px;
 }
 
+@media(min-width:900px){label.form-check-label{font-size: 300%}}
+
 #datepicker, #timepicker{
     font-size: 40px;
 }
-
-/* i.gj-icon {
-    line-height: 2;
-}
-
-#datepicker.gj-unselectable::after, #timepicker.gj-unselectable {
-    width: 500px;
-    height: 500px;
-} */
 
 img.remove {
     margin-left: 30px;
