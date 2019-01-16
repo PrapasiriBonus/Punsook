@@ -32,7 +32,9 @@ img.Punsook_logo_white {
 h1 {
     color: #39588A;
     font-size: 55px;
-    margin-left: 60px;
+    padding-left: 60px;
+    padding-bottom: 20px;
+    margin-right: 100px;
 }
 
 h2 {
@@ -57,5 +59,9 @@ img.step_img {
     height: auto;
     margin-top: 20px;
     margin-bottom: 40px;
+}
+
+h1.step_cat {
+    border-bottom: 2px solid #E5E5E5;
 }
 

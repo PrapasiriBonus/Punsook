@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> Firebase Hosting</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link href="css/profile.css" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar navbar_top">
+      <img class="Return" src="Picture/Return.png">
+      <img class="Punsook_logo_white" src="Picture/Punsook_logo_white.png">    
+    </nav>   
+    <br><br>         
+    <div class="container-fluid">
+        <br>
+        <div class="row">
+            <div class="col-9">
+                <h1 class="topic">การแจ้งเตือน</h1>    
+                <h1 class="detail">แจ้งเตือนเตือนการดื่มน้ำ และการสวนปัสสาวะ</h1>   
+            </div>       
+            <label class="switch col-2">
+                <input type="checkbox">
+                <span class="slider round"></span>
+            </label>
+        </div>     
+        <br>
+    </div>
+    <br><br>
+    <div class="container-fluid">
+        <br>
+        <h1 class="topic">ประวัติ</h1>
+        <fieldset disabled>
+            <div class="row">
+                <div class="col-3">                   
+                    <h1 class="profile">รหัสผู้ป่วย</h1>   
+                </div>       
+                <div class="form-group col-7">
+                    <input type="text" id="disabledTextInput" class="form-control" placeholder="HT13451265">
+                </div>
+                <div class="col-1">
+                    <img class="lock" src="Picture/padlock.png">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">                   
+                    <h1 class="profile">ชื่อ</h1>   
+                </div>       
+                <div class="form-group col-7">
+                    <input type="text" id="disabledTextInput" class="form-control" placeholder="ยักไล่ยักเล็ก ยักเกเรนิสัยไม่ดี">
+                </div>
+                <div class="col-1">
+                    <img class="lock" src="Picture/padlock.png">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">                   
+                    <h1 class="profile">เพศ</h1>   
+                </div>       
+                <div class="form-group col-7">
+                    <div class="row">
+                        <img class="Select col-3" src="Picture/Select.png">
+                        <h2 class="Gender col-3 text-muted">ชาย</h2>
+                        <img class="Select col-3" src="Picture/Not_Select.png">
+                        <h2 class="Gender col-3 text-muted">หญิง</h2>
+                    </div>                    
+                </div>
+                <div class="col-1">
+                    <img class="lock" src="Picture/padlock.png">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">                   
+                    <h1 class="profile">วันเกิด</h1>   
+                </div>       
+                <div class="form-group col-7">
+                    <input type="text" id="disabledTextInput" class="form-control" placeholder="30 มกราคม 2500">
+                </div>
+                <div class="col-1">
+                    <img class="lock" src="Picture/padlock.png">
+                </div>
+            </div>
+        </fieldset>     
+        <br><h1 class="middle_line"></h1><br>
+        <div class="row">
+            <div class="col-3">                   
+                <h1 class="profile">น้ำหนัก</h1>   
+            </div>       
+            <div class="form-group col-5">
+                <input class="form-control" type="text" placeholder="">
+            </div>
+            <div class="col-3">
+                <h1 class="profile">กิโลกรัม</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">                   
+                <h1 class="profile">ส่วนสูง</h1>   
+            </div>       
+            <div class="form-group col-5">
+                <input class="form-control" type="text" placeholder="">
+            </div>
+            <div class="col-3">
+                <h1 class="profile">เซ็นติเมตร</h1>
+            </div>
+        </div>
+        <br>
+        <button type="button" class="btn btn-primary">บันทึกข้อมูล</button>
+        <br><br>
+    </div>
+  </body>
+</html>

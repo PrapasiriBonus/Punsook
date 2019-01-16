@@ -1,0 +1,186 @@
+body {
+    background-color: #E5E5E5;
+}
+
+.navbar {
+    background-color: #39588A;
+}
+
+.navbar_top {
+    height: 170px;  
+}
+
+.navbar_home {
+    height: 650px;  
+}
+
+img.Punsook_logo_white {
+    width: 17%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.container-fluid {
+    background-color: white;
+	box-shadow: 0 8px 20px -1px gray;
+}
+
+h1.topic {
+    color: #39588A;
+    font-size: 40px;
+    margin-left: 30px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+h1.profile {
+    font-size: 40px;
+    margin-left: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.col-3 {
+    padding-right: 0px;
+}
+
+.col-7 {
+    padding: 0px;
+}
+
+.form-control  {
+    font-size: 40px;
+    height: 80px;  
+} 
+
+.form-control:disabled {
+    background-color: white;
+    border: 2px solid gray;
+    border-radius: 34px;
+    padding-left: 30px;
+}
+
+img.Select { 
+  max-height: 50px;
+  max-width: 50px;
+  margin-top: 10px;
+  padding: 0px;
+  margin-left: 20px;
+}
+
+h2.Gender {
+  font-size: 40px;
+  height: 80px;
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+
+.row {
+  height: 96px;
+}
+
+.form-control {
+    border: 2px solid gray;
+    border-radius: 50px;
+    padding-left: 30px;
+}
+
+.col-5 {
+  padding: 0px;
+}
+
+.middle_line {
+  border: 2px solid #E5E5E5;
+}
+
+input.date, input.time, select.custom-select, input.value_urine {
+    font-size: 40px;
+    width: 600px;
+    height: 80px;;
+    border-radius: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: white;
+    border: 2px solid gray;
+}
+
+input#exampleCheck1.form-check-input {
+    width: 50px;
+    height: 50px;
+    margin-left: 20px;
+    background-color: white;
+    border: 2px solid #39588A;
+}
+
+label.form-check-label {
+    font-size: 40px;
+    margin-left: 100px;
+}
+
+#datepicker, #timepicker{
+    font-size: 40px;
+}
+
+/* i.gj-icon {
+    line-height: 2;
+}
+
+#datepicker.gj-unselectable::after, #timepicker.gj-unselectable {
+    width: 500px;
+    height: 500px;
+} */
+
+img.remove {
+    margin-left: 30px;
+    width: 50px;
+    height: auto;
+    margin-top: 15px;
+}
+
+.col-9 {
+    padding-right: 50px;
+}
+
+input.form-control.drink {
+    width: 200px;
+    border-right-style: dashed;
+}
+
+input.form-control.value {
+    border-left-style: dashed;
+}
+
+textarea.form-control {
+    height: 200px;
+}
+
+.other {
+    height: 216px;
+}
+
+button.btn-primary {
+    font-size: 40px;
+    background-color: #39588A;
+    width: 300px;
+    height: 100px;
+    border-radius: 30px;
+    margin-left: 20px;
+}
+
+button.btn-outline-light {
+    font-size: 40px;
+    color: #39588A;
+    border-color: #39588A;
+    width: 300px;
+    height: 100px;
+    border-radius: 30px;
+}
+
+.botton_last {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

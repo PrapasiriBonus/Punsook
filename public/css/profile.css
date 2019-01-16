@@ -1,0 +1,180 @@
+body {
+    background-color: #E5E5E5;
+}
+
+.navbar {
+    background-color: #39588A;
+    box-shadow: 0 8px 20px -1px gray;
+}
+
+.navbar_top {
+    height: 170px;  
+}
+
+img.Return {
+    width: 5%;
+    height: auto;
+    margin-left: 50px;;
+}
+
+img.Punsook_logo_white {
+    width: 17%;
+    height: auto;
+    margin-left: 300px;
+    margin-right: auto;
+}
+
+.container-fluid {
+    background-color: white;
+	box-shadow: 0 8px 20px -1px gray;
+}
+
+h1.topic {
+    color: #39588A;
+    font-size: 40px;
+    margin-left: 30px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+h1.detail {
+    font-size: 35px;
+    margin-left: 30px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 100px;
+    height: 50px;
+    margin-top: 30px
+  }
+  
+.switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+  
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 40px;
+    width: 40px;
+    left: 5px;
+    bottom: 5px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+  
+input:checked + .slider {
+    background-color: #2196F3;
+}
+  
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+  
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(110px);
+}
+  
+  /* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+  
+.slider.round:before {
+    border-radius: 50%;
+}
+
+h1.profile {
+      font-size: 40px;
+      margin-left: 30px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+}
+
+.col-3 {
+      padding-right: 0px;
+}
+
+.col-7 {
+      padding: 0px;
+}
+
+.form-control  {
+      font-size: 40px;
+      height: 80px;  
+} 
+  
+.form-control:disabled {
+      background-color: white;
+      border: 2px solid gray;
+      border-radius: 50px;
+      padding-left: 30px;
+}
+
+img.lock {
+      width: 65px;
+      height: auto;
+}
+
+img.Select { 
+    max-height: 50px;
+    max-width: 50px;
+    margin-top: 10px;
+    padding: 0px;
+    margin-left: 20px;
+}
+
+h2.Gender {
+    font-size: 40px;
+    height: 80px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+.row {
+    height: 96px;
+}
+
+.form-control {
+    border: 2px solid gray;
+      border-radius: 34px;
+      padding-left: 30px;
+}
+
+.col-5 {
+    padding: 0px;
+}
+
+.middle_line {
+    border: 2px solid #E5E5E5;
+}
+
+button.btn {
+    background-color: #39588A;
+    width: 300px;
+    height: 100px;
+    font-size: 40px;
+    border-radius: 30px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title> Firebase Hosting</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+   
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://unpkg.com/gijgo@1.9.11/js/gijgo.min.js" type="text/javascript"></script>
+    <link href="https://unpkg.com/gijgo@1.9.11/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/record.css" rel="stylesheet">
+</head>
+  <body>
+    <nav class="navbar navbar_top">
+      <img class="Return" src="Picture/Return.png">
+      <img class="Punsook_logo_white" src="Picture/Punsook_logo_white.png">    
+    </nav>   
+    <br><br> 
+    <div class="container-fluid">
+        <br>
+        <h1 class="topic">บันทึกการดื่มน้ำและสวนปัสสาวะ</h1>
+        <div class="row">
+            <div class="col-3">                   
+                <h1 class="profile">วันที่</h1>   
+            </div>       
+            <div class="form-group col-7">
+                <input class="date" type="date" id="start" name="trip-start">
+                <!-- <input id="datepicker" />
+                <script>
+                    $('#datepicker').datepicker();
+                </script> -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">                   
+                <h1 class="profile">เวลา</h1>   
+            </div>       
+                <div class="form-group col-7">
+                    <input class="time" type="time" id="start" name="trip-start">
+                    <!-- <input id="timepicker"/>
+                    <script>
+                        $('#timepicker').timepicker();
+                    </script>                 -->
+            </div>
+        </div>
+        <br><h1 class="middle_line"></h1><br>
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">ดื่มน้ำ</label>
+        </div>       
+        <br>
+        <div class="row">
+            <div class="col-2">
+                    <img class="remove" src="Picture/remove.png">
+            </div>
+            <div class="input-group col-9">
+                <input type="text" class="form-control drink" placeholder="เครื่องดื่ม / อาหาร">
+                <input type="text" class="form-control value" placeholder="ปริมาณ[ซีซี]">
+            </div>
+        </div> 
+        <br>
+        <div class="row">
+            <div class="col-2">
+            </div>
+            <div class="input-group col-9">
+                <input type="text" class="form-control" placeholder="เครื่องดื่ม / อาหาร">
+            </div>
+        </div>   
+        <br><h1 class="middle_line"></h1><br>
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">สวนปัสสาวะ</label>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-3">
+                <h1 class="profile">ปริมาณ</h1>
+            </div>
+            <div class="input-group col-7">
+                <input type="text" class="form-control value_urine" placeholder="เครื่องดื่ม / อาหาร">
+            </div>
+            <h1 class="profile">ซีซี</h1>
+        </div> 
+        <br><h1 class="middle_line"></h1><br>
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">ปัสสาวะด้วยตนเอง</label>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-3">
+                <h1 class="profile">ปริมาณ</h1>
+            </div>
+            <div class="input-group col-7">
+                <input type="text" class="form-control value_urine" placeholder="เครื่องดื่ม / อาหาร">
+            </div>
+            <h1 class="profile">ซีซี</h1>
+        </div> 
+        <br><h1 class="middle_line"></h1><br>
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">อื่นๆ</label>
+        </div>
+        <br>
+        <div class="row other">
+            <div class="col-4">
+                <h1 class="profile">รายละเอียด</h1>
+            </div>
+            <div class="input-group col-7">
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>            
+            </div>
+        </div>
+        <div class="botton_last">
+            <button type="button" class="btn btn-outline-light">ยกเลิก</button>
+            <button type="button" class="btn btn-primary">บันทึก</button> 
+        </div>
+        <br>
+    </div> 
+  </body>
+</html>    
