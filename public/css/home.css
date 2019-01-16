@@ -1,4 +1,5 @@
 body {
+    font-family: "athiti";
     background-color: #E5E5E5;
 }
 
@@ -34,19 +35,24 @@ img.Home {
 }
 
 h1 {
+    font-size:  300%;
     color: #39588A;
-    font-size: 55px;
     margin-left: 60px;
+    font-weight: bold;
 }
 
+@media(min-width:900px){h1{font-size: 400%}}
+
 h2 {
-    font-size: 40px;
+    font-size:  200%;
     text-align: left;
     padding-top: 30px;
 }
 
+@media(min-width:900px){h2{font-size: 300%}}
+
 .logo {
-    margin-left: 70px;
+    margin-left: 50px;
 }
 
 img.Record ,img.Manual ,img.Profile ,img.Logout {
@@ -56,7 +62,7 @@ img.Record ,img.Manual ,img.Profile ,img.Logout {
     height: auto;
 }
 
-.col-8 {
+.col-9 {
     border-top: 3px solid #E5E5E5;
 }
 
