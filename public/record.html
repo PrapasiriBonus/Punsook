@@ -2,7 +2,7 @@
 
 <html>
   <head>
-    <title> Firebase Hosting</title>
+    <title>ปันสุข | บันทึกการดื่มน้ำและสวนปัสสาวะ</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
@@ -16,8 +16,8 @@
 </head>
   <body>
     <nav class="navbar navbar_top">
-      <img class="Return" src="Picture/Return.png">
-      <img class="Punsook_logo_white" src="Picture/Punsook_logo_white.png">    
+      <img class="Return" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fback.png?alt=media&token=4b2dc79f-e33c-4f03-8520-29ce0cc6cb4d">
+      <img class="Punsook_logo_white" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/logo_white.png?alt=media&token=7ea16ae2-206b-41b9-90de-33799268daf4">    
     </nav>   
     <br><br> 
     <div class="container-fluid">
@@ -54,12 +54,13 @@
         </div>       
         <br>
         <div class="row">
-            <div class="col-2">
-                    <img class="remove" src="Picture/remove.png">
+            <div class="col-1"></div>
+            <div class="col-1">
+                <img class="remove" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fremove.png?alt=media&token=cb80abf8-8510-47c0-b9f1-bf8578d76043">
             </div>
             <div class="input-group col-9">
                 <input type="text" class="form-control drink" placeholder="เครื่องดื่ม / อาหาร">
-                <input type="text" class="form-control value" placeholder="ปริมาณ[ซีซี]">
+                <input type="text" class="form-control value" placeholder="ปริมาณ (ซีซี)">
             </div>
         </div> 
         <br>
@@ -67,7 +68,7 @@
             <div class="col-2">
             </div>
             <div class="input-group col-9">
-                <input type="text" class="form-control" placeholder="เครื่องดื่ม / อาหาร">
+                <input type="text" class="form-control" placeholder="เพิ่ม">
             </div>
         </div>   
         <br><h1 class="middle_line"></h1><br>
@@ -81,7 +82,7 @@
                 <h1 class="profile">ปริมาณ</h1>
             </div>
             <div class="input-group col-7">
-                <input type="text" class="form-control value_urine" placeholder="เครื่องดื่ม / อาหาร">
+                <input type="text" class="form-control value_urine" placeholder="ปริมาณ (ซีซี)">
             </div>
             <h1 class="profile">ซีซี</h1>
         </div> 
@@ -96,7 +97,7 @@
                 <h1 class="profile">ปริมาณ</h1>
             </div>
             <div class="input-group col-7">
-                <input type="text" class="form-control value_urine" placeholder="เครื่องดื่ม / อาหาร">
+                <input type="text" class="form-control value_urine" placeholder="ปริมาณ (ซีซี)">
             </div>
             <h1 class="profile">ซีซี</h1>
         </div> 
@@ -114,10 +115,14 @@
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>            
             </div>
         </div>
+        <br>
         <div class="botton_last">
-            <button type="button" class="btn btn-outline-light">ยกเลิก</button>
-            <button type="button" class="btn btn-primary">บันทึก</button> 
+            <center>
+                <button type="button" class="btn btn-outline-light">ยกเลิก</button>
+                <button type="button" class="btn btn-primary">บันทึก</button> 
+            </center>
         </div>
+        <br>
         <br>
     </div> 
   </body>
