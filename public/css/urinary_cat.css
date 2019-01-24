@@ -3,73 +3,69 @@ body {
     font-family: "athiti";
 }
 
+
 .navbar {
     background-color: #39588A;
-    box-shadow: 0 8px 20px -1px gray;
+    box-shadow: 0 2px 5px -1px gray;
 }
 
-.navbar_top {
-    height: 170px;  
+.logo-img {
+    width: auto;
+    height: 40px;
 }
 
-img.Return {
-    width: 5%;
-    height: auto;
-    margin-left: 50px;;
-}
-
-img.Punsook_logo_white {
-    width: 17%;
-    height: auto;
-    margin-left: 300px;
-    margin-right: auto;
+.logo-return {
+    width: auto;
+    height: 20px;
 }
 
 .container {
+    width: 360px;
+    margin-top: 20px;
     background-color: white;
-	box-shadow: 0 8px 20px -1px gray;
+    box-shadow: 0 2px 5px -1px gray;
+    padding-bottom: 25px;
+    padding-left: 20px;
 }
 
-@media(min-width:900px){.container{margin: auto}}
-
-h1 {
-    color: #39588A;
-    font-size: 55px;
-    padding-left: 60px;
-    padding-bottom: 20px;
-    margin-right: 100px;
-    font-weight: bold;
-}
-
-@media(min-width:900px){h1{font-size: 400%}}
 
 h2 {
-    font-size: 45px;
+    font-size: 18px;
     text-align: left;
-    margin-left: 30px;
+    margin-left: 20px;
 }
 
-@media(min-width:900px){h2{font-size: 300%}}
 
 h2.step {
     font-weight: bold;
 }
 
 h3 {
-    font-size: 40px;
+    font-size: 18px;
     text-align: left;
-    margin-left: 30px;
+    margin-left: 20px;
     margin-top: 10px;
 }
 
 img.step_img {
     width: 100%;
     height: auto;
-    margin-top: 20px;
-    margin-bottom: 40px;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 h1.step_cat {
+    color: #39588A;
+    font-size:  20px;
+    font-weight: bold;
     border-bottom: 2px solid #E5E5E5;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
 }
 
+@media (max-width: 600px) {
+    .logo-img {
+        width: auto;
+        height: 40px;
+      }
+}

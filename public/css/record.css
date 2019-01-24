@@ -6,87 +6,67 @@ body {
 
 .navbar {
     background-color: #39588A;
+    box-shadow: 0 2px 5px -1px gray;
 }
 
-.navbar_top {
-    height: 170px;  
+.logo-img {
+    width: auto;
+    height: 40px;
 }
 
-.navbar_home {
-    height: 650px;  
+.logo-return {
+    width: auto;
+    height: 20px;
 }
 
-img.Punsook_logo_white {
-    width: 17%;
-    height: auto;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.container-fluid {
+.container {
+    width: 360px;
+    margin-top: 20px;
     background-color: white;
-	box-shadow: 0 8px 20px -1px gray;
+    box-shadow: 0 2px 5px -1px gray;
+    padding-bottom: 25px;
+    padding-left: 20px;
 }
 
 h1.topic {
     color: #39588A;
-    font-size: 300%;
-    margin-left: 30px;
+    font-size:  20px;
     font-weight: bold;
-    margin-bottom: 20px;
 }
-
-@media(min-width:900px){h1.topic{font-size: 400%}}
 
 h1.profile {
-    font-size: 40px;
-    margin-left: 30px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    font-size: 18px;
+    margin-top: 8px;
 }
 
-@media(min-width:900px){h1.profile{font-size: 300%}}
+h1.profile-end {
+    margin-left: 10px;
+    font-size: 18px;
+    margin-top: 8px;
+}
 
-.col-3 {
+.col-3, .col-7, .col-1 {
     padding-right: 0px;
 }
 
 .col-7 {
-    padding: 0px;
+    padding-left: 0px;
 }
 
 .form-control  {
-    font-size: 40px;
-    height: 80px;  
+    font-size: 100%;
+    height: 40px;
+    border: 1px solid gray;
+    border-radius: 50px;
+    padding-left: 10px;  
 } 
 
-.form-control:disabled {
-    background-color: white;
-    border: 2px solid gray;
-    border-radius: 34px;
-    padding-left: 30px;
-}
-
 img.Select { 
-  max-height: 50px;
-  max-width: 50px;
+  height: 25px;
+  width: 25px;
   margin-top: 10px;
   padding: 0px;
   margin-left: 20px;
-}
-
-.row {
-  height: 96px;
-}
-
-.form-control {
-    border: 2px solid gray;
-    border-radius: 50px;
-    padding-left: 30px;
-}
-
-.col-5 {
-  padding: 0px;
 }
 
 .middle_line {
@@ -94,50 +74,44 @@ img.Select {
 }
 
 input.date, input.time, select.custom-select, input.value_urine {
-    font-size: 40px;
-    width: 600px;
-    height: 80px;;
+    font-size: 100%;
+    height: 40px;
+    width: 240px;
+    border: 1px solid gray;
     border-radius: 50px;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    background-color: white;
-    border: 2px solid gray;
+    padding-left: 10px;  
 }
 
 input#exampleCheck1.form-check-input {
-    width: 50px;
-    height: 50px;
-    margin-left: 20px;
+    width: 24px;
+    height: 24px;
     background-color: white;
-    border: 2px solid #39588A;
+    border: 1px solid #39588A;
 }
 
 label.form-check-label {
-    font-size: 40px;
-    margin-left: 100px;
+    font-size: 18px;
+    margin-top: 8px;
+    margin-left: 20px;
 }
-
-@media(min-width:900px){label.form-check-label{font-size: 300%}}
 
 #datepicker, #timepicker{
     font-size: 40px;
 }
 
 img.remove {
-    margin-left: 30px;
-    width: 50px;
+    width: 24px;
     height: auto;
-    margin-top: 15px;
+    margin-top: 8px;
 }
 
 .col-9 {
-    padding-right: 50px;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 input.form-control.drink {
-    width: 200px;
+    width: 80px;
     border-right-style: dashed;
 }
 
@@ -146,28 +120,30 @@ input.form-control.value {
 }
 
 textarea.form-control {
-    height: 200px;
+    height: 100px;
+    border-radius: 10px;
 }
 
-.other {
-    height: 216px;
+button.btn-add {
+    font-size: 100%;
+    height: 40px;
+    width: 200px;
+    border: 1px solid #39588A;
+    border-radius: 50px;
+    margin-bottom: 20px;
 }
 
 button.btn-primary {
-    font-size: 40px;
-    background-color: #39588A;
-    width: 300px;
-    height: 100px;
+    width: 115px;
+    height: 50px;
+    font-size: 18px;
     border-radius: 30px;
-    margin-left: 20px;
 }
 
 button.btn-outline-light {
-    font-size: 40px;
-    color: #39588A;
-    border-color: #39588A;
-    width: 300px;
-    height: 100px;
+    width: 115px;
+    height: 50px;
+    font-size: 18px;
     border-radius: 30px;
 }
 
@@ -175,4 +151,12 @@ button.btn-outline-light {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+
+@media (max-width: 600px) {
+    .logo-img {
+        width: auto;
+        height: 40px;
+      }
 }

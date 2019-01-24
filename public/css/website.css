@@ -1,0 +1,131 @@
+body{
+    background-color: #E5E5E5;
+    font-family: "athiti";
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+    margin: 0; 
+    padding: 0;
+}
+
+.navbar {
+    background-color: #39588A;
+    box-shadow: 0 8px 20px -1px gray;
+}
+
+.logo-img {
+    width: auto;
+    height: 40px;
+}
+
+.logo-return {
+    width: auto;
+    height: 20px;
+}
+ 
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+.center-img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    z-index:-1;
+    margin-top: 10%;
+  }
+.card-size{
+    width: 80%;
+    -webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+.card-body{
+    background-color: transparent;
+}
+.input-radius{
+    width: 331px;
+    height: 43px;
+    background: #F4F4F4;
+    border-radius: 25px;
+    text-align: center;
+    border:none;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+    font-size: 14px;
+    color: #525252;
+}
+.inline{
+    display: inline;
+}
+.button-radius{
+    width: 331px;
+    height: 43px;
+    left: 518px;
+    background: #4F4F4F;
+    border-radius: 25px;
+    border:none;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+    font-size: 18px;
+    color: #FFFFFF;
+
+    }
+
+/* centered columns styles */
+.row-centered {
+    text-align:center;
+    }
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
+    }
+
+#load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
+
+@media (max-width: 600px) {
+    body, #message { 
+        margin-top: 0; 
+        background: url("../image/bg2.png") no-repeat center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+    .logo-img {
+        width: auto;
+        height: 40px;
+      }
+
+    .center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 80%;
+      }
+    .center-img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 10%;
+        z-index:-1;
+        margin-top: 25%;
+        width: 90%;
+      }
+    .card-size{
+        width: 80%;
+        background-color: transparent;
+    }
+}
