@@ -45,8 +45,8 @@ h1 {
 
 h2 {
     font-size:  200%;
+    color: black;
     text-align: left;
-    padding-top: 30px;
 }
 
 @media(min-width:900px){h2{font-size: 300%}}
@@ -55,14 +55,13 @@ h2 {
     margin-left: 50px;
 }
 
-img.Record ,img.Manual ,img.Profile ,img.Logout {
-    margin-top: 10px;
-    margin-bottom: 10px;
+img.icons {
+    margin-top: 30px;
+    margin-bottom: 30px;
     width: 90px;
     height: auto;
 }
 
 .col-9 {
-    border-top: 3px solid #E5E5E5;
+    border-top: 1px solid #E5E5E5;
 }
-

@@ -1,7 +1,75 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title> Firebase Hosting</title>
+    <title>ปันสุข | หน้าหลัก</title>
+    <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyCE4QfVxXo4HZAyfoL5pLtCdrqEPZMqjnk",
+        authDomain: "support-7fdcd.firebaseapp.com",
+        databaseURL: "https://support-7fdcd.firebaseio.com",
+        projectId: "support-7fdcd",
+        storageBucket: "support-7fdcd.appspot.com",
+        messagingSenderId: "144995411560"
+      };
+      firebase.initializeApp(config);
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        
+        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+        // // The Firebase SDK is initialized and available here!
+        
+        firebase.auth().onAuthStateChanged(function(user) {
+          if (user) {
+            // User is signed in.
+            var displayName = user.displayName;
+            var email = user.email;
+            var emailVerified = user.emailVerified;
+            var photoURL = user.photoURL;
+            var uid = user.uid;
+            var phoneNumber = user.phoneNumber;
+            var providerData = user.providerData;
+            user.getIdToken().then(function(accessToken) {
+              document.getElementById('sign-in-status').textContent = 'Signed in';
+              document.getElementById('sign-in').textContent = 'Sign out';
+              document.getElementById('account-details').textContent = JSON.stringify({
+                displayName: displayName,
+                email: email,
+                emailVerified: emailVerified,
+                phoneNumber: phoneNumber,
+                photoURL: photoURL,
+                uid: uid,
+                accessToken: accessToken,
+                providerData: providerData
+              }, null, '  ');
+            });
+          } else {
+            // User is signed out.
+            document.getElementById('sign-in-status').textContent = 'Signed out';
+            document.getElementById('sign-in').textContent = 'Sign in';
+            document.getElementById('account-details').textContent = 'null';
+          }
+        }, function(error) {
+          console.log(error);
+        });
+
+        //firebase.database().ref('/path/to/ref').on('value', snapshot => { });
+        //firebase.messaging().requestPermission().then(() => { });
+        //firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
+        
+        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+
+        try {
+          let app = firebase.app();
+          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
+          document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
+        } catch (e) {
+          document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
+        }
+      });
+    </script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">    
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -9,56 +77,69 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <link href="css/home.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
-    <script>
-      document.getElementById('signOut').addEventListener('click', function(event) {
-        firebase.auth().signOut();
-      });
-    </script>
   </head>
   <body>
     <nav class="navbar navbar_top">
       <img class="Punsook_logo_white" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/logo_white.png?alt=media&token=7ea16ae2-206b-41b9-90de-33799268daf4">    
-    </nav>            
+    </nav>
     <div class="navbar navbar_home">
       <img class="Home" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fhome.png?alt=media&token=6223b97d-0c2f-4b17-a940-bba47d29f716">
     </div>
     <div class="container-fluid">
-      <br>
       <h1>หน้าหลัก</h1>
-      <br>
       <div class="row justify-content-start">
         <div class="col-2 logo">
-          <img class="Record" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fclipboard.png?alt=media&token=4c46cc5b-2ade-4860-ad85-1f7142b36c37">
+          <img class="icons" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fclipboard.png?alt=media&token=4c46cc5b-2ade-4860-ad85-1f7142b36c37">
         </div>
         <div class="col-9 topic">
-          <h2>บันทึกการดื่มน้ำและสวนปัสสาวะ</h2>
+          <a href="record.html"><h2>บันทึกการดื่มน้ำและสวนปัสสาวะ</h2></a>
         </div>
       </div>
       <div class="row justify-content-start">
         <div class="col-2 logo">
-          <img class="Manual" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fbook.png?alt=media&token=cdf5f868-7f38-4482-b25c-652f5837d9dc">
+          <img class="icons" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fbook.png?alt=media&token=cdf5f868-7f38-4482-b25c-652f5837d9dc">
         </div>
         <div class="col-9 topic">
-          <h2>คู่มือการสวนปัสสาวะ</h2>
+          <a href="manual.html"><h2>คู่มือการดื่มน้ำและปัสสาวะ</h2></a>
         </div>
       </div>
       <div class="row justify-content-start">
         <div class="col-2 logo">
-          <img class="Profile" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Favatar.png?alt=media&token=4380945e-6a4c-47b5-9e7f-83478722fe09">
+          <img class="icons" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Favatar.png?alt=media&token=4380945e-6a4c-47b5-9e7f-83478722fe09">
         </div>
         <div class="col-9 topic">
-          <h2>ประวัติ</h2>
+          <a href="profile.html"><h2>ประวัติส่วนตัว</h2></a>
         </div>
       </div>
       <div class="row justify-content-start">
         <div class="col-2 logo">
-          <img class="Logout" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Flogout-blue.png?alt=media&token=10cbaffe-10f5-4712-9621-cd3ff29899aa">
+          <img class="icons" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fsmartphone.png?alt=media&token=15ac840a-979a-4620-8cd7-3618e2213151">
         </div>
-        <div class="col-9 topic" id="signOut">
-          <h2>ออกจากระบบ</h2>
+        <div class="col-9 topic">
+          <a href=""><h2>เกี่ยวกับแอพพลิเคชั่น</h2></a>
         </div>
       </div>
-      <br>
+      <div class="row justify-content-start">
+        <div class="col-2 logo">
+          <img class="icons" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Flogout-blue.png?alt=media&token=10cbaffe-10f5-4712-9621-cd3ff29899aa">
+        </div>
+        <div class="col-9 topic">
+          <a href="index.html" id="signOut"><h2>ออกจากระบบ</h2></a>
+          <script>
+            document.getElementById('signOut').addEventListener('click', function(event) {
+              firebase.auth().signOut().then(function() {
+                // Sign-out successful.
+              }).catch(function(error) {
+                // An error happened.
+              });
+            });
+          </script>
+        </div>
+      </div>
     </div>
+    <div id="sign-in-status"></div>
+    <div id="sign-in"></div>
+    <div id="account-details"></div>
+    <div id="loader">Loading...</div>
   </body>
 </html>
