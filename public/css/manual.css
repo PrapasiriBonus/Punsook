@@ -16,7 +16,7 @@ body {
 .logo-return {
     width: auto;
     height: 20px;
-
+}
 
 .container {
     width: 360px;
@@ -26,7 +26,6 @@ body {
     padding-bottom: 25px;
     padding-left: 20px;
 }
-
 h1 {
     color: #39588A;
     font-size:  20px;
@@ -38,10 +37,6 @@ h2 {
     margin-top: 8px;
 }
 
-/* .logo {
-    margin-left: px;
-} */
-
 img.Equipment ,img.Urinary_Catheterization ,img.About_App {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -50,7 +45,7 @@ img.Equipment ,img.Urinary_Catheterization ,img.About_App {
 }
 
 .col-8 {
-    border-top: 3px solid #E5E5E5;
+    border-top: 2px solid #E5E5E5;
 }
 
 

@@ -130,7 +130,7 @@ button.btn-add {
     width: 200px;
     border: 1px solid #39588A;
     border-radius: 50px;
-    margin-bottom: 20px;
+    background-color: #E5E5E5;
 }
 
 button.btn-primary {

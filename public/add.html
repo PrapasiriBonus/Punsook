@@ -71,6 +71,9 @@
         }
       });
     </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
 
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 
@@ -87,11 +90,17 @@
     <link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
 </head>
   <body>
-    <nav class="navbar navbar_top">
-      <img class="Return" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fback.png?alt=media&token=4b2dc79f-e33c-4f03-8520-29ce0cc6cb4d">
-      <img class="Punsook_logo_white" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/logo_white.png?alt=media&token=7ea16ae2-206b-41b9-90de-33799268daf4">    
-    </nav>   
-    <br><br> 
+    <nav class="navbar">
+        <div class="col">
+            <a href="/home.html"><img class= "logo-return" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fback.png?alt=media&token=4b2dc79f-e33c-4f03-8520-29ce0cc6cb4d"></a>
+        </div>
+        <div class="col">
+            <center>
+                    <a href="/home.html"><img class= "logo-img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/logo_white.png?alt=media&token=7ea16ae2-206b-41b9-90de-33799268daf4"></a>   
+            </center>
+        </div>
+        <div class="col"></div>
+    </nav>                
     <script>
         var records = firebase.database().ref().child("records");
         var submitRecord = function(){
@@ -107,7 +116,7 @@
         // });
     </script>
     <form id="recordForm">
-    <div class="container-fluid">
+    <div class="container">
         <br>
         <h1 class="topic">บันทึกการดื่มน้ำและสวนปัสสาวะ</h1>
         <div class="row">
@@ -116,10 +125,6 @@
             </div>       
             <div class="form-group col-7">
                 <input class="date" type="date" id="date" name="trip-start">
-                <!-- <input id="datepicker" />
-                <script>
-                    $('#datepicker').datepicker();
-                </script> -->
             </div>
         </div>
         <div class="row">
@@ -128,18 +133,13 @@
             </div>       
                 <div class="form-group col-7">
                     <input class="time" type="time" id="time" name="trip-start">
-                    <!-- <input id="timepicker"/>
-                    <script>
-                        $('#timepicker').timepicker();
-                    </script>                 -->
             </div>
         </div>
-        <br><h1 class="middle_line"></h1><br>
+       <h1 class="middle_line"></h1>
         <div class="form-group form-check">
             <input type="checkbox" class="form-check-input" id="exampleCheck1">
             <label class="form-check-label" for="exampleCheck1">ดื่มน้ำ</label>
         </div>       
-        <br>
         <div class="row">
             <div class="col-2">
                 <img class="remove" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fremove.png?alt=media&token=cb80abf8-8510-47c0-b9f1-bf8578d76043">
@@ -154,15 +154,16 @@
             <div class="col-2">
             </div>
             <div class="input-group col-9">
-                <input type="text" class="form-control" placeholder="เพิ่ม">
+                <center>
+                    <button type="button" class="btn btn-add">เพิ่ม</button>
+                </center>
             </div>
         </div>   
-        <br><h1 class="middle_line"></h1><br>
+        <br><h1 class="middle_line"></h1>
         <div class="form-group form-check">
             <input type="checkbox" class="form-check-input" id="exampleCheck1">
             <label class="form-check-label" for="exampleCheck1">สวนปัสสาวะ</label>
         </div>
-        <br>
         <div class="row">
             <div class="col-3">
                 <h1 class="profile">ปริมาณ</h1>
@@ -172,12 +173,11 @@
             </div>
             <h1 class="profile">ซีซี</h1>
         </div> 
-        <br><h1 class="middle_line"></h1><br>
+        <br><h1 class="middle_line"></h1>
         <div class="form-group form-check">
             <input type="checkbox" class="form-check-input" id="exampleCheck1">
             <label class="form-check-label" for="exampleCheck1">ปัสสาวะด้วยตนเอง</label>
         </div>
-        <br>
         <div class="row">
             <div class="col-3">
                 <h1 class="profile">ปริมาณ</h1>
@@ -187,12 +187,11 @@
             </div>
             <h1 class="profile">ซีซี</h1>
         </div> 
-        <br><h1 class="middle_line"></h1><br>
+        <br><h1 class="middle_line"></h1>
         <div class="form-group form-check">
             <input type="checkbox" class="form-check-input" id="exampleCheck1">
             <label class="form-check-label" for="exampleCheck1">อื่นๆ</label>
         </div>
-        <br>
         <div class="row other">
             <div class="col-4">
                 <h1 class="profile">รายละเอียด</h1>
@@ -202,13 +201,12 @@
             </div>
         </div>
         <br>
-        <!-- <div class="botton_last">
+        <div class="botton_last">
             <center>
-                <button type="button" class="btn btn-outline-light">ยกเลิก</button>
-                <button type="button" class="btn btn-primary">บันทึก</button> 
+                <button type="button" class="btn btn-outline-light" style="border: 2px solid #39588A; color: #39588A">ยกเลิก</button>
+                <button type="button" class="btn btn-primary" style="background-color: #39588A; color: white;">บันทึก</button> 
             </center>
-        </div> -->
-        <button type="button" class="btn btn-primary">บันทึก</button> 
+        </div>
         <br>
         <br>
     </div>
