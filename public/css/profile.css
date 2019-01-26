@@ -72,7 +72,8 @@ img.Select {
 }
 
 .middle_line {
-    border: 1px solid #E5E5E5;
+    border-bottom: 2px solid #E5E5E5;
+    margin-bottom: 20px;
 }
 
 button.btn {
