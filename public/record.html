@@ -143,7 +143,11 @@
         </div>
         <br>
     </div>
-    <a href="add.html"><img class="add" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2FAdd%20Record.png?alt=media&token=f9012bce-fa36-43a1-99c6-cf0b22efece5"></a>
+    <center>
+      <a href="add.html">
+        <img class="add" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2FAdd%20Record.png?alt=media&token=f9012bce-fa36-43a1-99c6-cf0b22efece5">
+      </a>
+    </center>
     <br>
     <div class="container container-record">
         <div class="row">
@@ -205,12 +209,30 @@
     </div>
     <div class="container container-footer">
         <div class="row">
-          <div class="row col">
+          <div class="row col" data-toggle="modal" data-target="#exampleModal">
             <div class="col-3 col-logo">
                 <img class="logo-footer" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fgarbage.png?alt=media&token=200a21fa-65f0-4b03-82d4-42c12ec81b87">
             </div>
             <div class="col-3 col-detail">
                 <h3>ลบ</h3>        
+            </div>
+          </div>
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title" id="exampleModalLabel">ลบบันทึก</h1>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <h2>ยืนยันการลบบันทึกนี้ทั้งหมด</h2>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal" style="margin-right: 10px;">ยกเลิก</button>
+                  <button type="button" class="btn btn-primary" style="background-color: #39588A; color: white;">ยืนยัน</button>                </div>
+              </div>
             </div>
           </div>
           <div class="row col">
