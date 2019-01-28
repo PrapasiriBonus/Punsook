@@ -1,0 +1,120 @@
+body{
+    background-color: #E5E5E5;
+    font-family: "athiti";
+}
+
+.navbar {
+    background-color: #39588A;
+    box-shadow: 0 2px 5px -1px gray;
+}
+
+.logo-img {
+    width: auto;
+    height: 50px;
+}
+
+.logo-return {
+    width: auto;
+    height: 20px;
+}
+
+.container {
+    width: 360px;
+    margin-top: 20px;
+    background-color: white;
+    box-shadow: 0 2px 5px -1px gray;
+    padding-bottom: 25px;
+    padding-left: 20px;
+    margin-left: 55px;
+}
+
+.col-3, .col-7, .col-1 {
+    padding-right: 0px;
+}
+
+h1.topic {
+    color: #39588A;
+    font-size:  20px;
+    font-weight: bold;
+    margin-right: 20PX;
+}
+
+h1.profile, h2.Gender {
+    font-size: 18px;
+    margin-top: 8px;
+}
+
+.form-control  {
+    height: 40px;
+    border: 1px solid gray;
+    border-radius: 50px;
+    padding-left: 10px;  
+} 
+
+.form-control:disabled {
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 50px;
+    padding-left: 10px;
+}
+
+img.Select { 
+    max-height: 25px;
+    max-width: 25px;
+    padding: 0px;
+    margin-left: 20px;
+    margin-top: 8px;
+}
+
+.middle_line {
+    border-bottom: 2px solid #E5E5E5;
+    margin-bottom: 20px;
+    margin-right: 20PX;
+}
+
+
+@media (max-width: 1200px) {
+    .logo-img {
+        width: auto;
+        height: 40px;
+      }
+
+    h1.topic {
+        color: #39588A;
+        font-size:  16px;
+        font-weight: bold;
+        margin-right: 20PX;
+    }
+    
+    h1.profile, h2.Gender {
+        font-size: 14px;
+        margin-top: 8px;
+        padding-left: 10px;
+    }
+    
+    input.form-control  {
+        height: 30px;
+        border: 1px solid gray;
+        border-radius: 50px;
+        padding-left: 10px;  
+    } 
+    
+    .form-control:disabled {
+        background-color: white;
+        border: 1px solid gray;
+        border-radius: 50px;
+        padding-left: 10px;
+    }
+    
+    img.Select { 
+        max-height: 20px;
+        max-width: 20px;
+        padding: 0px;
+        margin-left: 10px;
+        margin-top: 8px;
+    }
+
+    .col-3.unit {
+        padding-left: 0px;
+    }
+}
