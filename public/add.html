@@ -214,15 +214,14 @@
     <script>
         $(document).ready(function(){
             var next = 1;
-            $("#count").val(0);
-            $(".btn-add").click(function(e){
+            $(".add-more").click(function(e){
                 e.preventDefault();
                 var addto = "#field" + next;
-                var addRemove = "#field" + (next);
+                var addRemove = "#drinking_quanlity" + (next);
+                var removeBtn = '<button id="remove' + next + '" class="btn btn-danger remove-me form-control" >-</button>';
                 next = next + 1;
                 var newIn = '<div class="input-group" id="field' + next + '"><input id="drinking_type' + next + '" type="text" class="form-control drink" placeholder="เครื่องดื่ม / อาหาร"><input id="drinking_quanlity' + next + '" type="number" class="form-control value" placeholder="ปริมาณ (ซีซี)"></div>';
                 var newInput = $(newIn);
-                var removeBtn = '<button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" >-</button></div></div><div id="field">';
                 var removeButton = $(removeBtn);
                 $(addto).after(newInput);
                 $(addRemove).after(removeButton);
@@ -265,16 +264,13 @@
             <div class="form-group form-check">
                 <input type="checkbox" class="form-check-input" id="drinking" value="drinking" onclick="drinkingFunction()">
                 <label for="drinking">ดื่มน้ำ</label>
+                <input type="hidden" id="count" value="0" />
                 <div id="drinking_text" style="display:none">
-                    <div id="field">
-                        <div class="input-group" id="field1">
-                            <input id="drinking_type1" type="text" class="form-control drink" placeholder="เครื่องดื่ม / อาหาร">
-                            <input id="drinking_quanlity1" type="number" class="form-control value" placeholder="ปริมาณ (ซีซี)">
-                        </div>
-                        <br>
-                        <p id="count"></p>
-                        <button id="b1" type="button" class="btn btn-add">เพิ่ม</button>
+                    <div class="input-group" id="field1">
+                        <input id="drinking_type1" type="text" class="form-control drink" placeholder="เครื่องดื่ม / อาหาร">
+                        <input id="drinking_quanlity1" type="number" class="form-control value" placeholder="ปริมาณ (ซีซี)">
                     </div>
+                    <button id="b1" type="button" class="btn add-more">เพิ่ม</button>
                     <br>
                     <h1 class="middle_line"></h1>
                 </div>
