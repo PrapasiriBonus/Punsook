@@ -32,6 +32,7 @@ h1.topic {
     color: #39588A;
     font-size:  20px;
     font-weight: bold;
+    padding-top: 20px;
 }
 
 h1.profile {
@@ -108,6 +109,11 @@ img.remove {
 .col-9 {
     padding-left: 0px;
     padding-right: 0px;
+}
+
+.row {
+    width: 355px;
+    margin-left: 10px;
 }
 
 input.form-control.drink {

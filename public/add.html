@@ -220,7 +220,7 @@
                 var addRemove = "#drinking_quanlity" + (next);
                 var removeBtn = '<button id="remove' + next + '" class="btn btn-danger remove-me form-control" >-</button>';
                 next = next + 1;
-                var newIn = '<div class="input-group" id="field' + next + '"><input id="drinking_type' + next + '" type="text" class="form-control drink" placeholder="เครื่องดื่ม / อาหาร"><input id="drinking_quanlity' + next + '" type="number" class="form-control value" placeholder="ปริมาณ (ซีซี)"></div>';
+                var newIn = '<div class="row"><div class="input-group col-9" id="field' + next + '"><input id="drinking_type' + next + '" type="text" class="form-control drink" placeholder="เครื่องดื่ม / อาหาร"><input id="drinking_quanlity' + next + '" type="number" class="form-control value" placeholder="ปริมาณ (ซีซี)"></div> <div class="col-2"></div></div>';
                 var newInput = $(newIn);
                 var removeButton = $(removeBtn);
                 $(addto).after(newInput);

@@ -13,6 +13,33 @@
     <link href="css/desktop_learning.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
 
+    <!-- scrip bar chart -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Year', 'Sales', 'Expenses', 'Profit'],
+          ['2014', 1000, 400, 200],
+          ['2015', 1170, 460, 250],
+          ['2016', 660, 1120, 300],
+          ['2017', 1030, 540, 350]
+        ]);
+
+        var options = {
+          chart: {
+            title: 'Company Performance',
+            subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+          }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      }
+    </script>
   </head>
   <body>
     <nav class="navbar">
@@ -41,8 +68,7 @@
                     </div>       
                     <div class="form-group col-7">
                         <input type="text" id="disabledTextInput" class="form-control" placeholder="HT13451265">
-                    </div>
-                    
+                    </div>    
                 </div>
                 <div class="row">
                     <div class="col-3">                   
@@ -120,8 +146,44 @@
             </fieldset> 
             <br>
         </div> 
-        <div class="col-9">
-            
+        <div class="col-8 col-8-learning">
+            <ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">ผลการเรียนรู้</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">บันทึกการดื่มน้ำ-ปัสสาวะ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">ประวัติการแชท</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <div class="row row-learning">
+                    <div class="container col">
+                        <center>
+                            <h1 class="drink-avg">ปริมาณน้ำดื่มโดยเฉลี่ย</h1>
+                            <h2>200 ซีซี/วัน</h2>
+                        </center>
+                    </div>
+                    <div class="container col">
+                        <center>
+                            <h1 class="urine-avg">ปริมาณปัสสาวะโดยเฉลี่ย</h1>
+                            <h2>200 ซีซี/วัน</h2>
+                        </center>
+                    </div>
+                </div>
+                <div class='container'>
+                    <br>
+                    <h1 class="topic">ช่วงเวลาที่ดื่มน้ำ-ปัสสาวะบ่อย</h1>
+                    <h1 class="middle_line"></h1>
+                    <div id="columnchart_material" style="width: 800px; height: 500px;"></div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">...</div>
+            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
+            </div>
         </div>
     </div>
     
