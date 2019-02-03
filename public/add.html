@@ -270,7 +270,9 @@
                         <input id="drinking_type1" type="text" class="form-control drink" placeholder="เครื่องดื่ม / อาหาร">
                         <input id="drinking_quanlity1" type="number" class="form-control value" placeholder="ปริมาณ (ซีซี)">
                     </div>
-                    <button id="b1" type="button" class="btn add-more">เพิ่ม</button>
+                    <center>
+                        <button id="b1" type="button" class="btn add-more">เพิ่ม</button>
+                    </center>
                     <br>
                     <h1 class="middle_line"></h1>
                 </div>
@@ -280,15 +282,15 @@
                 <label for="catheterization">สวนปัสสาวะ</label>
                 <div id="catheterization_text" style="display:none">
                     <div class="row">
-                        <div class="col-3">
+                        <div class="col-2 col-cc">
                             <h1 class="profile">ปริมาณ</h1>
                         </div>
-                        <div class="input-group col-7">
+                        <div class="input-group col-6">
                             <input type="number" id="catheterization_quanlity" class="form-control value_urine" placeholder="ปริมาณ (ซีซี)">
                         </div>
                         <h1 class="profile">ซีซี</h1>
                     </div>
-                    <br><h1 class="middle_line"></h1>
+                    <h1 class="middle_line"></h1>
                 </div>
             </div>
             <div class="form-group form-check">
@@ -296,15 +298,15 @@
                 <label for="urine">ปัสสาวะด้วยตนเอง</label>
                 <div id="urine_text" style="display:none">
                     <div class="row">
-                        <div class="col-3">
+                        <div class="col-2 col-cc">
                             <h1 class="profile">ปริมาณ</h1>
                         </div>
-                        <div class="input-group col-7">
+                        <div class="input-group col-6">
                             <input type="number" id="urine_quanlity" class="form-control value_urine" placeholder="ปริมาณ (ซีซี)">
                         </div>
                         <h1 class="profile">ซีซี</h1>
                     </div>
-                    <br><h1 class="middle_line"></h1>
+                    <h1 class="middle_line"></h1>
                 </div>
             </div>
             <div class="form-group form-check">
@@ -312,18 +314,22 @@
                 <label for="other">อื่นๆ</label>
                 <div id="other_text" style="display:none">
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-3 col-cc">
                             <h1 class="profile">รายละเอียด</h1>
                         </div>
                         <div class="input-group col-7">
                             <textarea class="form-control" id="other_detail" rows="3"></textarea>            
                         </div>
                     </div>
-                    <br><h1 class="middle_line"></h1>
+                    <h1 class="middle_line"></h1>
                 </div>
             </div>
             <!-- When you click this button, trigger the submit event on this form. -->
-            <button type="submit" class="btn btn-default">Submit</button>
+            <!-- <button type="submit" class="btn btn-default">Submit</button> -->
+            <center>
+                <button type="button" class="btn btn-outline-light" style="border: 1px solid #39588A; color: #39588A">ยกเลิก</button>
+                <button type="submit" class="btn btn-primary" style="background-color: #39588A; color: white;">บันทึก</button> 
+            </center>
         </form>
     </div>
     <div id="uid"></div>
@@ -423,7 +429,7 @@
             <div class="botton_last">
                 <center>
                     <button type="button" class="btn btn-outline-light" style="border: 2px solid #39588A; color: #39588A">ยกเลิก</button>
-                    <button type="button" class="btn btn-primary" style="background-color: #39588A; color: white;">บันทึก</button> 
+                    <button type="submit" class="btn btn-primary" style="background-color: #39588A; color: white;">บันทึก</button> 
                 </center>
             </div>
             <br>
