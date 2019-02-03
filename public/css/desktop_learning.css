@@ -28,6 +28,10 @@ body{
     margin-left: 55px;
 }
 
+.container.col-3.container-profile {
+    height: 650px;
+}
+
 .col-3, .col-7, .col-1 {
     padding-right: 0px;
 }
@@ -46,9 +50,11 @@ h1.topic {
 h1.profile, h2.Gender {
     font-size: 18px;
     margin-top: 8px;
+    padding: 0px;
+    margin-right: 0px;
 }
 
-.form-control  {
+.form-control, input.date  {
     height: 40px;
     border: 1px solid gray;
     border-radius: 50px;
@@ -74,6 +80,17 @@ img.Select {
     border-bottom: 2px solid #E5E5E5;
     margin-bottom: 20px;
     margin-right: 20PX;
+}
+
+.middle_line-graph {
+    border-bottom: 2px solid #E5E5E5;
+    margin-right: 20PX;
+}
+
+.middle_line-chat {
+    border-bottom: 2px solid #FFD0BB;
+    margin-top: 15px;
+
 }
 
 .nav {
@@ -135,11 +152,241 @@ a#pills-home-tab.nav-link.active, a#pills-profile-tab.nav-link.active, a#pills-c
     margin-top: 20px;
 }
 
-@media (max-width: 1200px) {
+.container-graph {
+    margin-top: 20px;
+    background-color: white;
+    box-shadow: 0 2px 5px -1px gray;
+    padding-bottom: 25px;
+    padding-left: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding-right: 20px;
+}
+
+#count_time,#type_count {
+    width : 700px;
+}
+
+h1.topic {
+    color: #39588A;
+    font-size:  20px;
+    font-weight: bold;
+    margin-right: 20PX;
+    padding-top: 6px;
+}
+
+.btn-link {
+    margin-bottom: 0px;
+}
+
+.col-10, .col-1 {
+    padding: 0px; 
+}
+
+.legend_out {
+    margin-left: 50px;
+    margin-top: 10px;
+}
+
+h2.legend {
+    font-size: 13px;
+    margin: 0px;
+    margin-right: 20px;
+    margin-left: 10px;
+}
+
+.table.head {
+    font-weight: bold;
+}
+
+.card {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.container-solution, .container-test {
+    margin-top: 0px;
+    background-color: white;
+    box-shadow: 0 2px 5px -1px gray;
+    padding-bottom: 25px;
+    padding-left: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding-right: 20px;
+}
+
+.container-date {
+    background-color: white;
+    box-shadow: 0 2px 5px -1px gray;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding-right: 20px;
+}
+
+.container-table {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding-right: 20px;
+}
+
+h1.sol-value {
+    font-weight: bold;
+}
+
+h2.sol {
+    font-size: 14px;
+}
+
+.row.row-sol {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+td {
+    text-align: center;
+    font-size: 16px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+th {
+    font-size: 16px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.row.row-date {
+    margin-left: 0px;
+}
+
+h3 {
+    color: #39588A;
+    margin-top: 10px;
+    font-size:  18px;
+}
+
+.head-table {
+    font-weight: bold;
+}
+
+.row-table {
+    margin-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    text-align: center;
+}
+
+.patient-table {
+    background-color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.total {
+    background-color: #39588A;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+h3.col-total {
+    color: white;
+}
+
+.patient-chat {
+    background-color:#A9BDD7;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.record-chat {
+    background-color:white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-bottom: 0px;
+}
+
+h3.col.col-chat {
+    font-weight: bold;
+}
+
+h3.time-chat {
+    margin-top: 0px;
+}
+
+.badge-chat {
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding: 10px;
+    padding-left: 20px;
+    font-weight: normal;
+    background-color: #A9BDD7;
+    font-size: 18px;
+    max-width: 400px;
+    margin-bottom: 10px;
+}
+
+.punsook-chat {
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border: 1px solid #39588A;
+    padding: 10px;
+    padding-right: 20px;
+    font-weight: normal;
+    background-color: white;
+    color: #39588A;
+    font-size: 18px;
+    max-width: 400px;
+    margin-bottom: 10px;
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+.chat-list {
+    height: 500px;
+  overflow-y: scroll;
+}
+
+.card.card-punsook {
+    float: right;
+}
+/* 
+.punsook {
+    float: right;
+} */
+
+
+
+@media (max-width: 1000px) {
     .logo-img {
         width: auto;
         height: 40px;
-      }
+    }
+
+    .container.col-3.container-profile {
+        width: 220px;
+        height: 600px;
+        padding-left: 10px;
+        margin-left: 40px;
+    }
 
     h1.topic {
         color: #39588A;
@@ -151,15 +398,27 @@ a#pills-home-tab.nav-link.active, a#pills-profile-tab.nav-link.active, a#pills-c
     h1.profile, h2.Gender {
         font-size: 14px;
         margin-top: 8px;
-        padding-left: 10px;
+        padding-left: 5px;
+    }
+
+    h1.drink-avg, h1.urine-avg {
+        margin-right: 0px;
     }
     
-    input.form-control  {
+    input.form-control , input.date   {
         height: 30px;
         border: 1px solid gray;
         border-radius: 50px;
         padding-left: 10px;  
     } 
+
+    .form-group.col-4 {
+        padding: 0px;
+    }
+
+    .form-group.col-7 {
+        padding-left: 0px;
+    }
     
     .form-control:disabled {
         background-color: white;
@@ -174,6 +433,11 @@ a#pills-home-tab.nav-link.active, a#pills-profile-tab.nav-link.active, a#pills-c
         padding: 0px;
         margin-left: 10px;
         margin-top: 8px;
+        margin-right: 0px;
+    }
+
+    h2.Gender {
+        margin-right: 0px;
     }
 
     .col-3.unit {
@@ -191,5 +455,21 @@ a#pills-home-tab.nav-link.active, a#pills-profile-tab.nav-link.active, a#pills-c
     a#pills-profile-tab.nav-link, a#pills-contact-tab.nav-link, a#pills-home-tab.nav-link {   
         font-size: 16px;
     }
+
+    #count_time,#type_count {
+        width : 400px;
+    }
     
+    .row.legend_out {
+        margin-left: 0px;
+    }
+
+    h2.legend {
+        margin-right: 90px;
+        margin-top: 3px;
+    }
+
+    span.badge {
+        margin-top: 3px;
+    }
 }

@@ -1,3 +1,6 @@
+<!-- https://developers.google.com/chart/interactive/docs/gallery/barchart -->
+
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -16,30 +19,90 @@
     <!-- scrip bar chart -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
-      google.charts.load('current', {'packages':['bar']});
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['ดื่มน้ำ', 'ปัสสาวะ'],
+          [0.5,null],
+          [0.5,0.12],
+          [0.59,0.59],
+          [1.30,1.30],
+          [2.55,2.55],
+          [2.45,2.45],
+          [2.35,2.35],
+          [2.5,2.5],
+          [2.51,3.15],
+          [2.34,2.44],
+          [2.55,2.11],
+          [3.00,3.00],
+          [4.00,17.00],
+          [4.21,7.21],
+          [4.55,4.55],
+          [5.00,5.00],
+          [6.00,null],
+          [10.21,20.21],
+          [12.55,null],
+          [14.00,3.00],
+          [23.00,14.00],
+          [14.21,16.21]
+          ]);
+
+        var options = {
+          height: 200,
+          legend: { position: 'none'},
+          histogram: {
+            hideBucketItems: true,
+            bucketSize: 3
+          },
+          colors: ['#A9BDD7','#FFD0BB'],
+          hAxis: {
+              viewWindowMode: 'explicit',
+              viewWindow: {
+                  max: 23.59
+          			},
+          },
+          chartArea: {
+                left: 10,
+                top: 20,
+                right: 10,
+                bottom: 30,
+                },
+        };
+
+        var chart = new google.visualization.Histogram(document.getElementById('count_time'));
+        chart.draw(data, options);
+      }
+    </script>
+    <script type="text/javascript">
+         google.charts.load('current', {'packages':['bar']});
       google.charts.setOnLoadCallback(drawChart);
 
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['Year', 'Sales', 'Expenses', 'Profit'],
-          ['2014', 1000, 400, 200],
-          ['2015', 1170, 460, 250],
-          ['2016', 660, 1120, 300],
-          ['2017', 1030, 540, 350]
+          ['', 'จำนวนครั้งในเดือนนี้', 'จำนวนครั้งทั้งหมด', 'จำนวนครั้งโดยเฉลี่ยจากผู้ป่วยทั้งหมด'],
+          ['อุปกรณ์', 1000, 400, 200],
+          ['การดื่มน้ำ', 1170, 460, 250],
+          ['การปัสสาวะ ', 660, 1120, 300],
+          ['ปัญหาระหว่างสวน', 1030, 540, 350],
+          ['ภาวะผิดปกติ', 1030, 540, 350]
         ]);
-
+                             
         var options = {
-          chart: {
-            title: 'Company Performance',
-            subtitle: 'Sales, Expenses, and Profit: 2014-2017',
-          }
+          legend: { position: 'none'},
+          bars: 'vertical',
+          vAxis: {format: 'decimal'},
+          height: 200,
+          colors: ['#A9BDD7', '#FFD0BB', '#CEA9D7']
+          
         };
 
-        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+        var chart = new google.charts.Bar(document.getElementById('type_count'));
 
         chart.draw(data, google.charts.Bar.convertOptions(options));
-      }
+        }
     </script>
+
   </head>
   <body>
     <nav class="navbar">
@@ -55,7 +118,7 @@
     </nav>      
     <br>        
     <div class="row">
-        <div class="container col-3">
+        <div class="container col-3 container-profile">
             <br>
             <center>
                 <h1 class="topic">ประวัติผู้ป่วย</h1>
@@ -114,7 +177,7 @@
                     <div class="col-3">                   
                         <h1 class="profile">อายุ</h1>   
                     </div>       
-                    <div class="form-group col-5">
+                    <div class="form-group col-4">
                         <input class="form-control" type="text" placeholder="38">
                     </div>
                     <div class="col-3 unit">
@@ -125,7 +188,7 @@
                     <div class="col-3">                   
                         <h1 class="profile">น้ำหนัก</h1>   
                     </div>       
-                    <div class="form-group col-5">
+                    <div class="form-group col-4">
                         <input class="form-control" type="text" placeholder="55">
                     </div>
                     <div class="col-3 unit">
@@ -136,7 +199,7 @@
                     <div class="col-3">                   
                         <h1 class="profile">ส่วนสูง</h1>   
                     </div>       
-                    <div class="form-group col-5">
+                    <div class="form-group col-4">
                         <input class="form-control" type="text" placeholder="173">
                     </div>
                     <div class="col-3 unit">
@@ -174,15 +237,517 @@
                         </center>
                     </div>
                 </div>
-                <div class='container'>
+                <div class='container-graph'>
                     <br>
                     <h1 class="topic">ช่วงเวลาที่ดื่มน้ำ-ปัสสาวะบ่อย</h1>
-                    <h1 class="middle_line"></h1>
-                    <div id="columnchart_material" style="width: 800px; height: 500px;"></div>
+                    <h1 class="middle_line-graph"></h1>
+                    <center>
+                        <div id="count_time"></div>
+                    </center>  
+                    <div class="row legend_out"> 
+                            <span class="badge" style="background-color: #A9BDD7; width:20px; color: #A9BDD7">8</span>
+                            <h2 class="legend">ดื่มน้ำ</h2>
+                            <span class="badge" style="background-color: #FFD0BB; width:20px; color: #FFD0BB">8</span>
+                            <h2 class="legend">ปัสสาวะ</h2>
+                    </div>                 
+                </div>
+                <div class='container-graph'>
+                    <br>
+                    <div class="row">
+                        <h1 class="topic col-9">จำนวนครั้งที่ถามแชทบอท โดยแบ่งตามหมวด</h1>
+                        <button class="btn btn-link col-2" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                            ดูเพิ่มเติม
+                        </button>
+                    </div>
+
+                    <h1 class="middle_line-graph"></h1>
+                    <center>
+                        <div id="type_count"></div>
+                    </center>  
+                    <div class="row legend_out"> 
+                            <span class="badge" style="background-color: #A9BDD7; width:20px; color: #A9BDD7">8</span>
+                            <h2 class="legend">จำนวนครั้งในเดือนนี้</h2>
+                            <span class="badge" style="background-color: #FFD0BB; width:20px; color: #FFD0BB">8</span>
+                            <h2 class="legend">จำนวนครั้งทั้งหมด</h2>
+                            <span class="badge" style="background-color: #CEA9D7; width:20px; color: #CEA9D7">8</span>
+                            <h2 class="legend">จำนวนครั้งโดยเฉลี่ยจากผู้ป่วยทั้งหมด</h2>
+                    </div>               
+                </div>
+                <br>
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                            <table class="table">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col" style="font-weight: bold; color: #39588A; width: 40%;">คำถาม</th>
+                                        <th scope="col" style="font-weight: bold; color: #39588A; width: 15%;">เดื่อนนี้</th>
+                                        <th scope="col" style="font-weight: bold; color: #39588A; width: 15%;">ทั้งหมด</th>
+                                        <th scope="col" style="font-weight: bold; color: #39588A; width: 15%;">เฉลี่ย</th>
+                                        <th scope="col" style="font-weight: bold; color: #39588A; width: 15%;">ร้อยละ</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        <th scope="row" style="font-weight: bold; color: #39588A" colspan="5">อุปกรณ์</th>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">• อุปกรณ์สวนปัสสาวะ</th>
+                                        <td>3</td>
+                                        <td>8</td>
+                                        <td>5</td>
+                                        <td>99</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">• น้ำยาฆ่าเชื้อ</th>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td>98</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">• ประเภทสายสวนปัสสาวะ</th>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td>98</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">• ประเภทสายสวนปัสสาวะ</th>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td>98</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">• ประเภทสายสวนปัสสาวะ</th>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td>98</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">• สายสวนปัสสาวะเสื่อม</th>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td>98</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">• วิธีทำความสะอาดสายสวนปัสสาวะ</th>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td>98</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">• วิธีใช้สารหล่อลื่น</th>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td>98</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row" style="font-weight: bold; color: #39588A" colspan="5">การดื่มน้ำ</th>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">• ปริมาณน้ำที่เหมาะสม</th>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td>98</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row" style="font-weight: bold; color: #39588A" colspan="5">การสวนปัสสาวะ</th>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">• ขั้นตอนสวนปัสสาวะ</th>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td>98</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">• ปริมาณปัสสาวะที่เหมาะสม</th>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td>98</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">• ความถี่ในการสวนปัสสาวะที่เหมาะสม</th>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td>98</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">• วิธีแก้ไขหากลืมสวนปัสสาวะ</th>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td>98</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row" style="font-weight: bold; color: #39588A" colspan="5">ปัญหาระหว่างสวนปัสสาวะ</th>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">• ปัสสาวะไม่ออก</th>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td>98</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">• ใส่สายสวนปัสสาวะติดขัด</th>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td>98</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">• บาดเจ็บเมื่อสวนปัสสาวะ</th>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td>98</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row" style="font-weight: bold; color: #39588A" colspan="5">ภาวะผิดปกติ</th>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">• ภาวะรีเฟล็กซ์ระบบประสารทอัตโนมัติผิดปกติ</th>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td>98</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">• ภาวะติดเชื้อทางเดินปัสสาวะ</th>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td>98</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">• ภาวะท่อปัสสาวะกร่อน</th>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td>98</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">• ผลข้างเคียงจากยา Paracetamol และ Tramadol</th>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td>98</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                    </div>
+                    <br>
+                </div>
+                <div class='container-solution'>
+                    <br>
+                    <h1 class="topic">ช่วงเวลาที่ดื่มน้ำ-ปัสสาวะบ่อย</h1>
+                    <h1 class="middle_line-graph"></h1>
+                    <div class="row">                      
+                            <div class="col">
+                            <center>
+                                <h1 class="sol-value" style="color: #A9BDD7">4</h1>
+                                <h2 class="sol">จาก 8 ครั้ง</h2>
+                            </center>
+                            </div>
+                            <div class="col">
+                            <center>
+                                <h1 class="sol-value" style="color: #FFD0BB">50%</h1>
+                                <h2 class="sol">ร้อยละที่สำเร็จ</h2>
+                            </center>
+                            </div>
+                            <div class="col">
+                            <center>
+                                <h1 class="sol-value" style="color: #CEA9D7">23%</h1>
+                                <h2 class="sol">ร้อยละที่สำเร็จโดยเฉลี่ย</h2>
+                            </center>
+                            </div>
+                    </div>                
+                </div>
+                <br>
+                <div class='container-test'>
+                    <br>
+                    <div class="row">
+                        <h1 class="topic col-9">จำนวนครั้งที่ถามแชทบอท โดยแบ่งตามหมวด</h1>
+                        <button class="btn btn-link col-2" data-toggle="collapse" href="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2">
+                            ดูเพิ่มเติม
+                        </button>
+                    </div>
+                    <h1 class="middle_line-graph"></h1>
+                    <div class="row row-sol">                      
+                        <div class="col">
+                        <center>
+                            <h1 class="sol-value" style="color: #A9BDD7">4</h1>
+                            <h2 class="sol">จาก 15 คะแนน</h2>
+                        </center>
+                        </div>
+                        <div class="col">
+                        <center>
+                            <h1 class="sol-value" style="color: #FFD0BB">50%</h1>
+                            <h2 class="sol">จาก 15 คะแนน</h2>
+                        </center>
+                        </div>
+                    </div>  
                 </div>
             </div>
-            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">...</div>
-            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
+            <br>
+            <div class="collapse" id="collapseExample2">
+                    <div class="card card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style="font-weight: bold; color: #39588A;  width: 60%;">คำถาม</th>
+                                        <th scope="col" style="font-weight: bold; color: #39588A; text-align: center;  width: 20%;">ก่อน</th>
+                                        <th scope="col" style="font-weight: bold; color: #39588A; text-align: center;  width: 20%;">หลัง</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">ล้างมือให้สะอาดด้วยสบู่ ก่อนสวนปัสสาวะทุกครั้ง</th>
+                                        <td>ใช่</td>
+                                        <td>ไม่</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">ไม่ควรสวนปัสสาวะล่าช้ากว่ากำหนดเกิน 30 นาที</th>
+                                        <td>ใช่</td>
+                                        <td>ไม่</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">การจัดท่าในการสวนปัสสาวะที่ถูกต้อง คือควรอยู่ในท่านั่ง
+                                                เอนหลัง และพยายามห้อยขาลง</th>
+                                        <td>ใช่</td>
+                                        <td>ไม่</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">สวนปัสสาวะด้วยตัวผู้ป่วยเองเท่านั้น</th>
+                                        <td>ใช่</td>
+                                        <td>ไม่</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">หลังการสวนปัสสาวะทุกครั้ง ต้องเบ่งหรือกดหน้าท้อง
+                                                เพื่อไล่ปัสสาวะที่เหลือค้างออกให้หมด</th>
+                                        <td>ใช่</td>
+                                        <td>ไม่</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">หากสวนปัสสาวะไม่เข้า ให้ออกแรงดันสายสวนเข้ามากขึ้น</th>
+                                        <td>ใช่</td>
+                                        <td>ไม่</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">หากมีอาการเลือดออกจากการสวนปัสสาวะ ให้สวนปัสสาวะ
+                                                ด้วยสายสวนที่มีขนาดเล็กลง</th>
+                                        <td>ใช่</td>
+                                        <td>ไม่</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">ใช้น้ำยาฆ่าเชื้อในการแช่สายสวนปัสสาวะเท่านั้น</th>
+                                        <td>ใช่</td>
+                                        <td>ไม่</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">ผู้ป่วยสามารถดื่มน้ำได้ในปริมาณมากตามต้องการ 
+                                                ไม่ต้องจำกัดปริมาณน้ำในแต่ละมื้อ</th>
+                                        <td>ใช่</td>
+                                        <td>ไม่</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">บันทึกปริมาณของน้ำที่ดื่ม รวมถึงปริมาณและลักษณะของ
+                                                ปัสสาวะด้วยทุกครั้ง</th>
+                                        <td>ใช่</td>
+                                        <td>ไม่</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">อาการไข้ ปัสสาวะขุ่น ปวดท้องน้อย หรือปวดเอว  
+                                                เป็นสัญญาณของการติดเชื้อทางเดินปัสาวะ</th>
+                                        <td>ใช่</td>
+                                        <td>ไม่</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">เมื่อมีอาการปวดศีรษะ ตาพร่ามัว และตรวจพบความดันโลหิตสูง 
+                                                ให้จัดท่ายกศีรษะ ปลดเสื้อผ้าที่รัดแน่นออก และสวนปัสสาวะ</th>
+                                        <td>ใช่</td>
+                                        <td>ไม่</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A" colspan="3">จงเรียงลำดับขั้นตอนการสวนปัสสาวะ</th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">• เช็ดทำความสะอาดบริเวณอวัยวะเพศ </th>
+                                        <td>ขั้นตอนที่ 1</td>
+                                        <td>ขั้นตอนที่ 2</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">• เตรียมอุปกรณ์สำหรับการสวนปัสสาวะวางไว้ใกล้ตัว </th>
+                                        <td>ขั้นตอนที่ 1</td>
+                                        <td>ขั้นตอนที่ 2</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">• ถอดกางเกงและม้วนชายเสื้อไว้ระดับสะดือ จัดท่าสำหรับการสวนปัสสาวะ </th>
+                                        <td>ขั้นตอนที่ 1</td>
+                                        <td>ขั้นตอนที่ 2</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">• ล้างมือด้วยด้วยสบู่ และล้างน้ำสะอาดในกะละมังใบแรก </th>
+                                        <td>ขั้นตอนที่ 1</td>
+                                        <td>ขั้นตอนที่ 2</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="font-weight: normal; color: #39588A">• สอดสายสวนเข้าไปในรูเปิดท่อปัสสาวะอย่างนุ่มนวลจนสุดสาย แล้วค่อยๆถอยสายสวน</th>
+                                        <td>ขั้นตอนที่ 1</td>
+                                        <td>ขั้นตอนที่ 2</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                    </div>
+                    <br>
+            </div>
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <div class="container-date">   
+                    <div class="row row-date">
+                        <h1 class="topic">วันที่</h1>   
+                        <input class="date" type="date" id="date" name="trip-start">
+                    </div>               
+                </div>
+                <br>
+                <div class="container-table">
+                    <div class="row row-table">
+                        <h3 class="col head-table">เวลา</h3>
+                        <h3 class="col head-table">ดื่มน้ำ(ซีซี) </h3>
+                        <h3 class="col head-table">สวนปัสสาวะ(ซีซี)</h3>
+                        <h3 class="col head-table">ปัสสาวะเอง(ซีซี) </h3>
+                        <h3 class="col head-table">อื่น ๆ</h3>
+                    </div>
+                    <div class="row row-table patient-table">
+                        <h3 class="col">6.00</h3>
+                        <div class="col">
+                            <h3>น้ำ 100</h3>
+                            <h3>แกงจืด 200</h3>
+                        </div>
+                        <h3 class="col">400</h3>
+                        <h3 class="col"></h3>
+                        <h3 class="col"></h3>
+                    </div>
+                    <div class="row row-table patient-table">
+                        <h3 class="col">6.00</h3>
+                        <div class="col">
+                            <h3>น้ำ 100</h3>
+                            <h3>แกงจืด 200</h3>
+                        </div>
+                        <h3 class="col">400</h3>
+                        <h3 class="col">100</h3>
+                        <h3 class="col"></h3>
+                    </div>
+                    <div class="row row-table patient-table">
+                        <h3 class="col">6.00</h3>
+                        <div class="col">
+                        </div>
+                        <h3 class="col">400</h3>
+                        <h3 class="col"></h3>
+                        <h3 class="col">เลือดออก</h3>
+                    </div>
+                    <div class="row row-table patient-table">
+                        <h3 class="col">6.00</h3>
+                        <div class="col">
+                        </div>
+                        <h3 class="col">400</h3>
+                        <h3 class="col">20</h3>
+                        <h3 class="col"></h3>
+                    </div>
+                    <div class="row row-table total">
+                        <h3 class="col col-total">รวม</h3>
+                        <h3 class="col col-total">400</h3>
+                        <h3 class="col col-total">400</h3>
+                        <h3 class="col col-total">20</h3>
+                        <h3 class="col col-total"></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                <div class="container-date">   
+                    <div class="row row-date">
+                        <h1 class="topic">วันที่</h1>   
+                        <input class="date" type="date" id="date" name="trip-start">
+                    </div>               
+                </div>
+                <br>
+                <div class="container-table">
+                    <div class="row row-table patient-chat">
+                        <h3 class="col col-chat" style="text-align: left;">ผู้ป่วย</h3>
+                        <h3 class="col col-chat" style="text-align: right;">ปันสุข</h3>
+                    </div>
+                    <div class="chat-list">
+                    <div class="record-chat">
+                        <center>
+                            <h3 class="time-chat">8.00</h3>
+                        </center>
+                        <table class="table table-borderless">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="width:50%;"></th>
+                                    <th scope="col" style="width:50%;"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <td class="card badge-chat d-inline-flex" style="text-align: left;">สวัสดีครับ</td>
+                                <td></td>
+                            </tbody>
+                            <tbody>
+                                <td></td>
+                                <td class="card card-punsook punsook-chat d-inline-flex" style="text-align: left;">สวัสดีคะ</td>
+                            </tbody>
+                            <tbody>
+                                <td></td>
+                                <td class="card card-punsook punsook-chat d-inline-flex" style="text-align: left;">อยากรู้เกี่ยวกับเรา ลองพิมพ์ "คุณทำอะไร" ดูสิ</td>
+                            </tbody>
+                        </table>
+                        <h1 class="middle_line-chat"></h1>
+                    </div>
+                    <div class="record-chat">
+                        <center>
+                            <h3 class="time-chat">8.01</h3>
+                        </center>
+                        <table class="table table-borderless">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="width:50%;"></th>
+                                    <th scope="col" style="width:50%;"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <td class="card badge-chat d-inline-flex" style="text-align: left;">ดื่มน้ำอย่างไร</td>
+                                <td></td>
+                            </tbody>
+                            <tbody>
+                                <td></td>
+                                <td class="card card-punsook punsook-chat d-inline-flex" style="text-align: left;">1. ดื่มน้ำประมาณ 200-250 ซีซี ทุก 2 ชม. ตั้งแต่ 6.00-20.00 น. งดหลังจากนี้ เพราะจะไม่สวนปัสสาวะหลังเที่ยงคืน</td>
+                            </tbody>
+                            <tbody>
+                                <td></td>
+                                <td class="card card-punsook punsook-chat d-inline-flex" style="text-align: left;">2. ไม่ควรดื่มน้ำมากกว่า 500 ซีซี ใน 4 ชม.</td>
+                            </tbody>
+                            <tbody>
+                                <td></td>
+                                <td class="card card-punsook punsook-chat d-inline-flex" style="text-align: left;">3. หากดื่มน้ำผลไม้ นม เครื่องดื่มหรืออาหารที่ มีส่วนประกอบของน้ำ ต้องนำมาหักออกด้วย</td>
+                            </tbody>
+                            <tbody>
+                                <td></td>
+                                <td class="card card-punsook punsook-chat d-inline-flex" style="text-align: left;">4. ไม่ควรดื่มชา กาแฟ หรือน้ำอัดลม เพราะกระตุ้นให้ปัสสาวะมากขึ้น</td>
+                            </tbody>
+                        </table>
+                        <h1 class="middle_line-chat"></h1>
+                    </div>
+                </div>
+                </div>
+            </div>
             </div>
         </div>
     </div>
