@@ -1,6 +1,9 @@
 <!-- 
   - ตัวเลขรวมสีดำ
   - ปรับคำว่าวันที่
+  - ปุ่มบวกไม่ transparent
+  - สีพื้นหลังตารางเป็นสีขาว
+  - แต่งปุ่มค้นหา
 -->
 <!DOCTYPE html>
 <html>
@@ -25,58 +28,58 @@
     </script>
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        
-        firebase.auth().onAuthStateChanged(function(user) {
-          if (user) {
-            // User is signed in.
-            var displayName = user.displayName;
-            var email = user.email;
-            var emailVerified = user.emailVerified;
-            var photoURL = user.photoURL;
-            var uid = user.uid;
-            var phoneNumber = user.phoneNumber;
-            var providerData = user.providerData;
-            document.getElementById('uid').textContent = uid;
-            user.getIdToken().then(function(accessToken) {
-              document.getElementById('sign-in-status').textContent = 'Signed in';
-              document.getElementById('sign-in').textContent = 'Sign out';
-              document.getElementById('account-details').textContent = JSON.stringify({
-                displayName: displayName,
-                email: email,
-                emailVerified: emailVerified,
-                phoneNumber: phoneNumber,
-                photoURL: photoURL,
-                uid: uid,
-                accessToken: accessToken,
-                providerData: providerData
-              }, null, '  ');
-            });
-          } else {
-            // User is signed out.
-            document.getElementById('sign-in-status').textContent = 'Signed out';
-            document.getElementById('sign-in').textContent = 'Sign in';
-            document.getElementById('account-details').textContent = 'null';
-          }
-        }, function(error) {
-          console.log(error);
-        });
-
-        //firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        //firebase.messaging().requestPermission().then(() => { });
-        //firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-
-        try {
-          let app = firebase.app();
-          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-          document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
+      // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+      // // The Firebase SDK is initialized and available here!
+      
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          // User is signed in.
+          var displayName = user.displayName;
+          var email = user.email;
+          var emailVerified = user.emailVerified;
+          var photoURL = user.photoURL;
+          var uid = user.uid;
+          var phoneNumber = user.phoneNumber;
+          var providerData = user.providerData;
+          //document.getElementById('uid').textContent = uid;
+          $("#uid").val(uid);
+          user.getIdToken().then(function(accessToken) {
+            document.getElementById('sign-in-status').textContent = 'Signed in';
+            document.getElementById('sign-in').textContent = 'Sign out';
+            document.getElementById('account-details').textContent = JSON.stringify({
+              displayName: displayName,
+              email: email,
+              emailVerified: emailVerified,
+              phoneNumber: phoneNumber,
+              photoURL: photoURL,
+              uid: uid,
+              accessToken: accessToken,
+              providerData: providerData
+            }, null, '  ');
+          });
+        } else {
+          // User is signed out.
+          document.getElementById('sign-in-status').textContent = 'Signed out';
+          document.getElementById('sign-in').textContent = 'Sign in';
+          document.getElementById('account-details').textContent = 'null';
         }
+      }, function(error) {
+        console.log(error);
+      });
+
+      //firebase.database().ref('/path/to/ref').on('value', snapshot => { });
+      //firebase.messaging().requestPermission().then(() => { });
+      //firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
+      
+      // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+
+      try {
+        let app = firebase.app();
+        let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
+        document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
+      } catch (e) {
+        document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
+      }
       });
     </script>
     <meta charset="utf-8">
@@ -94,104 +97,151 @@
     <link href="https://unpkg.com/gijgo@1.9.11/css/gijgo.min.css" rel="stylesheet" type="text/css" />
     <link href="css/record.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
+
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
-</head>
+    <script src="https://unpkg.com/querybase@0.6.0"></script>
+  </head>
   <body>
     <nav class="navbar">
-        <div class="col">
-            <a href="/home.html"><img class= "logo-return" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fback.png?alt=media&token=4b2dc79f-e33c-4f03-8520-29ce0cc6cb4d"></a>
-        </div>
-        <div class="col">
-            <center>
-              <a href="/home.html"><img class= "logo-img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/logo_white.png?alt=media&token=7ea16ae2-206b-41b9-90de-33799268daf4"></a>   
-            </center>
-        </div>
-        <div class="col"></div>
+      <div class="col">
+        <a href="/home.html"><img class= "logo-return" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fback.png?alt=media&token=4b2dc79f-e33c-4f03-8520-29ce0cc6cb4d"></a>
+      </div>
+      <div class="col">
+        <center>
+          <a href="/home.html"><img class= "logo-img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/logo_white.png?alt=media&token=7ea16ae2-206b-41b9-90de-33799268daf4"></a>   
+        </center>
+      </div>
+      <div class="col"></div>
     </nav>
     <script>
-      var records = firebase.database().ref("records");
-      // Get the single most recent recommendation from the database and
-      // update the table with its values. This is called every time the child_added
-      // event is triggered on the recommendations Firebase reference, which means
-      // that this will update EVEN IF you don't refresh the page. Magic.
-      records.limitToLast(1).on('child_added', function(childSnapshot) {
-        // Get the recommendation data from the most recent snapshot of data
-        // added to the recommendations list in Firebase
-        record = childSnapshot.val();
-        // Update the HTML to display the recommendation text
-        $("#title").html(record.date)
-        $("#presenter").html(record.time)
-        $("#link").html(record.uid)
+      $(document).ready(function() {
+        var urlParams = new URLSearchParams(location.search)
+        if(!urlParams.get('date')){
+          var date = new Date();
+
+          var day = date.getDate();
+          var month = date.getMonth() + 1;
+          var year = date.getFullYear();
+
+          if (month < 10) month = "0" + month;
+          if (day < 10) day = "0" + day;
+
+          var today = year + "-" + month + "-" + day;
+          $("#date").attr("value", today);
+        }else{
+          $("#date").attr("value", urlParams.get('date'));
+        }
       });
-      </script>
-    <!-- <div class="container">
-      <h1>Talks You Should Watch</h1>
+    </script>
+    <script>
+      var urlParams = new URLSearchParams(location.search);
+      if(!urlParams.get('date')){
+        var date = new Date();
+        var day = date.getDate();
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear();
 
-      <h3>Last Talk Proposed</h3>
+        if (month < 10) month = "0" + month;
+        if (day < 10) day = "0" + day;
 
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Logo</th>
-            <th>Type</th>
-            <th>Quantity</th>
-            <th>cc.</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            This is empty for now, but it will be filled out by an event handler in application.js with the most recent recommendation data from Firebase.
-            <td id="title"></td>
-            <td id="presenter"></td>
-            <td><a id="link" target="_blank"></a></td>
-            <td>ซีซี</td>
-          </tr>
-        </tbody>
-      </table>
-    </div> -->
+        var today = year + "-" + month + "-" + day;
+        var query_date = Date.parse(today);
+      }else{
+        var query_date = Date.parse(urlParams.get('date'));
+      }
 
+      var databaseRef = firebase.database().ref("records");
+      databaseRef.orderByChild('time').on('value', function(snapshot) {
+        var current_uid = $("#uid").val();
+        var rec_container = '';
+        var drinking_sum = 0;
+        var urine_sum = 0;
+        snapshot.forEach(function(childSnapshot) {
+          var childKey = childSnapshot.key;
+          record = childSnapshot.val();
+          if((record.uid==current_uid)&&(record.date==query_date)){
+            rec_container = rec_container+'<div id="'+childKey+'"><div class="container container-record">';
+            if(record.data.drinking){
+              var drinking_keys = Object.keys(record.data.drinking)
+              rec_container = rec_container+'<div name="drinking"><div class="row"><div class="col-3"><img class="logo-detail" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fwater-glass.png?alt=media&token=28aa1acc-b049-4fbd-86ad-87a7ef20bfc5"></div><div class="row row-detail col-9"><table class="table table-striped"><tbody>';
+              for(var i=0; i<drinking_keys.length; i++){
+                drinking_sum = drinking_sum + record.data.drinking[drinking_keys[i]];
+                rec_container = rec_container+'<tr><td>'+drinking_keys[i]+'</td><td>'+record.data.drinking[drinking_keys[i]]+'</td><td>ซีซี</td></tr>';
+              }
+              rec_container = rec_container+'</tbody></table></div></div><h1 class="middle_line"></h1></div>';
+            }
+            if(record.data.catheterization){
+              urine_sum = urine_sum + record.data.catheterization;
+              rec_container = rec_container+'<div name="catheterization"><div class="row"><div class="col-3"><img class="logo-detail" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fcatheter%20(1).png?alt=media&token=3e0b9c93-443d-488b-9d47-b0d557bdb557"></div><div class="row row-detail col-9"><table class="table table-striped"><tbody><tr><td>สวนปัสสาวะ</td><td>'+record.data.catheterization+'</td><td>ซีซี</td></tr></tbody></table></div></div><h1 class="middle_line"></h1></div>';
+            }
+            if(record.data.urine){
+              urine_sum = urine_sum + record.data.urine;
+              rec_container = rec_container+'<div name="urine"><div class="row"><div class="col-3"><img class="logo-detail" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Ftoilet.png?alt=media&token=afb7e301-bcb7-4690-9413-3a778986c221"></div><div class="row row-detail col-9"><table class="table table-striped"><tbody><tr><td>ปัสสาวะด้วยตนเอง</td><td>'+record.data.urine+'</td><td>ซีซี</td></tr></tbody></table></div></div><h1 class="middle_line"></h1></div>';
+            }
+            if(record.data.other){
+              rec_container = rec_container+'<div name="other"><div class="row"><div class="col-3"><img class="logo-detail" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fmore.png?alt=media&token=a0e31732-b699-496e-9ce9-331e6758a17c"></div><div class="row row-detail col-9"><h2>'+record.data.other+'</h2></div></div></div></div>';
+            }
+            rec_container = rec_container+'</div><div class="container container-footer"><div class="row">';
+            rec_container = rec_container+'<div class="row col" data-toggle="modal" data-target="#modal'+childKey+'"><div class="col-3 col-logo"><img class="logo-footer" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fgarbage.png?alt=media&token=200a21fa-65f0-4b03-82d4-42c12ec81b87"></div><div class="col-3 col-detail"><h3>ลบ</h3></div></div>';
+            rec_container = rec_container+'<a href="/edit.html?record="'+childKey+'"><div class="row col"><div class="col-3 col-logo"><img class="logo-footer" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fedit.png?alt=media&token=9100928c-3b00-4c89-bb8d-f43a479a5e78"></div><div class="col-3 col-detail"><h3>แก้ไข</h3></div></div></a>';
+            rec_container = rec_container+'<div class="row col"><div class="col-3 col-logo"><img class="logo-footer" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Ftime.png?alt=media&token=f6fc3287-a89c-4c37-a5ee-ed21fa2fa4c9"></div><div class="col-3 col-detail"><h3>'+record.time+'</h3></div></div></div>';
+            rec_container = rec_container+'</div></div>';
+            rec_container = rec_container+'<div class="modal fade" id="modal'+childKey+'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><h1 class="modal-title" id="exampleModalLabel">ลบบันทึก</h1><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body"><h2>ยืนยันการลบบันทึกนี้</h2></div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal" style="margin-right: 10px;">ยกเลิก</button><a href="?"><button type="button" class="btn btn-remove-key" data-key="'+childKey+'" style="background-color: #39588A; color: white;">ยืนยัน</button></a></div></div></div></div>'
+          }
+        });
+        $("#drinking_sum").html(drinking_sum)
+        $("#urine_sum").html(urine_sum)
+        $("#records").html(rec_container)
+      });
+      var remove = function(e){
+        var key = $(this).data('key');
+        firebase.database().ref("records").child(key).remove();
+      }
+      $(document).on('click', '.btn-remove-key', remove);
+    </script>
     <div class="container choose-date">
-        <br>
-        <h1 class="topic">บันทึกการดื่มน้ำและสวนปัสสาวะ</h1>
-        <form>
-          <div class="form-group">
-            <div class="row">
-              <div class="col-2">
-                <label for="date">วันที่</label>
-              </div>
-              <div class="form-group col-6">
-                <input class="date" type="date" id="date" name="trip-start">
-              </div>
-            </div>
+      <br>
+      <h1 class="topic">บันทึกการดื่มน้ำและสวนปัสสาวะ</h1>
+      <form action="?">
+        <div class="row">
+          <div class="col-2">
+            <label for="date">วันที่</label>
           </div>
-        </form>
-        <div class="container show-all-value">
-            <div class="row">
-                <div class="col-6 left-side-water">
-                  <center>
-                    <h1 class="water">น้ำดื่ม[ซี.ซี.]</h1>  
-                  </center>                    
-                </div>       
-                <div class="col-6 right-side-water">
-                  <center>
-                    <h1 class="water">ปัสสาวะ[ซี.ซี.]</h1>   
-                  </center>             
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6 left-side-value">
-                    <center>
-                      <h1 class="value">180</h1>   
-                    </center>    
-                </div>       
-                <div class="col-6 right-side-value">
-                  <center>
-                    <h1 class="value">200</h1>   
-                  </center>             
-                </div>
-            </div>
+          <div class="col-8">
+            <input class="date" type="date" id="date" name="date">
+          </div>
+          <div class="col-2">
+            <button type="submit" class="btn btn-default">ค้นหา</button>
+          </div>
         </div>
-        <br>
+      </form>
+      <div class="container show-all-value">
+          <div class="row">
+              <div class="col-6 left-side-water">
+                <center>
+                  <h1 class="water">น้ำดื่ม(ซีซี)</h1>
+                </center>     
+              </div>
+              <div class="col-6 right-side-water">
+                <center>
+                  <h1 class="water">ปัสสาวะ(ซีซี)</h1>   
+                </center>             
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-6 left-side-value">
+                  <center>
+                    <h1 class="value" id="drinking_sum"></h1>   
+                  </center>    
+              </div>       
+              <div class="col-6 right-side-value">
+                <center>
+                  <h1 class="value" id="urine_sum"></h1>   
+                </center>             
+              </div>
+          </div>
+      </div>
+      <br>
     </div>
     <center>
       <a href="add.html">
@@ -199,107 +249,88 @@
       </a>
     </center>
     <br>
-    <div class="container container-record">
-        <div class="row">
+    <div id="records"></div>
+    <div id="uid"></div>
+    <div style="display:none" id="sign-in-status"></div>
+    <div style="display:none" id="sign-in"></div>
+    <div style="display:none" id="account-details"></div>
+    <div style="display:none" id="load">Loading...</div>
+  </body>
+</html>
+
+    <!-- <div id="-LXdeJby3rRQx3q-IQ4o">
+      <div class="container container-record">
+        <div name="drinking">
+          <div class="row">
             <div class="col-3">
               <img class="logo-detail" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fwater-glass.png?alt=media&token=28aa1acc-b049-4fbd-86ad-87a7ef20bfc5">
             </div>
             <div class="row row-detail col-9">
               <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th>Type</th>
-                      <th>Quantity</th>
-                      <th>cc.</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td id="title"></td>
-                      <td id="presenter"></td>
-                      <td><a id="link" target="_blank"></a></td>
-                      <td>ซีซี</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <!-- <div class="col-8">
-                    <h2 id="drinking_type1">น้ำ</h2>
-                  </div>
-                  <div class="col-4">
-                    <h2 id="drinking_quantity1" class="water-value">100 ซี.ซี.</h2>
-                  </div>
-                <div class="col-8">
-                  <h2>แกงจืด</h2>
-                </div>
-                <div class="col-4">
-                  <h2 class="water-value">80 ซี.ซี.</h2>
-                </div> -->
+                <tbody id="drinking">
+                </tbody>
+              </table>
             </div>
+          </div>
+          <h1 class="middle_line"></h1>
         </div>
-        <h1 class="middle_line"></h1>
-        <div class="row">
+        <div name="catheterization">
+          <div class="row">
             <div class="col-3">
               <img class="logo-detail" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fcatheter%20(1).png?alt=media&token=3e0b9c93-443d-488b-9d47-b0d557bdb557">
             </div>
             <div class="row row-detail col-9">
-                <div class="col-8">
-                  <h2>สวนปัสสาวะ</h2>
-                </div>
-                <div class="col-4">
-                  <h2 class="water-value">100 ซี.ซี.</h2>
-                </div>
+              <table class="table table-striped">
+                <tbody>
+                  <tr>
+                    <td>สวนปัสสาวะ</td>
+                    <td id="catheterization_quantity"></td>
+                    <td>ซีซี</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </div>
+          <h1 class="middle_line"></h1>
         </div>
-        <h1 class="middle_line"></h1>
-        <div class="row">
+        <div name="urine">
+          <div class="row">
             <div class="col-3">
               <img class="logo-detail" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Ftoilet.png?alt=media&token=afb7e301-bcb7-4690-9413-3a778986c221">
             </div>
             <div class="row row-detail col-9">
-                <div class="col-8">
-                  <h2>ปัสสาวะด้วยตนเอง</h2>
-                </div>
-                <div class="col-4">
-                  <h2 class="water-value">60 ซี.ซี.</h2>
-                </div>           
+              <table class="table table-striped">
+                <tbody>
+                  <tr>
+                    <td>ปัสสาวะด้วยตนเอง</td>
+                    <td id="urine_quantity"></td>
+                    <td>ซีซี</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </div>
+          <h1 class="middle_line"></h1>
         </div>
-        <h1 class="middle_line"></h1>
-        <div class="row">
+        <div name="other">
+          <div class="row">
             <div class="col-3">
               <img class="logo-detail" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fmore.png?alt=media&token=a0e31732-b699-496e-9ce9-331e6758a17c">
             </div>
             <div class="row row-detail col-9">
-                <h2>เลือดออก</h2>        
+              <h2 id="other"></h2>        
             </div>
+          </div>
         </div>
-    </div>
-    <div class="container container-footer">
+      </div>
+      <div class="container container-footer">
         <div class="row">
           <div class="row col" data-toggle="modal" data-target="#exampleModal">
             <div class="col-3 col-logo">
-                <img class="logo-footer" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fgarbage.png?alt=media&token=200a21fa-65f0-4b03-82d4-42c12ec81b87">
+              <img class="logo-footer" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fgarbage.png?alt=media&token=200a21fa-65f0-4b03-82d4-42c12ec81b87">
             </div>
             <div class="col-3 col-detail">
-                <h3>ลบ</h3>        
-            </div>
-          </div>
-          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1 class="modal-title" id="exampleModalLabel">ลบบันทึก</h1>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <h2>ยืนยันการลบบันทึกนี้ทั้งหมด</h2>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal" style="margin-right: 10px;">ยกเลิก</button>
-                  <button type="button" class="btn btn-primary" style="background-color: #39588A; color: white;">ยืนยัน</button>                </div>
-              </div>
+              <h3>ลบ</h3>
             </div>
           </div>
           <div class="row col">
@@ -315,16 +346,32 @@
               <img class="logo-footer" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Ftime.png?alt=media&token=f6fc3287-a89c-4c37-a5ee-ed21fa2fa4c9">
             </div>
             <div class="col-3 col-detail">
-              <h3>10.30</h3> 
+              <h3 id="time"></h3> 
             </div>        
           </div>
         </div>
-    </div>
-    <div id="record"></div>
-    <div id="uid"></div>
-    <div style="display:none" id="sign-in-status"></div>
-    <div style="display:none" id="sign-in"></div>
-    <div style="display:none" id="account-details"></div>
-    <div style="display:none" id="load">Loading...</div>
-  </body>
-</html>    
+      </div> -->
+              <!-- <div class="col-8">
+                  <h2 id="drinking_type1">น้ำ</h2>
+                </div>
+                <div class="col-4">
+                  <h2 id="drinking_quantity1" class="water-value">100 ซี.ซี.</h2>
+                </div>
+              <div class="col-8">
+                <h2>แกงจืด</h2>
+              </div>
+              <div class="col-4">
+                <h2 class="water-value">80 ซี.ซี.</h2>
+              </div> -->
+              <!-- <div class="col-8">
+                <h2>ปัสสาวะด้วยตนเอง</h2>
+              </div>
+              <div class="col-4">
+                <h2 class="water-value">60 ซี.ซี.</h2>
+              </div>            -->
+              <!-- <div class="col-8">
+                <h2>สวนปัสสาวะ</h2>
+              </div>
+              <div class="col-4">
+                <h2 class="water-value">100 ซี.ซี.</h2>
+              </div> -->
