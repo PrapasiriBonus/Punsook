@@ -1,5 +1,8 @@
+<!-- 
+  - ตัวเลขรวมสีดำ
+  - ปรับคำว่าวันที่
+-->
 <!DOCTYPE html>
-
 <html>
   <head>
     <title>ปันสุข | บันทึกการดื่มน้ำและสวนปัสสาวะ</title>
@@ -36,6 +39,7 @@
             var uid = user.uid;
             var phoneNumber = user.phoneNumber;
             var providerData = user.providerData;
+            document.getElementById('uid').textContent = uid;
             user.getIdToken().then(function(accessToken) {
               document.getElementById('sign-in-status').textContent = 'Signed in';
               document.getElementById('sign-in').textContent = 'Sign out';
@@ -90,7 +94,7 @@
     <link href="https://unpkg.com/gijgo@1.9.11/css/gijgo.min.css" rel="stylesheet" type="text/css" />
     <link href="css/record.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
-
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 </head>
   <body>
     <nav class="navbar">
@@ -104,17 +108,63 @@
         </div>
         <div class="col"></div>
     </nav>
+    <script>
+      var records = firebase.database().ref("records");
+      // Get the single most recent recommendation from the database and
+      // update the table with its values. This is called every time the child_added
+      // event is triggered on the recommendations Firebase reference, which means
+      // that this will update EVEN IF you don't refresh the page. Magic.
+      records.limitToLast(1).on('child_added', function(childSnapshot) {
+        // Get the recommendation data from the most recent snapshot of data
+        // added to the recommendations list in Firebase
+        record = childSnapshot.val();
+        // Update the HTML to display the recommendation text
+        $("#title").html(record.date)
+        $("#presenter").html(record.time)
+        $("#link").html(record.uid)
+      });
+      </script>
+    <!-- <div class="container">
+      <h1>Talks You Should Watch</h1>
+
+      <h3>Last Talk Proposed</h3>
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Logo</th>
+            <th>Type</th>
+            <th>Quantity</th>
+            <th>cc.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            This is empty for now, but it will be filled out by an event handler in application.js with the most recent recommendation data from Firebase.
+            <td id="title"></td>
+            <td id="presenter"></td>
+            <td><a id="link" target="_blank"></a></td>
+            <td>ซีซี</td>
+          </tr>
+        </tbody>
+      </table>
+    </div> -->
+
     <div class="container choose-date">
         <br>
-        <h1 class="topic">บันทึก</h1>
-        <div class="row">
-            <div class="col-3">                   
-                <h1 class="profile">วันที่</h1>   
-            </div>       
-            <div class="form-group col-7">
+        <h1 class="topic">บันทึกการดื่มน้ำและสวนปัสสาวะ</h1>
+        <form>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-2">
+                <label for="date">วันที่</label>
+              </div>
+              <div class="form-group col-6">
                 <input class="date" type="date" id="date" name="trip-start">
+              </div>
             </div>
-        </div>
+          </div>
+        </form>
         <div class="container show-all-value">
             <div class="row">
                 <div class="col-6 left-side-water">
@@ -155,18 +205,35 @@
               <img class="logo-detail" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fwater-glass.png?alt=media&token=28aa1acc-b049-4fbd-86ad-87a7ef20bfc5">
             </div>
             <div class="row row-detail col-9">
-                <div class="col-8">
-                    <h2>น้ำ</h2>
+              <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Type</th>
+                      <th>Quantity</th>
+                      <th>cc.</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td id="title"></td>
+                      <td id="presenter"></td>
+                      <td><a id="link" target="_blank"></a></td>
+                      <td>ซีซี</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!-- <div class="col-8">
+                    <h2 id="drinking_type1">น้ำ</h2>
                   </div>
                   <div class="col-4">
-                    <h2 class="water-value">100 ซี.ซี.</h2>
+                    <h2 id="drinking_quantity1" class="water-value">100 ซี.ซี.</h2>
                   </div>
                 <div class="col-8">
                   <h2>แกงจืด</h2>
                 </div>
                 <div class="col-4">
                   <h2 class="water-value">80 ซี.ซี.</h2>
-                </div>
+                </div> -->
             </div>
         </div>
         <h1 class="middle_line"></h1>
@@ -180,7 +247,7 @@
                 </div>
                 <div class="col-4">
                   <h2 class="water-value">100 ซี.ซี.</h2>
-                </div>           
+                </div>
             </div>
         </div>
         <h1 class="middle_line"></h1>
@@ -253,10 +320,11 @@
           </div>
         </div>
     </div>
-    
-    <div id="sign-in-status"></div>
-    <div id="sign-in"></div>
-    <div id="account-details"></div>
-    <div id="loader">Loading...</div>
+    <div id="record"></div>
+    <div id="uid"></div>
+    <div style="display:none" id="sign-in-status"></div>
+    <div style="display:none" id="sign-in"></div>
+    <div style="display:none" id="account-details"></div>
+    <div style="display:none" id="load">Loading...</div>
   </body>
 </html>    
