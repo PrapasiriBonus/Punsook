@@ -177,6 +177,18 @@ button.btn-outline-light {
     padding: 0px;
 }
 
+h1.modal-title {
+    font-size: 20px;
+    margin-bottom: 8px;
+    color: #39588A;
+    font-weight: bold;
+}
+
+h2.modal-datail {
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: #39588A;
+}
 
 
 @media (max-width: 600px) {

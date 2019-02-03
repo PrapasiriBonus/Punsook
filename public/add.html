@@ -133,7 +133,10 @@
                     if(($(type).val()!="")&&($(quanlity).val()!="")){
                         drinking[$(type).val()]=parseInt($(quanlity).val());
                     }else{
-                        alert("ระบุเครื่องดื่ม/อาหาร พร้อมปริมาณด้วยค่ะ");
+                        // alert("ระบุเครื่องดื่ม/อาหาร พร้อมปริมาณด้วยค่ะ");
+                        // $("#myModal").modal();
+                        $("#myModal").modal('show');
+
                     }
                 }
                 data["drinking"]=drinking;
@@ -156,7 +159,8 @@
                     "data": data
                 });
             }else{
-                alert("ต้องบันทึกอย่างน้อยหนึ่งประเภท");
+                // alert("ต้องบันทึกอย่างน้อยหนึ่งประเภท");
+                $("#myModal1").modal();
             }
         };
 
@@ -327,9 +331,66 @@
             <!-- When you click this button, trigger the submit event on this form. -->
             <!-- <button type="submit" class="btn btn-default">Submit</button> -->
             <center>
-                <button type="button" class="btn btn-outline-light" style="border: 1px solid #39588A; color: #39588A">ยกเลิก</button>
+                <button type="button" class="btn btn-outline-light" style="border: 1px solid #39588A; color: #39588A" data-toggle="modal" data-target="#exampleModal">ยกเลิก</button>
                 <button type="submit" class="btn btn-primary" style="background-color: #39588A; color: white;">บันทึก</button> 
             </center>
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title" id="exampleModalLabel">ยกเลิกการบันทึก</h1>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <h2 class="modal-datail">ยืนยันยกเลิกการบันทึกนี้ทั้งหมด</h2>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-light" data-dismiss="modal" style="margin-right: 10px; border: 1px solid #39588A; color: #39588A">ยกเลิก</button>
+                            <button type="button" class="btn btn-primary" style="background-color: #39588A; color: white;">ยืนยัน</button>                
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title" id="exampleModalLabel2">บันทึก</h1>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <h2 class="modal-datail">4444444444444444444</h2>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" style="background-color: #39588A; color: white;">ตกลง</button>             
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title" id="exampleModalLabel3">บันทึก</h1>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <h2 class="modal-datail">55555555555555</h2>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" style="background-color: #39588A; color: white;">ตกลง</button>             
+                        </div>
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
     <div id="uid"></div>
