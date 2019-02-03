@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ปันสุข | เพิ่มบันทึกการดื่มน้ำและสวนปัสสาวะ</title>
+    <title>ปันสุข | แก้ไขบันทึกการดื่มน้ำและสวนปัสสาวะ</title>
     <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
     <script>
       // Initialize Firebase
@@ -104,8 +104,12 @@
         <div class="col"></div>
     </nav>
     <script>
+        var urlParams = new URLSearchParams(location.search)
+        //console.log(urlParams.get('record'));
         // Reference to the recommendations object in your Firebase database
         var records = firebase.database().ref("records");
+        var record_key = records.child(urlParams.get('record'));
+        console.log(record_key);
         // Save a new recommendation to the database, using the input in the form
         var submitRecord = function () {
             // Get input values from each of the form elements
@@ -123,10 +127,7 @@
                     if(($(type).val()!="")&&($(quanlity).val()!="")){
                         drinking[$(type).val()]=parseInt($(quanlity).val());
                     }else{
-                        // alert("ระบุเครื่องดื่ม/อาหาร พร้อมปริมาณด้วยค่ะ");
-                        // $("#myModal").modal();
-                        $("#myModal").modal('show');
-
+                        alert("ระบุเครื่องดื่ม/อาหาร พร้อมปริมาณด้วยค่ะ");
                     }
                 }
                 data["drinking"]=drinking;
@@ -149,8 +150,7 @@
                     "data": data
                 });
             }else{
-                // alert("ต้องบันทึกอย่างน้อยหนึ่งประเภท");
-                $("#myModal1").modal();
+                alert("ต้องบันทึกอย่างน้อยหนึ่งประเภท");
             }
         };
 
@@ -228,11 +228,11 @@
                     $(this).remove();
                     $(fieldID).remove();
                 });
-            }); 
+            });
         });
     </script>
     <div class="container">
-        <h1 class="topic">บันทึกการดื่มน้ำและสวนปัสสาวะ</h1>
+        <h1 class="topic">บันทึกการดื่มน้ำและปัสสาวะ</h1>
         <form id="recordForm" action="/record.html">
             <div class="form-group">
                 <div class="row">
