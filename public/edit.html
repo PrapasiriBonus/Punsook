@@ -103,15 +103,58 @@
         </div>
         <div class="col"></div>
     </nav>
-    <script>
+    <script>        
         var urlParams = new URLSearchParams(location.search)
-        //console.log(urlParams.get('record'));
         // Reference to the recommendations object in your Firebase database
-        var records = firebase.database().ref("records");
-        var record_key = records.child(urlParams.get('record'));
-        console.log(record_key);
-        // Save a new recommendation to the database, using the input in the form
-        var submitRecord = function () {
+        var record_key = firebase.database().ref("records/"+urlParams.get('record'));
+        record_key.once('value', function(snapshot) {
+            record = snapshot.val();
+            var date = new Date(record.date);
+
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+
+            if (month < 10) month = "0" + month;
+            if (day < 10) day = "0" + day;
+
+            var event = year + "-" + month + "-" + day;
+            $("#date").val(event)
+            $("#time").val(record.time)
+            if(record.data.drinking){
+                $("#drinking").attr("checked", true)
+                $("#drinking_text").attr("style","display:block")
+                var drinking_key = Object.keys(record.data.drinking);
+                var field = '';
+                for(var i=1; i<=drinking_key.length; i++){
+                    if(i!=1){
+                        $('.add-more').click();
+                    }
+                    var type = "#drinking_type"+i;
+                    var quantity = "#drinking_quantity"+i;
+                    $(type).attr("value",drinking_key[i-1])
+                    $(quantity).attr("value",record.data.drinking[drinking_key[i-1]])
+                }
+            }
+            if(record.data.catheterization){
+                $("#catheterization").attr("checked", true)
+                $("#catheterization_text").attr("style","display:block")
+                $("#catheterization_quantity").attr("value", record.data.catheterization)
+            }
+            if(record.data.urine){
+                $("#urine").attr("checked", true)
+                $("#urine_text").attr("style","display:block")
+                $("#urine_quantity").attr("value", record.data.urine)
+            }
+            if(record.data.other){
+                $("#other").attr("checked", true)
+                $("#other_text").attr("style","display:block")
+                $("#other_detail").attr("value", record.data.other)
+            }
+        });
+        
+        var submitRecord=function(){
+            //record_key.update({time:"11:14"});
             // Get input values from each of the form elements
             var uid = $("#uid").val();
             var date = Date.parse($("#date").val());
@@ -123,42 +166,38 @@
             if((document.getElementById("drinking").checked)&&(count!=0)){
                 for(var i=1; i<=count; i++){
                     var type = "#drinking_type"+i;
-                    var quanlity = "#drinking_quanlity"+i;
-                    if(($(type).val()!="")&&($(quanlity).val()!="")){
-                        drinking[$(type).val()]=parseInt($(quanlity).val());
+                    var quantity = "#drinking_quantity"+i;
+                    if(($(type).val()!="")&&($(quantity).val()!="")){
+                        drinking[$(type).val()]=parseInt($(quantity).val());
                     }else{
                         alert("ระบุเครื่องดื่ม/อาหาร พร้อมปริมาณด้วยค่ะ");
                     }
                 }
                 data["drinking"]=drinking;
             }
-            if((document.getElementById("catheterization").checked)&&($("#catheterization_quanlity").val()!="")){
-                data["catheterization"]=parseInt($("#catheterization_quanlity").val());
+            if((document.getElementById("catheterization").checked)&&($("#catheterization_quantity").val()!="")){
+                data["catheterization"]=parseInt($("#catheterization_quantity").val());
             }
-            if((document.getElementById("urine").checked)&&($("#urine_quanlity").val()!="")){
-                data["urine"]=parseInt($("#urine_quanlity").val());
+            if((document.getElementById("urine").checked)&&($("#urine_quantity").val()!="")){
+                data["urine"]=parseInt($("#urine_quantity").val());
             }
             if((document.getElementById("other").checked)&&($("#other_detail").val()!="")){
                 data["other"]=parseInt($("#other_detail").val());
             }
+            console.log(data);
+
             if(Object.keys(data).length!=0){
-                // Push a new recommendation to the database using those values
-                records.push({
+                record_key.update({
                     "uid": uid,
                     "date": date,
                     "time": time,
-                    "data": data
+                    "data": data,
+                    "drinking": drinking
                 });
             }else{
                 alert("ต้องบันทึกอย่างน้อยหนึ่งประเภท");
             }
         };
-
-        // When the window is fully loaded, call this function.
-        // Note: because we are attaching an event listener to a particular HTML element
-        // in this function, we can't do that until the HTML element in question has
-        // been loaded. Otherwise, we're attaching our listener to nothing, and no code
-        // will run when the submit button is clicked.
         $(window).load(function () {
             // Find the HTML element with the id recommendationForm, and when the submit
             // event is triggered on that element, call submitRecommendation.
@@ -211,10 +250,10 @@
             $(".add-more").click(function(e){
                 e.preventDefault();
                 var addto = "#field" + next;
-                var addRemove = "#drinking_quanlity" + (next);
+                var addRemove = "#drinking_quantity" + (next);
                 var removeBtn = '<button id="remove' + next + '" class="btn btn-danger remove-me form-control" >-</button>';
                 next = next + 1;
-                var newIn = '<div class="input-group" id="field' + next + '"><input id="drinking_type' + next + '" type="text" class="form-control drink" placeholder="เครื่องดื่ม / อาหาร"><input id="drinking_quanlity' + next + '" type="number" class="form-control value" placeholder="ปริมาณ (ซีซี)"></div>';
+                var newIn = '<div class="input-group" id="field' + next + '"><input id="drinking_type' + next + '" type="text" class="form-control drink" placeholder="เครื่องดื่ม / อาหาร"><input id="drinking_quantity' + next + '" type="number" class="form-control value" placeholder="ปริมาณ (ซีซี)"></div>';
                 var newInput = $(newIn);
                 var removeButton = $(removeBtn);
                 $(addto).after(newInput);
@@ -258,11 +297,11 @@
             <div class="form-group form-check">
                 <input type="checkbox" class="form-check-input" id="drinking" value="drinking" onclick="drinkingFunction()">
                 <label for="drinking">ดื่มน้ำ</label>
-                <input type="hidden" id="count" value="0" />
+                <input type="hidden" id="count" value="0">
                 <div id="drinking_text" style="display:none">
                     <div class="input-group" id="field1">
                         <input id="drinking_type1" type="text" class="form-control drink" placeholder="เครื่องดื่ม / อาหาร">
-                        <input id="drinking_quanlity1" type="number" class="form-control value" placeholder="ปริมาณ (ซีซี)">
+                        <input id="drinking_quantity1" type="number" class="form-control value" placeholder="ปริมาณ (ซีซี)">
                     </div>
                     <center>
                         <button id="b1" type="button" class="btn add-more">เพิ่ม</button>
@@ -280,7 +319,7 @@
                             <h1 class="profile">ปริมาณ</h1>
                         </div>
                         <div class="input-group col-6">
-                            <input type="number" id="catheterization_quanlity" class="form-control value_urine" placeholder="ปริมาณ (ซีซี)">
+                            <input type="number" id="catheterization_quantity" class="form-control value_urine" placeholder="ปริมาณ (ซีซี)">
                         </div>
                         <h1 class="profile">ซีซี</h1>
                     </div>
@@ -296,7 +335,7 @@
                             <h1 class="profile">ปริมาณ</h1>
                         </div>
                         <div class="input-group col-6">
-                            <input type="number" id="urine_quanlity" class="form-control value_urine" placeholder="ปริมาณ (ซีซี)">
+                            <input type="number" id="urine_quantity" class="form-control value_urine" placeholder="ปริมาณ (ซีซี)">
                         </div>
                         <h1 class="profile">ซีซี</h1>
                     </div>
@@ -318,8 +357,6 @@
                     <h1 class="middle_line"></h1>
                 </div>
             </div>
-            <!-- When you click this button, trigger the submit event on this form. -->
-            <!-- <button type="submit" class="btn btn-default">Submit</button> -->
             <center>
                 <button type="button" class="btn btn-outline-light" style="border: 1px solid #39588A; color: #39588A" data-toggle="modal" data-target="#exampleModal">ยกเลิก</button>
                 <button type="submit" class="btn btn-primary" style="background-color: #39588A; color: white;">บันทึก</button> 
@@ -328,17 +365,17 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title" id="exampleModalLabel">ยกเลิกการบันทึก</h1>
+                            <h1 class="modal-title" id="exampleModalLabel">ยกเลิกการแก้ไขบันทึกนี้</h1>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <h2 class="modal-datail">ยืนยันยกเลิกการบันทึกนี้ทั้งหมด</h2>
+                            <h2 class="modal-datail">ระบบจะไม่บันทึกการเปลี่ยนแปลงนี้</h2>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-light" data-dismiss="modal" style="margin-right: 10px; border: 1px solid #39588A; color: #39588A">ยกเลิก</button>
-                            <button type="button" class="btn btn-primary" style="background-color: #39588A; color: white;">ยืนยัน</button>                
+                            <button type="submit" class="btn btn-primary" style="background-color: #39588A; color: white;">ยืนยัน</button>                
                         </div>
                     </div>
                 </div>
