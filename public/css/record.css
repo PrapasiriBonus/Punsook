@@ -37,6 +37,13 @@ h1.profile {
     margin-top: 8px;
 }
 
+label.date {
+    color:white;
+    font-size:  20px;
+    margin-top: 8px;
+    margin-left: 20px;
+}
+
 .col-3, .col-7, .col-1, .col-4, .col-2, .col-8, col {
     padding-right: 0px;
 }
@@ -48,7 +55,7 @@ h1.profile {
 input.date {
     font-size: 100%;
     height: 40px;
-    width: 240px;
+    width: 220px;
     border: 1px solid gray;
     border-radius: 50px;
     padding-left: 10px;  
@@ -89,7 +96,7 @@ h1.water {
 }
 
 h1.value {
-    color: #39588A;
+    color: black;
     font-size: 40px;
     margin-bottom: 0px;
 }
@@ -99,7 +106,7 @@ img.add {
     height: auto;
     position: absolute;
     /* left: 270px; */
-    top: 300px;
+    top: 285px;
     margin-left: 90px;
 }
 
@@ -169,6 +176,10 @@ h3 {
     margin-top: 10px;
 }
 
+a:link, a:visited, a:hover, a:active{
+    text-decoration: none;
+}
+
 .col-detail {
     padding-left: 5px;
 }
@@ -176,6 +187,22 @@ h3 {
 .col-logo, .col-detail {
     margin-top: 0px;
     margin-bottom: 0px;
+}
+
+.btn.btn-default {
+    background-color: white;
+    border: 2px solid #39588A;
+    color: #39588A;
+    margin-left: 15px;
+    margin-top: 1px; 
+    border-radius: 50px;
+    font-weight: bold;
+}
+
+.table td {
+    background-color: white;
+    border-top: none;
+    padding-bottom: 0px;
 }
 
 @media (max-width: 600px) {
