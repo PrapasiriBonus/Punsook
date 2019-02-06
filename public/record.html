@@ -163,7 +163,7 @@
             rec_container = rec_container+'<div id="'+childKey+'"><div class="container container-record">';
             if(record.data.drinking){
               var drinking_keys = Object.keys(record.data.drinking)
-              rec_container = rec_container+'<div name="drinking"><div class="row"><div class="col-3"><img class="logo-detail" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fwater-glass.png?alt=media&token=28aa1acc-b049-4fbd-86ad-87a7ef20bfc5"></div><div class="row row-detail col-9"><table class="table table-striped"><tbody>';
+              rec_container = rec_container+'<div name="drinking"><div class="row"><div class="col-3"><img class="logo-detail" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fwater-glass.png?alt=media&token=28aa1acc-b049-4fbd-86ad-87a7ef20bfc5"></div><div class="row row-detail col-9"><table class="table table-borderless"><tbody>';
               for(var i=0; i<drinking_keys.length; i++){
                 drinking_sum = drinking_sum + record.data.drinking[drinking_keys[i]];
                 rec_container = rec_container+'<tr><td>'+drinking_keys[i]+'</td><td>'+record.data.drinking[drinking_keys[i]]+'</td><td>ซีซี</td></tr>';
@@ -172,11 +172,11 @@
             }
             if(record.data.catheterization){
               urine_sum = urine_sum + record.data.catheterization;
-              rec_container = rec_container+'<div name="catheterization"><div class="row"><div class="col-3"><img class="logo-detail" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fcatheter%20(1).png?alt=media&token=3e0b9c93-443d-488b-9d47-b0d557bdb557"></div><div class="row row-detail col-9"><table class="table table-striped"><tbody><tr><td>สวนปัสสาวะ</td><td>'+record.data.catheterization+'</td><td>ซีซี</td></tr></tbody></table></div></div><h1 class="middle_line"></h1></div>';
+              rec_container = rec_container+'<div name="catheterization"><div class="row"><div class="col-3"><img class="logo-detail" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fcatheter%20(1).png?alt=media&token=3e0b9c93-443d-488b-9d47-b0d557bdb557"></div><div class="row row-detail col-9"><table class="table table-borderless"><tbody><tr><td>สวนปัสสาวะ</td><td>'+record.data.catheterization+'</td><td>ซีซี</td></tr></tbody></table></div></div><h1 class="middle_line"></h1></div>';
             }
             if(record.data.urine){
               urine_sum = urine_sum + record.data.urine;
-              rec_container = rec_container+'<div name="urine"><div class="row"><div class="col-3"><img class="logo-detail" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Ftoilet.png?alt=media&token=afb7e301-bcb7-4690-9413-3a778986c221"></div><div class="row row-detail col-9"><table class="table table-striped"><tbody><tr><td>ปัสสาวะด้วยตนเอง</td><td>'+record.data.urine+'</td><td>ซีซี</td></tr></tbody></table></div></div><h1 class="middle_line"></h1></div>';
+              rec_container = rec_container+'<div name="urine"><div class="row"><div class="col-3"><img class="logo-detail" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Ftoilet.png?alt=media&token=afb7e301-bcb7-4690-9413-3a778986c221"></div><div class="row row-detail col-9"><table class="table table-borderless"><tbody><tr><td>ปัสสาวะด้วยตนเอง</td><td>'+record.data.urine+'</td><td>ซีซี</td></tr></tbody></table></div></div><h1 class="middle_line"></h1></div>';
             }
             if(record.data.other){
               rec_container = rec_container+'<div name="other"><div class="row"><div class="col-3"><img class="logo-detail" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fmore.png?alt=media&token=a0e31732-b699-496e-9ce9-331e6758a17c"></div><div class="row row-detail col-9"><h2>'+record.data.other+'</h2></div></div></div></div>';
@@ -205,9 +205,9 @@
       <form action="?">
         <div class="row">
           <div class="col-2">
-            <label for="date">วันที่</label>
+            <label for="date" class="date">วันที่</label>
           </div>
-          <div class="col-8">
+          <div class="col-7">
             <input class="date" type="date" id="date" name="date">
           </div>
           <div class="col-2">
