@@ -17,60 +17,87 @@
       firebase.initializeApp(config);
     </script>
     <script>
-            document.addEventListener('DOMContentLoaded', function() {
-              
-              // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-              // // The Firebase SDK is initialized and available here!
-              
-              firebase.auth().onAuthStateChanged(function(user) {
-                if (user) {
-                  // User is signed in.
-                  var displayName = user.displayName;
-                  var email = user.email;
-                  var emailVerified = user.emailVerified;
-                  var photoURL = user.photoURL;
-                  var uid = user.uid;
-                  var phoneNumber = user.phoneNumber;
-                  var providerData = user.providerData;
-                  user.getIdToken().then(function(accessToken) {
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+            // // The Firebase SDK is initialized and available here!
+            
+            firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                // User is signed in.
+                var displayName = user.displayName;
+                var email = user.email;
+                var emailVerified = user.emailVerified;
+                var photoURL = user.photoURL;
+                var uid = user.uid;
+                var phoneNumber = user.phoneNumber;
+                var providerData = user.providerData;
+                document.getElementById('uid').textContent = uid;
+                $("#uid").val(uid);
+                user.getIdToken().then(function(accessToken) {
                     document.getElementById('sign-in-status').textContent = 'Signed in';
                     document.getElementById('sign-in').textContent = 'Sign out';
                     document.getElementById('account-details').textContent = JSON.stringify({
-                      displayName: displayName,
-                      email: email,
-                      emailVerified: emailVerified,
-                      phoneNumber: phoneNumber,
-                      photoURL: photoURL,
-                      uid: uid,
-                      accessToken: accessToken,
-                      providerData: providerData
+                        displayName: displayName,
+                        email: email,
+                        emailVerified: emailVerified,
+                        phoneNumber: phoneNumber,
+                        photoURL: photoURL,
+                        uid: uid,
+                        accessToken: accessToken,
+                        providerData: providerData
                     }, null, '  ');
-                  });
-                } else {
-                  // User is signed out.
-                  document.getElementById('sign-in-status').textContent = 'Signed out';
-                  document.getElementById('sign-in').textContent = 'Sign in';
-                  document.getElementById('account-details').textContent = 'null';
-                }
-              }, function(error) {
-                console.log(error);
-              });
-      
-              //firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-              //firebase.messaging().requestPermission().then(() => { });
-              //firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-              
-              // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-      
-              try {
-                let app = firebase.app();
-                let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-                document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
-              } catch (e) {
-                document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
-              }
+                });
+                var users = firebase.database().ref("users/"+uid);
+                users.on('value', function(childSnapshot) {
+                    user = childSnapshot.val();
+                    $("#pid").val(user.patient_id)
+                    $("#name").val(user.firstname+" "+user.lastname)
+                    if(user.sex == "หญิง"){
+                        sex = '<img class="Select col-3" src="Picture/Not_Select.png"><h2 class="Gender col-3 text-muted">ชาย</h2><img class="Select col-3" src="Picture/Select.png"><h2 class="Gender col-3 text-muted">หญิง</h2>'
+                    }
+                    else{
+                        sex = '<img class="Select col-3" src="Picture/Select.png"><h2 class="Gender col-3 text-muted">ชาย</h2><img class="Select col-3" src="Picture/Not_Select.png"><h2 class="Gender col-3 text-muted">หญิง</h2>'
+                    }
+                    $("#sex").html(sex)
+                    var date = new Date(user.birthdate);
+                    var day = date.getDate();
+                    var month = date.getMonth() + 1;
+                    var year = date.getFullYear();
+
+                    if (month < 10) month = "0" + month;
+                    if (day < 10) day = "0" + day;
+
+                    var birthdate = year + "-" + month + "-" + day;
+                    $("#birth").val(birthdate)
+                    $("#weight").val(user.weight)
+                    $("#height").val(user.height)
+                });
+            } else {
+                // User is signed out.
+                document.getElementById('sign-in-status').textContent = 'Signed out';
+                document.getElementById('sign-in').textContent = 'Sign in';
+                document.getElementById('account-details').textContent = 'null';
+            }
+            }, function(error) {
+            console.log(error);
             });
-          </script>
+    
+            //firebase.database().ref('/path/to/ref').on('value', snapshot => { });
+            //firebase.messaging().requestPermission().then(() => { });
+            //firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
+            
+            // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+    
+            try {
+            let app = firebase.app();
+            let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
+            document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
+            } catch (e) {
+            document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
+            }
+        });
+    </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
@@ -83,7 +110,18 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" type="text/css" href="/css/profile.css">
-  </head>
+    <script>
+        var submitRecommendation = function () {
+            var uid = $("#uid").val();
+            var weight = $("#weight").val();
+            var height = $("#height").val();
+            firebase.database().ref("users/"+uid).update({
+                "weight": weight,
+                "height": height
+            });
+        };
+    </script>
+    </head>
   <body>
     <nav class="navbar navbar-expand-lg row">
         <div class="col">
@@ -91,51 +129,12 @@
         </div>
         <div class="col">
             <center>
-                    <a href="/home.html"><img class= "logo-img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/logo_white.png?alt=media&token=7ea16ae2-206b-41b9-90de-33799268daf4"></a>   
+                <a href="/home.html"><img class= "logo-img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/logo_white.png?alt=media&token=7ea16ae2-206b-41b9-90de-33799268daf4"></a>   
             </center>
         </div>
         <div class="col"></div>
-    </nav>  
-    <script>
-            console.log('hi');
-            var users = firebase.database().ref("users");    
-            console.log(users)
-            users.limitToLast(1).on('child_added', function(childSnapshot) {
-                user = childSnapshot.val();
-                console.log(user)
-                $("#pid").val(user.pid)
-                // console.log(user.pid)
-                $("#name").val(user.firstname+" "+user.lastname)
-                // console.log(user.firstname+" "+user.lastname)
-                // console.log(user.firstname)
-                // console.log(user.lastname)
-                if(users.sex = "หญิง"){
-                    console.log("woman")
-                    sex = '<img class="Select col-3" src="Picture/Not_Select.png"><h2 class="Gender col-3 text-muted">ชาย</h2><img class="Select col-3" src="Picture/Select.png"><h2 class="Gender col-3 text-muted">หญิง</h2>'
-                }
-                else {
-                    console.log("man")
-                    sex = '<img class="Select col-3" src="Picture/Select.png"><h2 class="Gender col-3 text-muted">ชาย</h2><img class="Select col-3" src="Picture/Not_Select.png"><h2 class="Gender col-3 text-muted">หญิง</h2>'
-                }
-                $("#sex").html(sex)
-                $("#birth").val(user.birth)
-                $("#weight").val(user.weight)
-                $("#height").val(user.height)
-                // console.log(user.birth)
-            });
-            var submitRecommendation = function () {
-                var weight = $("#weight").val();
-                var height = $("#height").val();
-                users.push({
-                    "weight": weight,
-                    "height": height
-                    });
-                };
-            $(window).load(function () {
-                $("#recommendationForm").submit(submitRecommendation);
-            });
+    </nav>
 
-    </script>
     <div class="container">
         <br>
         <h1 class="topic">ประวัติ</h1>
@@ -167,8 +166,7 @@
                     <h1 class="profile">เพศ</h1>   
                 </div>       
                 <div class="form-group col-7">
-                    <div class="row" id="sex">
-                    </div>                    
+                    <div class="row" id="sex"></div>
                 </div>
                 <div class="col-1">
                     <img class="lock" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fpadlock.png?alt=media&token=b3b4aea7-d7bf-49b1-a354-dcbcf580551f">
@@ -179,7 +177,7 @@
                     <h1 class="profile">วันเกิด</h1>   
                 </div>       
                 <div class="form-group col-7">
-                    <input type="text" id="birth" class="form-control">
+                    <input type="date" id="birth" class="form-control">
                 </div>
                 <div class="col-1">
                     <img class="lock" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fpadlock.png?alt=media&token=b3b4aea7-d7bf-49b1-a354-dcbcf580551f">
@@ -193,7 +191,7 @@
                     <h1 class="profile">น้ำหนัก</h1>   
                 </div>       
                 <div class="form-group col-5">
-                    <input class="form-control" type="text" id="weight">
+                    <input class="form-control" type="number" id="weight">
                 </div>
                 <div class="col-3">
                     <h1 class="profile">กิโลกรัม</h1>
@@ -204,17 +202,21 @@
                     <h1 class="profile">ส่วนสูง</h1>   
                 </div>       
                 <div class="form-group col-5">
-                    <input class="form-control" type="text" id="height">
+                    <input class="form-control" type="number" id="height">
                 </div>
                 <div class="col-3">
                     <h1 class="profile">เซ็นติเมตร</h1>
                 </div>
             </div>
             <br>
-            <button type="submit" class="btn btn-primary" style="background-color: #39588A; color: white;">บันทึกข้อมูล</button>
+            <button type="button" class="btn btn-primary" style="background-color: #39588A; color: white;" onclick="submitRecommendation()">บันทึกข้อมูล</button>
             <br>
         </form>
-    </div> 
-
+    </div>
+    <div id="uid"></div>
+    <div style="display:none" id="sign-in-status"></div>
+    <div style="display:none" id="sign-in"></div>
+    <div style="display:none" id="account-details"></div>
+    <div style="display:none" id="load">Loading...</div>
   </body>
 </html>
