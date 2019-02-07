@@ -187,16 +187,21 @@
                 data["other"]=$("#other_detail").val();
             }
 
-            if(Object.keys(data).length!=0){
-                record_key.set({
-                    "uid": uid,
-                    "date": date,
-                    "time": time,
-                    "data": data
-                });
+            if(date&&time){
+                if(Object.keys(data).length!=0){
+                    record_key.set({
+                        "uid": uid,
+                        "date": date,
+                        "time": time,
+                        "data": data
+                    });
+                }else{
+                    alert("ต้องบันทึกอย่างน้อยหนึ่งประเภท");
+                }
             }else{
-                alert("ต้องบันทึกอย่างน้อยหนึ่งประเภท");
+                alert("กรุณาใส่วันเวลาที่ต้องการบันทึก");
             }
+
         };
         $(window).load(function () {
             // Find the HTML element with the id recommendationForm, and when the submit

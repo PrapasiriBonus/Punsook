@@ -130,42 +130,38 @@
             if((document.getElementById("drinking").checked)&&(count!=0)){
                 for(var i=1; i<=count; i++){
                     var type = "#drinking_type"+i;
-                    var quanlity = "#drinking_quanlity"+i;
-                    if(($(type).val()!="")&&($(quanlity).val()!="")){
-                        if(($(type).val()!=undefined)&&($(quantity).val()!=undefined)){
-                            drinking[$(type).val()]=parseInt($(quanlity).val());
-                        }
+                    var quantity = "#drinking_quantity"+i;
+                    if(($(type).val()!="")&&($(quantity).val()!="")){
+                        if(($(type).val()!=undefined)&&($(quantity).val()!=undefined))
+                            drinking[$(type).val()]=parseInt($(quantity).val());
                     }else{
                         alert("ระบุเครื่องดื่ม/อาหาร พร้อมปริมาณด้วยค่ะ");
                     }
                 }
                 data["drinking"]=drinking;
             }
-            if((document.getElementById("catheterization").checked)&&($("#catheterization_quanlity").val()!="")){
-                data["catheterization"]=parseInt($("#catheterization_quanlity").val());
+            if((document.getElementById("catheterization").checked)&&($("#catheterization_quantity").val()!="")){
+                data["catheterization"]=parseInt($("#catheterization_quantity").val());
             }
-            if((document.getElementById("urine").checked)&&($("#urine_quanlity").val()!="")){
-                data["urine"]=parseInt($("#urine_quanlity").val());
+            if((document.getElementById("urine").checked)&&($("#urine_quantity").val()!="")){
+                data["urine"]=parseInt($("#urine_quantity").val());
             }
             if((document.getElementById("other").checked)&&($("#other_detail").val()!="")){
                 data["other"]=$("#other_detail").val();
             }
-
             if(date&&time){
-                if(!Array.isArray(data) || !data.length){
-                    alert("ต้องบันทึกอย่างน้อยหนึ่งประเภท");
-                    //$("#myModal1").modal();
-                }else{
-                    // Push a new recommendation to the database using those values
+                if(Object.keys(data).length!=0){
                     records.push({
                         "uid": uid,
                         "date": date,
                         "time": time,
                         "data": data
                     });
+                }else{
+                    alert("ต้องบันทึกอย่างน้อยหนึ่งประเภท");
                 }
             }else{
-                alert("ใส่วันเวลาที่ต้องการบันทึกด้วยค่ะ");
+                alert("กรุณาใส่วันเวลาที่ต้องการบันทึก");
             }
         };
 
@@ -239,10 +235,10 @@
             $(".add-more").click(function(e){
                 e.preventDefault();
                 var addto = "#field" + next;
-                var addRemove = "#drinking_quanlity" + (next);
+                var addRemove = "#drinking_quantity" + (next);
                 var removeBtn = '<button id="remove' + next + '" class="btn btn-danger remove-me form-control" >-</button>';
                 next = next + 1;
-                var newIn = '<div class="input-group" id="field' + next + '"><input id="drinking_type' + next + '" type="text" class="form-control drink" placeholder="เครื่องดื่ม / อาหาร"><input id="drinking_quanlity' + next + '" type="number" class="form-control value" placeholder="ปริมาณ (ซีซี)"></div>';
+                var newIn = '<div class="input-group" id="field' + next + '"><input id="drinking_type' + next + '" type="text" class="form-control drink" placeholder="เครื่องดื่ม / อาหาร"><input id="drinking_quantity' + next + '" type="number" class="form-control value" placeholder="ปริมาณ (ซีซี)"></div>';
                 var newInput = $(newIn);
                 var removeButton = $(removeBtn);
                 $(addto).after(newInput);
@@ -290,7 +286,7 @@
                 <div id="drinking_text" style="display:none">
                     <div class="input-group" id="field1">
                         <input id="drinking_type1" type="text" class="form-control drink" placeholder="เครื่องดื่ม / อาหาร">
-                        <input id="drinking_quanlity1" type="number" class="form-control value" placeholder="ปริมาณ (ซีซี)">
+                        <input id="drinking_quantity1" type="number" class="form-control value" placeholder="ปริมาณ (ซีซี)">
                     </div>
                     <center>
                         <button id="b1" type="button" class="btn add-more">เพิ่ม</button>
@@ -308,7 +304,7 @@
                             <h1 class="profile">ปริมาณ</h1>
                         </div>
                         <div class="input-group col-6">
-                            <input type="number" id="catheterization_quanlity" class="form-control value_urine" placeholder="ปริมาณ (ซีซี)">
+                            <input type="number" id="catheterization_quantity" class="form-control value_urine" placeholder="ปริมาณ (ซีซี)">
                         </div>
                         <h1 class="profile">ซีซี</h1>
                     </div>
@@ -324,7 +320,7 @@
                             <h1 class="profile">ปริมาณ</h1>
                         </div>
                         <div class="input-group col-6">
-                            <input type="number" id="urine_quanlity" class="form-control value_urine" placeholder="ปริมาณ (ซีซี)">
+                            <input type="number" id="urine_quantity" class="form-control value_urine" placeholder="ปริมาณ (ซีซี)">
                         </div>
                         <h1 class="profile">ซีซี</h1>
                     </div>
