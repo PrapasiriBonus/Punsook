@@ -45,7 +45,12 @@ img.Equipment ,img.Urinary_Catheterization ,img.About_App {
 }
 
 .col-8 {
-    border-top: 2px solid #E5E5E5;
+    border-top: 1px solid #E5E5E5;
+}
+
+a:link, a:visited, a:hover, a:active{
+    color: #39588A;
+    text-decoration: none;
 }
 
 
