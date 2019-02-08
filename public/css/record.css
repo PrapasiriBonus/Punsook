@@ -214,7 +214,33 @@ a:link, a:visited, a:hover, a:active{
 }
 
 @media (max-width: 400px) {
-    .container {
+    .container.choose-date {
+        width: 300px;
+    }
+
+    input.date {
+        margin-left: 10px;
+        width: 150px;
+    }
+
+    label.date {
+        margin-left: 15px;
+    }
+
+    .btn.btn-default {
+        margin-left: 0px;
+    }
+
+    .container.show-all-value {
+        width: 250px;
+
+    }
+
+    .container.container-footer {
+        width: 300px;
+    }
+
+    .container.container-record {
         width: 300px;
     }
 }
