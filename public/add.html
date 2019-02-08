@@ -342,8 +342,6 @@
                     <h1 class="middle_line"></h1>
                 </div>
             </div>
-            <!-- When you click this button, trigger the submit event on this form. -->
-            <!-- <button type="submit" class="btn btn-default">Submit</button> -->
             <center>
                 <button type="button" class="btn btn-outline-light" style="border: 1px solid #39588A; color: #39588A" data-toggle="modal" data-target="#exampleModal">ยกเลิก</button>
                 <button type="submit" class="btn btn-primary" style="background-color: #39588A; color: white;">บันทึก</button> 
@@ -352,162 +350,27 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title" id="exampleModalLabel">ยกเลิกการบันทึก</h1>
+                            <h1 class="modal-title" id="exampleModalLabel">ยกเลิกการบันทึกนี้</h1>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <h2 class="modal-datail">ยืนยันยกเลิกการบันทึกนี้ทั้งหมด</h2>
+                            <h2 class="modal-datail">ระบบจะไม่บันทึกการเปลี่ยนแปลงนี้</h2>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-light" data-dismiss="modal" style="margin-right: 10px; border: 1px solid #39588A; color: #39588A">ยกเลิก</button>
-                            <button type="button" class="btn btn-primary" style="background-color: #39588A; color: white;">ยืนยัน</button>                
+                            <a href="record.html"><button type="button" class="btn btn-primary" style="background-color: #39588A; color: white;">ยืนยัน</button></a>               
                         </div>
                     </div>
                 </div>
             </div>
         </form>
     </div>
-    <!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title" id="exampleModalLabel2">บันทึก</h1>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <h2 class="modal-datail">4444444444444444444</h2>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" style="background-color: #39588A; color: white;">ตกลง</button>             
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title" id="exampleModalLabel3">บันทึก</h1>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <h2 class="modal-datail">55555555555555</h2>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" style="background-color: #39588A; color: white;">ตกลง</button>             
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <div id="uid"></div>
+    <div style="display:none" id="uid"></div>
     <div style="display:none" id="sign-in-status"></div>
     <div style="display:none" id="sign-in"></div>
     <div style="display:none" id="account-details"></div>
     <div style="display:none" id="load">Loading...</div>
   </body>
 </html>
-
-    <!-- <div class="container">
-        <br>
-        <h1 class="topic">บันทึกการดื่มน้ำและสวนปัสสาวะ</h1>
-        <form id="recordForm">
-            <div class="row">
-                <div class="col-3">                   
-                    <h1 class="profile">วันที่</h1>   
-                </div>       
-                <div class="form-group col-7">
-                    <input class="date" type="date" id="date" name="trip-start">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-3">                   
-                    <h1 class="profile">เวลา</h1>   
-                </div>       
-                    <div class="form-group col-7">
-                        <input class="time" type="time" id="time" name="trip-start">
-                </div>
-            </div>
-        <h1 class="middle_line"></h1>
-            <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">ดื่มน้ำ</label>
-            </div>       
-            <div class="row">
-                <div class="col-2">
-                    <img class="remove" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fremove.png?alt=media&token=cb80abf8-8510-47c0-b9f1-bf8578d76043">
-                </div>
-                <div class="input-group col-9">
-                    <input type="text" class="form-control drink" placeholder="เครื่องดื่ม / อาหาร">
-                    <input type="text" class="form-control value" placeholder="ปริมาณ (ซีซี)">
-                </div>
-            </div> 
-            <br>
-            <div class="row">
-                <div class="col-2">
-                </div>
-                <div class="input-group col-9">
-                    <center>
-                        <button type="button" class="btn btn-add">เพิ่ม</button>
-                    </center>
-                </div>
-            </div>   
-            <br><h1 class="middle_line"></h1>
-            <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">สวนปัสสาวะ</label>
-            </div>
-            <div class="row">
-                <div class="col-3">
-                    <h1 class="profile">ปริมาณ</h1>
-                </div>
-                <div class="input-group col-7">
-                    <input type="text" class="form-control value_urine" placeholder="ปริมาณ (ซีซี)">
-                </div>
-                <h1 class="profile">ซีซี</h1>
-            </div> 
-            <br><h1 class="middle_line"></h1>
-            <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">ปัสสาวะด้วยตนเอง</label>
-            </div>
-            <div class="row">
-                <div class="col-3">
-                    <h1 class="profile">ปริมาณ</h1>
-                </div>
-                <div class="input-group col-7">
-                    <input type="text" class="form-control value_urine" placeholder="ปริมาณ (ซีซี)">
-                </div>
-                <h1 class="profile">ซีซี</h1>
-            </div>
-            <br><h1 class="middle_line"></h1>
-            <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">อื่นๆ</label>
-            </div>
-            <div class="row other">
-                <div class="col-4">
-                    <h1 class="profile">รายละเอียด</h1>
-                </div>
-                <div class="input-group col-7">
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>            
-                </div>
-            </div>
-            <br>
-            <div class="botton_last">
-                <center>
-                    <button type="button" class="btn btn-outline-light" style="border: 2px solid #39588A; color: #39588A">ยกเลิก</button>
-                    <button type="submit" class="btn btn-primary" style="background-color: #39588A; color: white;">บันทึก</button> 
-                </center>
-            </div>
-            <br>
-            <br>
-            <button type="button" class="btn btn-primary">บันทึก</button>
-        </form>
-    </div> -->
