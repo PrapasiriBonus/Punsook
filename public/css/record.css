@@ -213,4 +213,10 @@ a:link, a:visited, a:hover, a:active{
       }
 }
 
+@media (max-width: 400px) {
+    .container {
+        width: 300px;
+    }
+}
+
 /* record */

@@ -105,3 +105,9 @@ button.btn {
         height: 40px;
       }
 }
+
+@media (max-width: 400px) {
+    .container {
+        width: 300px;
+    }
+}
