@@ -125,7 +125,7 @@
                 $("#drinking").attr("checked", true)
                 $("#drinking_text").attr("style","display:block")
                 var drinking_key = Object.keys(record.data.drinking);
-                //$("#count").val(drinking_key.length);
+                $("#count").val(drinking_key.length);
                 for(var i=1; i<=drinking_key.length; i++){
                     if(i!=1){
                         $('.add-more').click();
