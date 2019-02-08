@@ -113,12 +113,13 @@
     <script>
         var submitRecommendation = function () {
             var uid = $("#uid").val();
-            var weight = $("#weight").val();
-            var height = $("#height").val();
+            var weight = parseInt($("#weight").val());
+            var height = parseInt($("#height").val());
             firebase.database().ref("users/"+uid).update({
                 "weight": weight,
                 "height": height
             });
+            alert("บันทึกข้อมูลสำเร็จ");
         };
     </script>
     </head>
