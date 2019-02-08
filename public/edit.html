@@ -125,7 +125,7 @@
                 $("#drinking").attr("checked", true)
                 $("#drinking_text").attr("style","display:block")
                 var drinking_key = Object.keys(record.data.drinking);
-                //$("#count").val(drinking_key.length);
+                $("#count").val(drinking_key.length);
                 for(var i=1; i<=drinking_key.length; i++){
                     if(i!=1){
                         $('.add-more').click();
@@ -154,7 +154,6 @@
         });
         
         var submitRecord=function(){
-            //record_key.update({time:"11:14"});
             // Get input values from each of the form elements
             var uid = $("#uid").val();
             var date = Date.parse($("#date").val());
@@ -380,52 +379,14 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-light" data-dismiss="modal" style="margin-right: 10px; border: 1px solid #39588A; color: #39588A">ยกเลิก</button>
-                            <button type="submit" class="btn btn-primary" style="background-color: #39588A; color: white;">ยืนยัน</button>                
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title" id="exampleModalLabel2">บันทึก</h1>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <h2 class="modal-datail">4444444444444444444</h2>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" style="background-color: #39588A; color: white;">ตกลง</button>             
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title" id="exampleModalLabel3">บันทึก</h1>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <h2 class="modal-datail">55555555555555</h2>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" style="background-color: #39588A; color: white;">ตกลง</button>             
+                            <a href="record.html"><button type="button" class="btn btn-primary" style="background-color: #39588A; color: white;">ยืนยัน</button></a>
                         </div>
                     </div>
                 </div>
             </div>
         </form>
     </div>
-    <div id="uid"></div>
+    <div style="display:none" id="uid"></div>
     <div style="display:none" id="sign-in-status"></div>
     <div style="display:none" id="sign-in"></div>
     <div style="display:none" id="account-details"></div>
