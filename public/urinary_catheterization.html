@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ปันสุข | วิธีการสวนปัสสาวะ</title>
+    <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyCE4QfVxXo4HZAyfoL5pLtCdrqEPZMqjnk",
+        authDomain: "support-7fdcd.firebaseapp.com",
+        databaseURL: "https://support-7fdcd.firebaseio.com",
+        projectId: "support-7fdcd",
+        storageBucket: "support-7fdcd.appspot.com",
+        messagingSenderId: "144995411560"
+      };
+      firebase.initializeApp(config);
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        
+        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+        // // The Firebase SDK is initialized and available here!
+        
+        firebase.auth().onAuthStateChanged(function(user) {
+          if (user) {
+            // User is signed in.
+            var displayName = user.displayName;
+            var email = user.email;
+            var emailVerified = user.emailVerified;
+            var photoURL = user.photoURL;
+            var uid = user.uid;
+            var phoneNumber = user.phoneNumber;
+            var providerData = user.providerData;
+            document.getElementById('uid').textContent = uid;
+            $("#uid").val(uid);
+            user.getIdToken().then(function(accessToken) {
+              document.getElementById('sign-in-status').textContent = 'Signed in';
+              document.getElementById('sign-in').textContent = 'Sign out';
+              document.getElementById('account-details').textContent = JSON.stringify({
+                displayName: displayName,
+                email: email,
+                emailVerified: emailVerified,
+                phoneNumber: phoneNumber,
+                photoURL: photoURL,
+                uid: uid,
+                accessToken: accessToken,
+                providerData: providerData
+              }, null, ' ');
+            });
+            var users = firebase.database().ref("users/"+uid);
+            users.on('value', function(childSnapshot) {
+                user = childSnapshot.val();
+                if(user.sex == "ชาย"){
+                    //console.log(user.sex);
+                    $("#home").attr("class", "tab-pane fade")
+                    $("#home-tab").attr("class","nav-link")
+                    $("#profile").attr("class", "tab-pane fade show active")
+                    $("#profile-tab").attr("class","nav-link active")
+                }
+            });
+          } else {
+            // User is signed out.
+            document.getElementById('sign-in-status').textContent = 'Signed out';
+            document.getElementById('sign-in').textContent = 'Sign in';
+            document.getElementById('account-details').textContent = 'null';
+          }
+        }, function(error) {
+            console.log(error);
+        });
+
+        //firebase.database().ref('/path/to/ref').on('value', snapshot => { });
+        //firebase.messaging().requestPermission().then(() => { });
+        //firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
+        
+        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+
+        try {
+          let app = firebase.app();
+          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
+          document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
+        } catch (e) {
+          document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
+        }
+      });
+    </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link href="css/urinary_cat.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar">
+        <div class="col">
+            <a href="/home.html"><img class= "logo-return" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fback.png?alt=media&token=4b2dc79f-e33c-4f03-8520-29ce0cc6cb4d"></a>
+        </div>
+        <div class="col">
+            <center>
+                <a href="/home.html"><img class= "logo-img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/logo_white.png?alt=media&token=7ea16ae2-206b-41b9-90de-33799268daf4"></a>   
+            </center>
+        </div>
+        <div class="col"></div>
+    </nav>
+    <div class="container">
+      <br>
+      <h1 class="step_cat">วิธีการสวนปัสสาวะ</h1>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">เพศหญิง</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">เพศชาย</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="row justify-content-start">
+                    <h2 class="step">ขั้นตอนที่ 1</h2>
+                    <h2 class="detail">เตรียมอุปกรณ์</h2>
+                    <h3>ให้วางอุปกรณ์ทั้งหมดไว้ใกล้ตัว</h3>
+                    <div class="image">
+                        <img class="step_img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/001.jpg?alt=media&token=ff5606b9-dc40-45b5-98dc-2ab5ab4145d1">
+                    </div>
+                    <h2 class="step">ขั้นตอนที่ 2</h2>
+                    <h2 class="detail">จัดท่าให้เหมาะสม</h2>
+                    <h3>สวนเอง : ให้นั่งพิงผนัง หรือพนักพิง</h3>
+                    <h3>มีผู้สวนให้ : ให้อยู่ในท่านอนหงายกางขาออก</h3>
+                    <div class="image">
+                        <img class="step_img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/002.jpg?alt=media&token=1fa7913a-03de-42de-b9c9-3ff7115fb95f">
+                    </div>
+                    <h2 class="step">ขั้นตอนที่ 3</h2>
+                    <h2 class="detail">ล้างมือให้สะอาด</h2>
+                    <h3>ล้างมือด้วยสบู่ และล้างด้วยน้ำสะอาด</h3>
+                    <div class="image">
+                        <img class="step_img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/003.jpg?alt=media&token=229ece3a-64f1-495b-abf5-2adb7e65066f">
+                    </div>
+                    <h2 class="step">ขั้นตอนที่ 4</h2>
+                    <h2 class="detail">ล้างสายสวนปัสสาวะ</h2>
+                    <h3>ล้างสายสวนด้วนน้ำกลั่นหรือน้ำต้มสุก</h3>
+                    <div class="image">
+                        <img class="step_img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/004.jpg?alt=media&token=d085b558-d659-4481-aba9-3b3928f53303">
+                    </div>
+                    <h2 class="step">ขั้นตอนที่ 5</h2>
+                    <h2 class="detail">หยดสารหล่อลื่นลงบนสายสวน</h2>
+                    <h3>หยดสารหล่อลื่นโดยไม่ให้ปากหลอดสารหล่อลื่นสัมผัสกับสายสวน</h3>
+                    <div class="image">
+                        <img class="step_img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/005.jpg?alt=media&token=ca53018c-c713-4e80-8134-16104ba5130b">
+                    </div>
+                    <h2 class="step">ขั้นตอนที่ 6</h2>
+                    <h2 class="detail">ทำความสะอาดบริเวณอวัยวะเพศ</h2>
+                    <h3>ใช้สำลีเช็ดอวัยวะเพศด้านนอก จากบนลงล่างทีละก้อน ห้ามเช็ดย้อนไปย้อยมา</h3>
+                    <div class="image">
+                        <img class="step_img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/006.jpg?alt=media&token=5ba98292-e822-43be-9775-23867ae3ea2a">
+                    </div>
+                    <h2 class="step">ขั้นตอนที่ 7</h2>
+                    <h2 class="detail">สอดสายสวน</h2>
+                    <h3>โดยจะสอดเข้าไปในรูเปิดท่อปัสสาวะ อย่างนุ่มนวลจนสุดสาย</h3>
+                    <div class="image">
+                        <img class="step_img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/008.jpg?alt=media&token=2ce32d6f-1458-4f3b-806e-7c8cb1bad5b4">
+                    </div>
+                    <h2 class="step">ขั้นตอนที่ 8</h2>
+                    <h2 class="detail">ปลดจุกสายสวน</h2>
+                    <h3>ปล่อยปัสสาวะลงภาชนะรองรับปัสสาวะ จนกว่าปัสสาวะหยุดไหล</h3>
+                    <div class="image">
+                        <img class="step_img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/010.jpg?alt=media&token=2876e408-f6c0-41b4-85f1-da963bc034df">
+                    </div>
+                    <h2 class="step">ขั้นตอนที่ 9</h2>
+                    <h2 class="detail">ถอดสายสวนออก</h2>
+                    <h3>ใช้มือข้างนึงจับสายสวน ส่วนอีกข้างกดเหนือหัวหน่าว แล้วค่อยๆถอนสายสวนออก</h3>
+                    <div class="image">
+                        <img class="step_img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/012.jpg?alt=media&token=7f917347-6cb4-4d31-8e14-927cde21f4ec">
+                    </div>
+                    <h2 class="step">ขั้นตอนที่ 10</h2>
+                    <h2 class="detail">ทำความสะอาดรูเปิดท่อปัสสาวะ</h2>
+                    <h3>ใช้สำลี ทำความสะอาดอีกครั้งนึง</h3>
+                    <div class="image">
+                        <img class="step_img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/014.jpg?alt=media&token=34b2f769-e3a8-4b5d-a804-f3442b001862">
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="row justify-content-start">
+                    <h2 class="step">ขั้นตอนที่ 1</h2>
+                    <h2 class="detail">เตรียมอุปกรณ์</h2>
+                    <h3>ให้วางอุปกรณ์ทั้งหมดไว้ใกล้ตัว</h3>
+                    <div class="image">
+                        <img class="step_img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/001.jpg?alt=media&token=ff5606b9-dc40-45b5-98dc-2ab5ab4145d1">
+                    </div>
+                    <h2 class="step">ขั้นตอนที่ 2</h2>
+                    <h2 class="detail">จัดท่าให้เหมาะสม</h2>
+                    <h3>สวนเอง : ให้นั่งพิงผนัง หรือพนักพิง</h3>
+                    <h3>มีผู้สวนให้ : ให้อยู่ในท่านอนหงายกางขาออก</h3>
+                    <div class="image">
+                        <img class="step_img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/002.jpg?alt=media&token=1fa7913a-03de-42de-b9c9-3ff7115fb95f">
+                    </div>
+                    <h2 class="step">ขั้นตอนที่ 3</h2>
+                    <h2 class="detail">ล้างมือให้สะอาด</h2>
+                    <h3>ล้างมือด้วยสบู่ และล้างด้วยน้ำสะอาด</h3>
+                    <div class="image">
+                        <img class="step_img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/003.jpg?alt=media&token=229ece3a-64f1-495b-abf5-2adb7e65066f">
+                    </div>
+                    <h2 class="step">ขั้นตอนที่ 4</h2>
+                    <h2 class="detail">ล้างสายสวนปัสสาวะ</h2>
+                    <h3>ล้างสายสวนด้วนน้ำกลั่นหรือน้ำต้มสุก</h3>
+                    <div class="image">
+                        <img class="step_img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/004.jpg?alt=media&token=d085b558-d659-4481-aba9-3b3928f53303">
+                    </div>
+                    <h2 class="step">ขั้นตอนที่ 5</h2>
+                    <h2 class="detail">หยดสารหล่อลื่นลงบนสายสวน</h2>
+                    <h3>หยดสารหล่อลื่นโดยไม่ให้ปากหลอดสารหล่อลื่นสัมผัสกับสายสวน</h3>
+                    <div class="image">
+                        <img class="step_img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/005.jpg?alt=media&token=ca53018c-c713-4e80-8134-16104ba5130b">
+                    </div>
+                    <h2 class="step">ขั้นตอนที่ 6</h2>
+                    <h2 class="detail">ทำความสะอาดบริเวณอวัยวะเพศ</h2>
+                    <h3>ใช้มือข้างนึงรูดหนังหุ้ม จนพบรูเปิดท่อปัสสาวะ เช็ดด้วยสำลีเป็นวงกลม ไม่เช็ดย้อนกลับไปย้อนมา</h3>
+                    <div class="image">
+                        <img class="step_img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/007.jpg?alt=media&token=a6744906-71e8-48c4-b835-d3bb89a8ab26">
+                    </div>
+                    <h2 class="step">ขั้นตอนที่ 7</h2>
+                    <h2 class="detail">สอดสายสวน</h2>
+                    <h3>โดยจะสอดเข้าไปในรูเปิดท่อปัสสาวะ อย่างนุ่มนวลจนสุดสาย</h3>
+                    <div class="image">
+                        <img class="step_img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/009.jpg?alt=media&token=582decd8-1e80-4a7f-9ecd-f6819c19cf21">
+                    </div>
+                    <h2 class="step">ขั้นตอนที่ 8</h2>
+                    <h2 class="detail">ปลดจุกสายสวน</h2>
+                    <h3>ปล่อยปัสสาวะลงภาชนะรองรับปัสสาวะ จนกว่าปัสสาวะหยุดไหล</h3>
+                    <div class="image">
+                        <img class="step_img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/011.jpg?alt=media&token=e535696f-3a57-45bb-bb6e-d2919a4928e1">
+                    </div>
+                    <h2 class="step">ขั้นตอนที่ 9</h2>
+                    <h2 class="detail">ถอดสายสวนออก</h2>
+                    <h3>ใช้มือข้างนึงจับสายสวน ส่วนอีกข้างกดเหนือหัวหน่าว แล้วค่อยๆถอนสายสวนออก</h3>
+                    <div class="image">
+                        <img class="step_img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/013.jpg?alt=media&token=7a0be3a8-30f9-4507-b30b-bc566b7b8d1e">
+                    </div>
+                    <h2 class="step">ขั้นตอนที่ 10</h2>
+                    <h2 class="detail">ทำความสะอาดรูเปิดท่อปัสสาวะ</h2>
+                    <h3>ใช้สำลี ทำความสะอาดอีกครั้งนึง</h3>
+                    <div class="image">
+                        <img class="step_img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/015.jpg?alt=media&token=38f346e9-f499-4f06-9814-f2fe1052771a">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="uid"></div>
+    <div style="display:none" id="sign-in-status"></div>
+    <div style="display:none" id="sign-in"></div>
+    <div style="display:none" id="account-details"></div>
+    <div style="display:none" id="load">Loading...</div>
+  </body>
+</html>
