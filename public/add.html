@@ -38,6 +38,11 @@
             var phoneNumber = user.phoneNumber;
             //document.getElementById('phoneNumber').innerHTML = phoneNumber;
             $("#phoneNumber").val(phoneNumber);
+            var users = firebase.database().ref("users/"+phoneNumber);
+            users.on('value', function(childSnapshot) {
+                user = childSnapshot.val();
+                $("#weight").val(user.weight)
+            });
           } else {
             // User is signed out.
             window.location.replace("/index.html");
@@ -101,6 +106,7 @@
             var phoneNumber = $("#phoneNumber").val();
             var date = Date.parse($("#date").val());
             var time = $("#time").val();
+            var weight =parseInt($("#weight").val());
             var data = [];
 
             var drinking = [];
@@ -128,15 +134,20 @@
                 data["other"]=$("#other_detail").val();
             }
             if(date&&time){
-                if(Object.keys(data).length!=0){
-                    records.push({
-                        "phoneNumber": phoneNumber,
-                        "date": date,
-                        "time": time,
-                        "data": data
-                    });
+                if(weight){
+                    if(Object.keys(data).length!=0){
+                        records.push({
+                            "phoneNumber": phoneNumber,
+                            "date": date,
+                            "time": time,
+                            "weight": weight,
+                            "data": data
+                        });
+                    }else{
+                        alert("ต้องบันทึกอย่างน้อยหนึ่งประเภท");
+                    }
                 }else{
-                    alert("ต้องบันทึกอย่างน้อยหนึ่งประเภท");
+                    alert("กรุณาใส่น้ำหนักตามเวลาในบันทึก");
                 }
             }else{
                 alert("กรุณาใส่วันเวลาที่ต้องการบันทึก");
@@ -238,7 +249,7 @@
         <form id="recordForm" action="/record.html">
             <div class="form-group">
                 <div class="row">
-                    <div class="col-2">
+                    <div class="col-3">
                         <label for="date">วันที่</label>
                     </div>
                     <div class="col-7">
@@ -248,11 +259,24 @@
             </div>
             <div class="form-group">
                 <div class="row">
-                    <div class="col-2">
+                    <div class="col-3">
                         <label for="time">เวลา</label>
                     </div>
                     <div class="col-7">
                         <input class="form-control" type="time" id="time">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-3">
+                        <label for="weight">น้ำหนัก</label>
+                    </div>
+                    <div class="col-7">
+                        <input class="form-control" type="number" id="weight" aria-describedby="passwordHelpBlock">
+                        <small id="passwordHelpBlock" class="form-text text-muted">
+                            * น้ำหนัก ณ เวลาที่เลือกไว้
+                        </small>
                     </div>
                 </div>
             </div>
