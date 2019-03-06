@@ -106,7 +106,7 @@
             var phoneNumber = $("#phoneNumber").val();
             var date = Date.parse($("#date").val());
             var time = $("#time").val();
-            var weight =parseInt($("#weight").val());
+            var weight = parseInt($("#weight").val());
             var data = [];
 
             var drinking = [];
@@ -141,7 +141,8 @@
                             "date": date,
                             "time": time,
                             "weight": weight,
-                            "data": data
+                            "data": data,
+                            "timestamp": Date.now()
                         });
                     }else{
                         alert("ต้องบันทึกอย่างน้อยหนึ่งประเภท");
