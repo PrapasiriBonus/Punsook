@@ -24,32 +24,12 @@
         firebase.auth().onAuthStateChanged(function(user) {
           if (user) {
             // User is signed in.
-            var displayName = user.displayName;
-            var email = user.email;
-            var emailVerified = user.emailVerified;
-            var photoURL = user.photoURL;
-            var uid = user.uid;
             var phoneNumber = user.phoneNumber;
-            var providerData = user.providerData;
-            user.getIdToken().then(function(accessToken) {
-              document.getElementById('sign-in-status').textContent = 'Signed in';
-              document.getElementById('sign-in').textContent = 'Sign out';
-              document.getElementById('account-details').textContent = JSON.stringify({
-                displayName: displayName,
-                email: email,
-                emailVerified: emailVerified,
-                phoneNumber: phoneNumber,
-                photoURL: photoURL,
-                uid: uid,
-                accessToken: accessToken,
-                providerData: providerData
-              }, null, '  ');
-            });
+            //document.getElementById('phoneNumber').innerHTML = phoneNumber;
+            $("#phoneNumber").val(phoneNumber);
           } else {
             // User is signed out.
-            document.getElementById('sign-in-status').textContent = 'Signed out';
-            document.getElementById('sign-in').textContent = 'Sign in';
-            document.getElementById('account-details').textContent = 'null';
+            $("#signout").attr("style","display:none");
           }
         }, function(error) {
           console.log(error);
@@ -138,7 +118,7 @@
           <a href="about_app.html"><h2>เกี่ยวกับแอพพลิเคชั่น</h2></a>
         </div>
       </div>
-      <div class="row justify-content-start">
+      <div id="signout" class="row justify-content-start">
         <div class="col-2 logo">
           <img class="icons" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Flogout-blue.png?alt=media&token=10cbaffe-10f5-4712-9621-cd3ff29899aa">
         </div>
@@ -156,9 +136,7 @@
         </div>
       </div>
     </div>
-    <div style="display:none" id="sign-in-status"></div>
-    <div style="display:none" id="sign-in"></div>
-    <div style="display:none" id="account-details"></div>
+    <div id="phoneNumber"></div>
     <div style="display:none" id="loader">Loading...</div>
   </body>
 </html>

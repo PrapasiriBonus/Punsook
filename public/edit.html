@@ -24,34 +24,12 @@
         firebase.auth().onAuthStateChanged(function(user) {
           if (user) {
             // User is signed in.
-            var displayName = user.displayName;
-            var email = user.email;
-            var emailVerified = user.emailVerified;
-            var photoURL = user.photoURL;
-            var uid = user.uid;
             var phoneNumber = user.phoneNumber;
-            var providerData = user.providerData;
-            document.getElementById('uid').textContent = uid;
-            $("#uid").val(uid);
-            user.getIdToken().then(function(accessToken) {
-              document.getElementById('sign-in-status').textContent = 'Signed in';
-              document.getElementById('sign-in').textContent = 'Sign out';
-              document.getElementById('account-details').textContent = JSON.stringify({
-                displayName: displayName,
-                email: email,
-                emailVerified: emailVerified,
-                phoneNumber: phoneNumber,
-                photoURL: photoURL,
-                uid: uid,
-                accessToken: accessToken,
-                providerData: providerData
-              }, null, '  ');
-            });
+            //document.getElementById('phoneNumber').textContent = phoneNumber;
+            $("#phoneNumber").val(phoneNumber);
           } else {
             // User is signed out.
-            document.getElementById('sign-in-status').textContent = 'Signed out';
-            document.getElementById('sign-in').textContent = 'Sign in';
-            document.getElementById('account-details').textContent = 'null';
+            window.location.replace("/index.html");
           }
         }, function(error) {
             console.log(error);
@@ -155,7 +133,7 @@
         
         var submitRecord=function(){
             // Get input values from each of the form elements
-            var uid = $("#uid").val();
+            var phoneNumber = $("#phoneNumber").val();
             var date = Date.parse($("#date").val());
             var time = $("#time").val();
             var data = [];
@@ -189,7 +167,7 @@
             if(date&&time){
                 if(Object.keys(data).length!=0){
                     record_key.set({
-                        "uid": uid,
+                        "phoneNumber": phoneNumber,
                         "date": date,
                         "time": time,
                         "data": data
@@ -386,10 +364,7 @@
             </div>
         </form>
     </div>
-    <div style="display:none" id="uid"></div>
-    <div style="display:none" id="sign-in-status"></div>
-    <div style="display:none" id="sign-in"></div>
-    <div style="display:none" id="account-details"></div>
+    <div id="phoneNumber"></div>
     <div style="display:none" id="load">Loading...</div>
   </body>
 </html>

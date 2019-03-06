@@ -35,34 +35,12 @@
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
           // User is signed in.
-          var displayName = user.displayName;
-          var email = user.email;
-          var emailVerified = user.emailVerified;
-          var photoURL = user.photoURL;
-          var uid = user.uid;
           var phoneNumber = user.phoneNumber;
-          var providerData = user.providerData;
-          //document.getElementById('uid').textContent = uid;
-          $("#uid").val(uid);
-          user.getIdToken().then(function(accessToken) {
-            document.getElementById('sign-in-status').textContent = 'Signed in';
-            document.getElementById('sign-in').textContent = 'Sign out';
-            document.getElementById('account-details').textContent = JSON.stringify({
-              displayName: displayName,
-              email: email,
-              emailVerified: emailVerified,
-              phoneNumber: phoneNumber,
-              photoURL: photoURL,
-              uid: uid,
-              accessToken: accessToken,
-              providerData: providerData
-            }, null, '  ');
-          });
+          //document.getElementById('phoneNumber').innerHTML = phoneNumber;
+          $("#phoneNumber").val(phoneNumber);
         } else {
           // User is signed out.
-          document.getElementById('sign-in-status').textContent = 'Signed out';
-          document.getElementById('sign-in').textContent = 'Sign in';
-          document.getElementById('account-details').textContent = 'null';
+          window.location.replace("/index.html");
         }
       }, function(error) {
         console.log(error);
@@ -153,14 +131,14 @@
 
       var databaseRef = firebase.database().ref("records");
       databaseRef.orderByChild('time').on('value', function(snapshot) {
-        var current_uid = $("#uid").val();
+        var current_phoneNumber = $("#phoneNumber").val();
         var rec_container = '';
         var drinking_sum = 0;
         var urine_sum = 0;
         snapshot.forEach(function(childSnapshot) {
           var childKey = childSnapshot.key;
           record = childSnapshot.val();
-          if((record.uid==current_uid)&&(record.date==query_date)){
+          if((record.phoneNumber==current_phoneNumber)&&(record.date==query_date)){
             rec_container = rec_container+'<div id="'+childKey+'"><div class="container container-record">';
             if(record.data.drinking){
               var drinking_keys = Object.keys(record.data.drinking)
@@ -251,10 +229,7 @@
     </center>
     <br>
     <div id="records"></div>
-    <div id="uid"></div>
-    <div style="display:none" id="sign-in-status"></div>
-    <div style="display:none" id="sign-in"></div>
-    <div style="display:none" id="account-details"></div>
+    <div id="phoneNumber"></div>
     <div style="display:none" id="load">Loading...</div>
   </body>
 </html>
