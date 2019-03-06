@@ -27,6 +27,9 @@
             var phoneNumber = user.phoneNumber;
             //document.getElementById('phoneNumber').innerHTML = phoneNumber;
             $("#phoneNumber").val(phoneNumber);
+            if(phoneNumber=="+66888888888"){
+              window.location.replace("/desktop_home.html");
+            }
           } else {
             // User is signed out.
             $("#signout").attr("style","display:none");
