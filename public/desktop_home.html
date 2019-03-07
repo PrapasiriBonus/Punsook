@@ -1,27 +1,84 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>ปันสุข | ประวัติผู้ป่วย</title>
+    <title>ปันสุข | หน้าหลัก</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
 
+    <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyCE4QfVxXo4HZAyfoL5pLtCdrqEPZMqjnk",
+        authDomain: "support-7fdcd.firebaseapp.com",
+        databaseURL: "https://support-7fdcd.firebaseio.com",
+        projectId: "support-7fdcd",
+        storageBucket: "support-7fdcd.appspot.com",
+        messagingSenderId: "144995411560"
+      };
+      firebase.initializeApp(config);
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+      // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+      // // The Firebase SDK is initialized and available here!
+      
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          // User is signed in.
+          var phoneNumber = user.phoneNumber;
+          //document.getElementById('phoneNumber').innerHTML = phoneNumber;
+          $("#phoneNumber").val(phoneNumber);
+        } else {
+          // User is signed out.
+          window.location.replace("/index.html");
+        }
+      }, function(error) {
+        console.log(error);
+      });
+
+      //firebase.database().ref('/path/to/ref').on('value', snapshot => { });
+      //firebase.messaging().requestPermission().then(() => { });
+      //firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
+      
+      // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+
+      try {
+        let app = firebase.app();
+        let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
+        document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
+      } catch (e) {
+        document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
+      }
+      });
+    </script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <link href="css/desktop_home.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
-
+    <script>
+        var databaseRef = firebase.database().ref("users");
+        databaseRef.orderByChild('patient_id').on('value', function(snapshot) {
+            var users_container = '<div class="container"><div class="row row-table"><h3 class="col head-table">รหัสผู้ป่วย</h3><h3 class="col head-table">ชื่อ</h3><h3 class="col head-table">นามสกุล</h3><h3 class="col head-table">เพศ</h3><h3 class="col head-table">ดูประวัติ</h3></div>';
+            snapshot.forEach(function(childSnapshot) {
+                var childKey = childSnapshot.key;
+                user = childSnapshot.val();
+                users_container = users_container +'<div class="row row-table patient-name"><h3 class="col">'+user.patient_id+'</h3><h3 class="col">'+user.firstname+'</h3><h3 class="col">'+user.lastname+'</h3><h3 class="col">'+user.sex+'</h3><div class="col"><a href="/desktop_patient.html?user='+childKey+'"><button type="button" class="btn btn-outline-light" style="border: 1px solid #39588A; color: #39588A">ประวัติ</button></a></div></div>';
+            });
+            users_container = users_container + '</div>';
+            $("#users").html(users_container)
+        });
+    </script>
   </head>
   <body>
     <nav class="navbar">
-        <div class="col">
-            <a href="/home.html"><img class= "logo-return" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fback.png?alt=media&token=4b2dc79f-e33c-4f03-8520-29ce0cc6cb4d"></a>
-        </div>
+        <div class="col"></div>
         <div class="col">
             <center>
-                <a href="/home.html"><img class= "logo-img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/logo_white.png?alt=media&token=7ea16ae2-206b-41b9-90de-33799268daf4"></a>   
+                <a href="/desktop_home.html"><img class= "logo-img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/logo_white.png?alt=media&token=7ea16ae2-206b-41b9-90de-33799268daf4"></a>   
             </center>
         </div>
         <div class="col"></div>
@@ -46,50 +103,7 @@
       </div> 
     </div>
     <br>
-    <div class="container">
-        <div class="row row-table">
-            <h3 class="col head-table">รหัสผู้ป่วย</h3>
-            <h3 class="col head-table">ชื่อ</h3>
-            <h3 class="col head-table">นามสกุล</h3>
-            <h3 class="col head-table">เบอร์โทรศัพท์</h3>
-            <h3 class="col head-table">ดูประวัติ</h3>
-        </div>
-        <div class="row row-table patient-name">
-            <h3 class="col">HN00001</h3>
-            <h3 class="col">ชัยธินิน</h3>
-            <h3 class="col">รัตนทารส</h3>
-            <h3 class="col">+668-0000-0001</h3>
-            <div class="col">
-                <button type="button" class="btn btn-outline-light" style="border: 1px solid #39588A; color: #39588A">ประวัติ</button>
-            </div>
-        </div>
-        <div class="row row-table patient-name">
-            <h3 class="col">HN00001</h3>
-            <h3 class="col">ขวัญปิยาพัช</h3>
-            <h3 class="col">ธนกุลจิรชัย</h3>
-            <h3 class="col">+668-0000-0001</h3>
-            <div class="col">
-                <button type="button" class="btn btn-outline-light" style="border: 1px solid #39588A; color: #39588A">ประวัติ</button>
-            </div>
-        </div>
-        <div class="row row-table patient-name">
-            <h3 class="col">HN00001</h3>
-            <h3 class="col">ชัยธินิน</h3>
-            <h3 class="col">รัตนทารส</h3>
-            <h3 class="col">+668-0000-0001</h3>
-            <div class="col">
-                <button type="button" class="btn btn-outline-light" style="border: 1px solid #39588A; color: #39588A">ประวัติ</button>
-            </div>
-        </div>
-        <div class="row row-table patient-name">
-                <h3 class="col">HN00001</h3>
-                <h3 class="col">ชัยธินิน</h3>
-                <h3 class="col">รัตนทารส</h3>
-                <h3 class="col">+668-0000-0001</h3>
-                <div class="col">
-                    <button type="button" class="btn btn-outline-light" style="border: 1px solid #39588A; color: #39588A">ประวัติ</button>
-                </div>
-            </div>
-    </div>
+    <div id="users"></div>
+    <div style="display:none" id="load">Loading...</div>
   </body>
 </html>
