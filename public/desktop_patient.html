@@ -5,10 +5,58 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title> Firebase Hosting</title>
+    <title>ปันสุข | ประวัติผู้ป่วย</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+
+    <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyCE4QfVxXo4HZAyfoL5pLtCdrqEPZMqjnk",
+        authDomain: "support-7fdcd.firebaseapp.com",
+        databaseURL: "https://support-7fdcd.firebaseio.com",
+        projectId: "support-7fdcd",
+        storageBucket: "support-7fdcd.appspot.com",
+        messagingSenderId: "144995411560"
+      };
+      firebase.initializeApp(config);
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+      // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+      // // The Firebase SDK is initialized and available here!
+      
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          // User is signed in.
+          var phoneNumber = user.phoneNumber;
+          //document.getElementById('phoneNumber').innerHTML = phoneNumber;
+          $("#phoneNumber").val(phoneNumber);
+        } else {
+          // User is signed out.
+          window.location.replace("/index.html");
+        }
+      }, function(error) {
+        console.log(error);
+      });
+
+      //firebase.database().ref('/path/to/ref').on('value', snapshot => { });
+      //firebase.messaging().requestPermission().then(() => { });
+      //firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
+      
+      // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+
+      try {
+        let app = firebase.app();
+        let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
+        document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
+      } catch (e) {
+        document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
+      }
+      });
+    </script>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -76,8 +124,8 @@
       }
     </script>
     <script type="text/javascript">
-         google.charts.load('current', {'packages':['bar']});
-      google.charts.setOnLoadCallback(drawChart);
+        google.charts.load('current', {'packages':['bar']});
+        google.charts.setOnLoadCallback(drawChart);
 
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
@@ -103,21 +151,219 @@
         chart.draw(data, google.charts.Bar.convertOptions(options));
         }
     </script>
-
   </head>
   <body>
     <nav class="navbar">
         <div class="col">
-            <a href="/home.html"><img class= "logo-return" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fback.png?alt=media&token=4b2dc79f-e33c-4f03-8520-29ce0cc6cb4d"></a>
+            <a href="/desktop_home.html"><img class= "logo-return" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fback.png?alt=media&token=4b2dc79f-e33c-4f03-8520-29ce0cc6cb4d"></a>
         </div>
         <div class="col">
             <center>
-                    <a href="/home.html"><img class= "logo-img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/logo_white.png?alt=media&token=7ea16ae2-206b-41b9-90de-33799268daf4"></a>   
+                <a href="/desktop_home.html"><img class= "logo-img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/logo_white.png?alt=media&token=7ea16ae2-206b-41b9-90de-33799268daf4"></a>   
             </center>
         </div>
         <div class="col"></div>
     </nav>      
-    <br>        
+    <br>
+    <script>
+        $(document).ready(function() {
+            var urlParams = new URLSearchParams(location.search);
+            var patient = urlParams.get('patient');
+            $("#record_patient_id").val(patient);
+            $("#chat_patient_id").val(patient);
+
+            var date = new Date();
+    
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+    
+            if (month < 10) month = "0" + month;
+            if (day < 10) day = "0" + day;
+    
+            var today = year + "-" + month + "-" + day;
+
+            var record_date = today;
+            var chat_date = today;
+            
+            var record_date_query = Date.parse(today);
+            var chat_date_query = date.toDateString();
+
+            if(urlParams.get('record_date')){
+                record_date = urlParams.get('record_date');
+                record_date_query = Date.parse(urlParams.get('record_date'));
+
+                $("#pills-home-tab").attr("class", "nav-link");
+                $("#pills-home").attr("class", "tab-pane fade");
+                $("#pills-profile-tab").attr("class","nav-link active");
+                $("#pills-profile").attr("class","tab-pane fade show active");
+            }
+            else if(urlParams.get('chat_date')){
+                chat_date = urlParams.get('chat_date');
+                chat_date_query = Date.parse(urlParams.get('chat_date'));
+                chat_date_query = new Date(chat_date_query).toDateString();
+
+                $("#pills-home-tab").attr("class", "nav-link");
+                $("#pills-home").attr("class", "tab-pane fade");
+                $("#pills-contact-tab").attr("class","nav-link active");
+                $("#pills-contact").attr("class","tab-pane fade show active");
+            }
+            $("#record_date").attr("value", record_date);
+            $("#chat_date").attr("value", chat_date);
+
+            var database = firebase.database();
+            var patient_line_id = "";
+            var users = database.ref("users/"+patient.replace(" ","+"));
+            users.on('value', function(snapshot) {
+                user = snapshot.val();
+                patient_line_id = user.line_id;
+                $("#pid").val(user.patient_id)
+                $("#firstname").val(user.firstname)
+                $("#lastname").val(user.lastname)
+                if(user.sex == "หญิง"){
+                    sex = '<img class="Select col-3" src="Picture/Not_Select.png"><h2 class="Gender col-3 text-muted">ชาย</h2><img class="Select col-3" src="Picture/Select.png"><h2 class="Gender col-3 text-muted">หญิง</h2>'
+                }
+                else{
+                    sex = '<img class="Select col-3" src="Picture/Select.png"><h2 class="Gender col-3 text-muted">ชาย</h2><img class="Select col-3" src="Picture/Not_Select.png"><h2 class="Gender col-3 text-muted">หญิง</h2>'
+                }
+                $("#sex").html(sex)
+                var date = new Date(user.birthdate);
+                var birth_day = date.getDate();
+                var birth_month = date.getMonth() + 1;
+                var birth_year = date.getFullYear();
+                if (birth_month < 10) month = "0" + birth_month;
+                if (birth_day < 10) day = "0" + birth_day;
+                var birthdate = year + "-" + month + "-" + day;
+                today_date = new Date();
+                today_year = today_date.getFullYear();
+                today_month = today_date.getMonth();
+                today_day = today_date.getDate();
+                age = today_year - birth_year;
+                if ( today_month < (birth_month - 1))
+                {
+                    age--;
+                }
+                if (((birth_month - 1) == today_month) && (today_day < birth_day))
+                {
+                    age--;
+                }
+                $("#age").val(age)
+                $("#birth").val(birthdate)
+                $("#weight").val(user.weight)
+                $("#height").val(user.height)
+                //user
+                console.log(user);
+            });
+
+            var records = database.ref("records");
+            // var time_rec = '';
+            var rec = '';
+            records.orderByChild('time').on('value', function(snapshot) {
+                var drinking_sum = 0;
+                var urine_sum = 0;
+                var cath_sum = 0;
+                snapshot.forEach(function(childSnapshot) {
+                    var childKey = childSnapshot.key;
+                    record = childSnapshot.val();
+                    var timestamp = new Date(record.timestamp);
+                    if((record.phoneNumber==patient.replace(" ","+")&&(record.date==record_date_query))){
+                        console.log(timestamp);
+                        console.log(record);
+                        var time = record.time;
+                        // console.log('timeeee  '+time);
+                        var time_rec = '<h3 class="col">'+time+'</h3>'
+                        var phone = record.phoneNumber;
+                        phoneNumber = '0'+phone.substr(3,2)+'-'+phone.substr(5,);
+                        $("#phone").val(phoneNumber)
+                        var date = new Date(timestamp);
+                        var day = date.getDate();
+                        var month = date.getMonth() + 1;
+                        var year = date.getFullYear();
+                        var hours = date.getHours();
+                        var minutes = date.getMinutes();
+                        var seconds = date.getSeconds();
+                        if (month < 10) month = "0" + month;
+                        if (day < 10) day = "0" + day;
+                        var daterecord = '<div class="col"><h3>'+ day + '/' + month + '/' + year+ '</h3><h3>'+hours+":"+minutes+":"+seconds+'</h3></div>';
+                        console.log(daterecord);
+                        var data = record.data;
+                        var drinking_rec = '';
+                        var other_rec = '';
+                        var catherization_rec = '';
+                        var urine_rec = '';
+                        var in_rec = '';
+                        if((data.drinking == undefined) == false){
+                            Object.keys(data.drinking).forEach(function (keys){
+                                console.log(keys); // key
+                                console.log(data.drinking[keys]); // value
+                                drinking_rec += '<h3>'+keys+' '+data.drinking[keys]+'</h3>';
+                            });
+                        }
+                        else if ((data.drinking == undefined) == true){
+                            drinking_rec += '';
+                        }
+                        if ((data.catherization == undefined) == true){
+                            other_rec += '<h3 class="col 1.1"></h3>';
+                        }
+                        else if ((data.catherization == undefined) == false){
+                            other_rec += '<h3 class="col 1.2">'+data.catherization+'</h3>';
+                        }
+                        if ((data.urine == undefined) == true){
+                            other_rec += '<h3 class="col 2.1"></h3>';
+                        }
+                        else if ((data.urine == undefined) == false){
+                            other_rec += '<h3 class="col 2.2">'+data.urine+'</h3>';
+                        }
+                        if ((data.other == undefined) == true){
+                            other_rec += '<h3 class="col 3.1"></h3>';
+                        }
+                        else if ((data.other == undefined) == false){
+                            other_rec += '<h3 class="col 3.2">'+data.other+'</h3>';
+                        }   
+                        drinking_all = '<div class="col">'+drinking_rec+'</div>'
+                        console.log(drinking_rec);
+                        //record
+                        console.log('other:'+record.data.other);
+                        rec += '<div class="row row-table patient-table" >'+time_rec+drinking_all+other_rec+daterecord+'</div>';
+                        console.log(rec);
+                        patient_rec = rec
+                        $("#patient_rec").html(patient_rec)
+                    }
+                });
+            });
+
+            var messages = database.ref("messages");
+            var array_time = '';
+            var old_time = '';
+            messages.orderByChild('time').on('value', function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
+                    var childKey = childSnapshot.key;
+                    message = childSnapshot.val();
+                    var time = new Date(message.time).getHours()+":"+new Date(message.time).getMinutes();
+                    if((message.user==patient_line_id)&&(new Date(message.time).toDateString()==chat_date_query)){
+                        //message and time
+                        // console.log(time);
+                        // console.log(message);
+                        var reply = '';
+                        var text = '';
+                        text += '<tbody><td class="card badge-chat d-inline-flex" style="text-align: left;">'+message.text+'</td><td></td></tbody>';
+                        for (i=0;i<message.reply.length;i++){
+                            reply += '<tbody><td></td><td class="card card-punsook punsook-chat d-inline-flex" style="text-align: left;">'+message.reply[i]+'</td></tbody>';
+                        }                 
+                        if (time != old_time){
+                            array_time += '<h1 class="middle_line-chat"></h1><center>'+time+'</center><table class="table table-borderless"><thead><tr><th scope="col" style="width:50%;"></th><th scope="col" style="width:50%;"></th></tr></thead>'+text+reply+'</table>';
+                        }
+                        else{
+                            array_time += '<table class="table table-borderless"><thead><tr><th scope="col" style="width:50%;"></th><th scope="col" style="width:50%;"></th></tr></thead>'+text+reply+'</table>';
+                        }
+                        timechat = '<div class="record-chat">'+array_time+'</div>'
+                        $("#timechat").html(timechat)
+                        old_time = time;
+                    }
+                });
+            });
+        });
+    </script>
     <div class="row">
         <div class="container col-3 container-profile">
             <br>
@@ -131,7 +377,7 @@
                         <h1 class="profile">รหัสผู้ป่วย</h1>   
                     </div>       
                     <div class="form-group col-7">
-                        <input type="text" id="disabledTextInput" class="form-control" placeholder="HT13451265">
+                        <input type="text" id="pid" class="form-control">
                     </div>    
                 </div>
                 <div class="row">
@@ -139,7 +385,7 @@
                         <h1 class="profile">ชื่อ</h1>   
                     </div>       
                     <div class="form-group col-7">
-                        <input type="text" id="disabledTextInput" class="form-control" placeholder="ยักไล่ยักเล็ก">
+                        <input type="text" id="firstname" class="form-control">
                     </div>
                 </div>
                 <div class="row">
@@ -147,7 +393,7 @@
                             <h1 class="profile">นามสกุล</h1>   
                         </div>       
                         <div class="form-group col-7">
-                            <input type="text" id="disabledTextInput" class="form-control" placeholder="ยักเกเรนิสัย">
+                            <input type="text" id="lastname" class="form-control">
                         </div>
                     </div>
                 <div class="row">
@@ -155,14 +401,7 @@
                         <h1 class="profile">เพศ</h1>   
                     </div>       
                     <div class="form-group col-7">
-                        <div class="row">
-                            <!-- <input type="radio" name="rsvp"> -->
-                            <img class="Select col-3" src="Picture/Select.png">
-                            <h2 class="Gender col-3 text-muted">ชาย</h2>
-                            <!-- <input type="radio" name="rsvp" disabled> -->
-                            <img class="Select col-3" src="Picture/Not_Select.png">
-                            <h2 class="Gender col-3 text-muted">หญิง</h2>
-                        </div>                    
+                        <div class="row" id="sex"></div>                    
                     </div>
                 </div>
                 <div class="row">
@@ -170,7 +409,7 @@
                         <h1 class="profile">วันเกิด</h1>   
                     </div>       
                     <div class="form-group col-7">
-                        <input type="text" id="disabledTextInput" class="form-control" placeholder="30 มกราคม 2500">
+                        <input type="text" id="birth" class="form-control">
                     </div>
                 </div>
                 <h1 class="middle_line"></h1>
@@ -179,7 +418,7 @@
                         <h1 class="profile">อายุ</h1>   
                     </div>       
                     <div class="form-group col-4">
-                        <input class="form-control" type="text" placeholder="38">
+                        <input class="form-control" type="text" id="age">
                     </div>
                     <div class="col-3 unit">
                         <h1 class="profile">ปี</h1>
@@ -190,7 +429,7 @@
                         <h1 class="profile">น้ำหนัก</h1>   
                     </div>       
                     <div class="form-group col-4">
-                        <input class="form-control" type="text" placeholder="55">
+                        <input class="form-control" type="text" id="weight">
                     </div>
                     <div class="col-3 unit">
                         <h1 class="profile">กิโลกรัม</h1>
@@ -201,11 +440,20 @@
                         <h1 class="profile">ส่วนสูง</h1>   
                     </div>       
                     <div class="form-group col-4">
-                        <input class="form-control" type="text" placeholder="173">
+                        <input class="form-control" type="text" id="height">
                     </div>
                     <div class="col-3 unit">
                         <h1 class="profile">เซ็นติเมตร</h1>
                     </div>
+                </div>
+                <h1 class="middle_line"></h1>
+                <div class="row">
+                    <div class="col-3">                   
+                        <h1 class="profile">เบอร์ติดต่อ</h1>   
+                    </div>       
+                    <div class="form-group col-7">
+                        <input type="text" id="phone" class="form-control">
+                    </div>    
                 </div>
             </fieldset> 
             <br>
@@ -250,7 +498,7 @@
                             <h2 class="legend">ดื่มน้ำ</h2>
                             <span class="badge" style="background-color: #FFD0BB; width:20px; color: #FFD0BB">8</span>
                             <h2 class="legend">ปัสสาวะ</h2>
-                    </div>                 
+                    </div>
                 </div>
                 <div class='container-graph'>
                     <br>
@@ -450,7 +698,7 @@
                 </div>
                 <div class='container-solution'>
                     <br>
-                    <h1 class="topic">ช่วงเวลาที่ดื่มน้ำ-ปัสสาวะบ่อย</h1>
+                    <h1 class="topic">แก้ปัญหาระหว่างสวนปัสสาวะสำเร็จ</h1>
                     <h1 class="middle_line-graph"></h1>
                     <div class="row">                      
                             <div class="col">
@@ -477,7 +725,7 @@
                 <div class='container-test'>
                     <br>
                     <div class="row">
-                        <h1 class="topic col-9">จำนวนครั้งที่ถามแชทบอท โดยแบ่งตามหมวด</h1>
+                        <h1 class="topic col-9">คะแนนแบบทดสอบความรู้ก่อน-หลัง</h1>
                         <button class="btn btn-link col-2" data-toggle="collapse" href="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2">
                             ดูเพิ่มเติม
                         </button>
@@ -492,15 +740,14 @@
                         </div>
                         <div class="col">
                         <center>
-                            <h1 class="sol-value" style="color: #FFD0BB">50%</h1>
+                            <h1 class="sol-value" style="color: #FFD0BB">14</h1>
                             <h2 class="sol">จาก 15 คะแนน</h2>
                         </center>
                         </div>
                     </div>  
                 </div>
-            </div>
-            <br>
-            <div class="collapse" id="collapseExample2">
+                <br>
+                <div class="collapse" id="collapseExample2">
                     <div class="card card-body">
                             <table class="table">
                                 <thead>
@@ -611,12 +858,18 @@
                     </div>
                     <br>
             </div>
+            </div>
+            <br>
             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                <div class="container-date">   
+                <div class="container-date">
                     <div class="row row-date">
-                        <h1 class="topic">วันที่</h1>   
-                        <input class="date" type="date" id="date" name="trip-start">
-                    </div>               
+                        <form action="">
+                            <label for="record_date" class="topic">วันที่</label>
+                            <input type="hidden" name="patient" id="record_patient_id">
+                            <input class="date" type="date" id="record_date" name="record_date">
+                            <button type="submit" class="btn btn-default">ค้นหา</button>
+                        </form>
+                    </div>
                 </div>
                 <br>
                 <div class="container-table">
@@ -626,8 +879,10 @@
                         <h3 class="col head-table">สวนปัสสาวะ(ซีซี)</h3>
                         <h3 class="col head-table">ปัสสาวะเอง(ซีซี) </h3>
                         <h3 class="col head-table">อื่น ๆ</h3>
+                        <h3 class="col head-table">เวลาที่ทำการบันทึก</h3>
                     </div>
-                    <div class="row row-table patient-table">
+                    <div id='patient_rec'>
+                    <!-- <div class="row row-table patient-table" >
                         <h3 class="col">6.00</h3>
                         <div class="col">
                             <h3>น้ำ 100</h3>
@@ -636,6 +891,7 @@
                         <h3 class="col">400</h3>
                         <h3 class="col"></h3>
                         <h3 class="col"></h3>
+                        <h3 class="col">12/01/2016 12:00</h3>
                     </div>
                     <div class="row row-table patient-table">
                         <h3 class="col">6.00</h3>
@@ -646,6 +902,7 @@
                         <h3 class="col">400</h3>
                         <h3 class="col">100</h3>
                         <h3 class="col"></h3>
+                        <h3 class="col">12/01/2016 12:00</h3>
                     </div>
                     <div class="row row-table patient-table">
                         <h3 class="col">6.00</h3>
@@ -654,6 +911,7 @@
                         <h3 class="col">400</h3>
                         <h3 class="col"></h3>
                         <h3 class="col">เลือดออก</h3>
+                        <h3 class="col">12/01/2016 12:00</h3>
                     </div>
                     <div class="row row-table patient-table">
                         <h3 class="col">6.00</h3>
@@ -662,6 +920,7 @@
                         <h3 class="col">400</h3>
                         <h3 class="col">20</h3>
                         <h3 class="col"></h3>
+                        <h3 class="col">12/01/2016 12:00</h3>
                     </div>
                     <div class="row row-table total">
                         <h3 class="col col-total">รวม</h3>
@@ -669,15 +928,21 @@
                         <h3 class="col col-total">400</h3>
                         <h3 class="col col-total">20</h3>
                         <h3 class="col col-total"></h3>
+                        <h3 class="col"></h3>
+                    </div> -->
                     </div>
                 </div>
             </div>
             <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
                 <div class="container-date">   
                     <div class="row row-date">
-                        <h1 class="topic">วันที่</h1>   
-                        <input class="date" type="date" id="date" name="trip-start">
-                    </div>               
+                        <form action="">
+                            <label for="chat_date2" class="topic">วันที่</label>
+                            <input type="hidden" name="patient" id="chat_patient_id">
+                            <input class="date" type="date" id="chat_date" name="chat_date">
+                            <button type="submit" class="btn btn-default">ค้นหา</button>
+                        </form>
+                    </div>
                 </div>
                 <br>
                 <div class="container-table">
@@ -685,73 +950,73 @@
                         <h3 class="col col-chat" style="text-align: left;">ผู้ป่วย</h3>
                         <h3 class="col col-chat" style="text-align: right;">ปันสุข</h3>
                     </div>
-                    <div class="chat-list">
-                    <div class="record-chat">
-                        <center>
-                            <h3 class="time-chat">8.00</h3>
-                        </center>
-                        <table class="table table-borderless">
-                            <thead>
-                                <tr>
-                                    <th scope="col" style="width:50%;"></th>
-                                    <th scope="col" style="width:50%;"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <td class="card badge-chat d-inline-flex" style="text-align: left;">สวัสดีครับ</td>
-                                <td></td>
-                            </tbody>
-                            <tbody>
-                                <td></td>
-                                <td class="card card-punsook punsook-chat d-inline-flex" style="text-align: left;">สวัสดีคะ</td>
-                            </tbody>
-                            <tbody>
-                                <td></td>
-                                <td class="card card-punsook punsook-chat d-inline-flex" style="text-align: left;">อยากรู้เกี่ยวกับเรา ลองพิมพ์ "คุณทำอะไร" ดูสิ</td>
-                            </tbody>
-                        </table>
-                        <h1 class="middle_line-chat"></h1>
+                    <div class="chat-list" id="timechat">
+                        <!-- <div class="record-chat" > -->
+                            <!-- <center>
+                            </center> -->
+                            <!-- <table class="table table-borderless"> -->
+                                <!-- <thead>
+                                    <tr>
+                                        <th scope="col" style="width:50%;"></th>
+                                        <th scope="col" style="width:50%;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <td class="card badge-chat d-inline-flex" style="text-align: left;">สวัสดีครับ</td>
+                                    <td></td>
+                                </tbody>
+                                <tbody>
+                                    <td></td>
+                                    <td class="card card-punsook punsook-chat d-inline-flex" style="text-align: left;">สวัสดีคะ</td>
+                                </tbody>
+                                <tbody>
+                                    <td></td>
+                                    <td class="card card-punsook punsook-chat d-inline-flex" style="text-align: left;">อยากรู้เกี่ยวกับเรา ลองพิมพ์ "คุณทำอะไร" ดูสิ</td>
+                                </tbody> -->
+                            <!-- </table> -->
+                            <!-- <h1 class="middle_line-chat"></h1> -->
+                        <!-- </div> -->
+                        <!-- <div class="record-chat">
+                            <center>
+                                <h3 class="time-chat">8.01</h3>
+                            </center>
+                            <table class="table table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style="width:50%;"></th>
+                                        <th scope="col" style="width:50%;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <td class="card badge-chat d-inline-flex" style="text-align: left;">ดื่มน้ำอย่างไร</td>
+                                    <td></td>
+                                </tbody>
+                                <tbody>
+                                    <td></td>
+                                    <td class="card card-punsook punsook-chat d-inline-flex" style="text-align: left;">1. ดื่มน้ำประมาณ 200-250 ซีซี ทุก 2 ชม. ตั้งแต่ 6.00-20.00 น. งดหลังจากนี้ เพราะจะไม่สวนปัสสาวะหลังเที่ยงคืน</td>
+                                </tbody>
+                                <tbody>
+                                    <td></td>
+                                    <td class="card card-punsook punsook-chat d-inline-flex" style="text-align: left;">2. ไม่ควรดื่มน้ำมากกว่า 500 ซีซี ใน 4 ชม.</td>
+                                </tbody>
+                                <tbody>
+                                    <td></td>
+                                    <td class="card card-punsook punsook-chat d-inline-flex" style="text-align: left;">3. หากดื่มน้ำผลไม้ นม เครื่องดื่มหรืออาหารที่ มีส่วนประกอบของน้ำ ต้องนำมาหักออกด้วย</td>
+                                </tbody>
+                                <tbody>
+                                    <td></td>
+                                    <td class="card card-punsook punsook-chat d-inline-flex" style="text-align: left;">4. ไม่ควรดื่มชา กาแฟ หรือน้ำอัดลม เพราะกระตุ้นให้ปัสสาวะมากขึ้น</td>
+                                </tbody>
+                            </table>
+                            <h1 class="middle_line-chat"></h1>
+                        </div> -->
                     </div>
-                    <div class="record-chat">
-                        <center>
-                            <h3 class="time-chat">8.01</h3>
-                        </center>
-                        <table class="table table-borderless">
-                            <thead>
-                                <tr>
-                                    <th scope="col" style="width:50%;"></th>
-                                    <th scope="col" style="width:50%;"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <td class="card badge-chat d-inline-flex" style="text-align: left;">ดื่มน้ำอย่างไร</td>
-                                <td></td>
-                            </tbody>
-                            <tbody>
-                                <td></td>
-                                <td class="card card-punsook punsook-chat d-inline-flex" style="text-align: left;">1. ดื่มน้ำประมาณ 200-250 ซีซี ทุก 2 ชม. ตั้งแต่ 6.00-20.00 น. งดหลังจากนี้ เพราะจะไม่สวนปัสสาวะหลังเที่ยงคืน</td>
-                            </tbody>
-                            <tbody>
-                                <td></td>
-                                <td class="card card-punsook punsook-chat d-inline-flex" style="text-align: left;">2. ไม่ควรดื่มน้ำมากกว่า 500 ซีซี ใน 4 ชม.</td>
-                            </tbody>
-                            <tbody>
-                                <td></td>
-                                <td class="card card-punsook punsook-chat d-inline-flex" style="text-align: left;">3. หากดื่มน้ำผลไม้ นม เครื่องดื่มหรืออาหารที่ มีส่วนประกอบของน้ำ ต้องนำมาหักออกด้วย</td>
-                            </tbody>
-                            <tbody>
-                                <td></td>
-                                <td class="card card-punsook punsook-chat d-inline-flex" style="text-align: left;">4. ไม่ควรดื่มชา กาแฟ หรือน้ำอัดลม เพราะกระตุ้นให้ปัสสาวะมากขึ้น</td>
-                            </tbody>
-                        </table>
-                        <h1 class="middle_line-chat"></h1>
-                    </div>
-                </div>
                 </div>
             </div>
             </div>
         </div>
     </div>
-    
+    <div id="phoneNumber"></div>
+    <div style="display:none" id="load">Loading...</div>
   </body>
 </html>
