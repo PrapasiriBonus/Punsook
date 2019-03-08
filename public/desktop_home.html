@@ -60,28 +60,39 @@
     <link href="css/desktop_home.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
     <script>
-        var databaseRef = firebase.database().ref("users");
-        databaseRef.orderByChild('patient_id').on('value', function(snapshot) {
-            var users_container = '<div class="container"><div class="row row-table"><h3 class="col head-table">รหัสผู้ป่วย</h3><h3 class="col head-table">ชื่อ</h3><h3 class="col head-table">นามสกุล</h3><h3 class="col head-table">เพศ</h3><h3 class="col head-table">ดูประวัติ</h3></div>';
-            snapshot.forEach(function(childSnapshot) {
-                var childKey = childSnapshot.key;
-                user = childSnapshot.val();
-                users_container = users_container +'<div class="row row-table patient-name"><h3 class="col">'+user.patient_id+'</h3><h3 class="col">'+user.firstname+'</h3><h3 class="col">'+user.lastname+'</h3><h3 class="col">'+user.sex+'</h3><div class="col"><a href="/desktop_patient.html?user='+childKey+'"><button type="button" class="btn btn-outline-light" style="border: 1px solid #39588A; color: #39588A">ประวัติ</button></a></div></div>';
-            });
-            users_container = users_container + '</div>';
-            $("#users").html(users_container)
+      var date = new Date();
+
+      var day = date.getDate();
+      var month = date.getMonth() + 1;
+      var year = date.getFullYear();
+
+      if (month < 10) month = "0" + month;
+      if (day < 10) day = "0" + day;
+
+      var today = year + "-" + month + "-" + day;
+
+      var databaseRef = firebase.database().ref("users");
+      databaseRef.orderByChild('patient_id').on('value', function(snapshot) {
+        var users_container = '<div class="container"><div class="row row-table"><h3 class="col head-table">รหัสผู้ป่วย</h3><h3 class="col head-table">ชื่อ</h3><h3 class="col head-table">นามสกุล</h3><h3 class="col head-table">เพศ</h3><h3 class="col head-table">ดูประวัติ</h3></div>';
+        snapshot.forEach(function(childSnapshot) {
+          var childKey = childSnapshot.key;
+          user = childSnapshot.val();
+          users_container = users_container +'<div class="row row-table patient-name"><h3 class="col">'+user.patient_id+'</h3><h3 class="col">'+user.firstname+'</h3><h3 class="col">'+user.lastname+'</h3><h3 class="col">'+user.sex+'</h3><div class="col"><a href="/desktop_patient.html?patient='+childKey+'"><button type="button" class="btn btn-outline-light" style="border: 1px solid #39588A; color: #39588A">ประวัติ</button></a></div></div>';
         });
+        users_container = users_container + '</div>';
+        $("#users").html(users_container)
+      });
     </script>
   </head>
   <body>
     <nav class="navbar">
-        <div class="col"></div>
-        <div class="col">
-            <center>
-                <a href="/desktop_home.html"><img class= "logo-img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/logo_white.png?alt=media&token=7ea16ae2-206b-41b9-90de-33799268daf4"></a>   
-            </center>
-        </div>
-        <div class="col"></div>
+      <div class="col"></div>
+      <div class="col">
+        <center>
+          <a href="/desktop_home.html"><img class= "logo-img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/logo_white.png?alt=media&token=7ea16ae2-206b-41b9-90de-33799268daf4"></a>   
+        </center>
+      </div>
+      <div class="col"></div>
     </nav>
     <br>
     <div class="nav row">

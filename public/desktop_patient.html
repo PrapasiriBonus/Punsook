@@ -10,6 +10,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
 
+    <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyCE4QfVxXo4HZAyfoL5pLtCdrqEPZMqjnk",
+        authDomain: "support-7fdcd.firebaseapp.com",
+        databaseURL: "https://support-7fdcd.firebaseio.com",
+        projectId: "support-7fdcd",
+        storageBucket: "support-7fdcd.appspot.com",
+        messagingSenderId: "144995411560"
+      };
+      firebase.initializeApp(config);
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+      // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+      // // The Firebase SDK is initialized and available here!
+      
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          // User is signed in.
+          var phoneNumber = user.phoneNumber;
+          //document.getElementById('phoneNumber').innerHTML = phoneNumber;
+          $("#phoneNumber").val(phoneNumber);
+        } else {
+          // User is signed out.
+          window.location.replace("/index.html");
+        }
+      }, function(error) {
+        console.log(error);
+      });
+
+      //firebase.database().ref('/path/to/ref').on('value', snapshot => { });
+      //firebase.messaging().requestPermission().then(() => { });
+      //firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
+      
+      // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+
+      try {
+        let app = firebase.app();
+        let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
+        document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
+      } catch (e) {
+        document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
+      }
+      });
+    </script>
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
@@ -76,8 +124,8 @@
       }
     </script>
     <script type="text/javascript">
-         google.charts.load('current', {'packages':['bar']});
-      google.charts.setOnLoadCallback(drawChart);
+        google.charts.load('current', {'packages':['bar']});
+        google.charts.setOnLoadCallback(drawChart);
 
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
@@ -103,7 +151,6 @@
         chart.draw(data, google.charts.Bar.convertOptions(options));
         }
     </script>
-
   </head>
   <body>
     <nav class="navbar">
@@ -117,7 +164,95 @@
         </div>
         <div class="col"></div>
     </nav>      
-    <br>        
+    <br>
+    <script>
+        $(document).ready(function() {
+            var urlParams = new URLSearchParams(location.search);
+            var patient = urlParams.get('patient');
+            $("#record_patient_id").val(patient);
+            $("#chat_patient_id").val(patient);
+
+            var date = new Date();
+    
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+    
+            if (month < 10) month = "0" + month;
+            if (day < 10) day = "0" + day;
+    
+            var today = year + "-" + month + "-" + day;
+
+            var record_date = today;
+            var chat_date = today;
+            
+            var record_date_query = Date.parse(today);
+            var chat_date_query = date.toDateString();
+
+            if(urlParams.get('record_date')){
+                record_date = urlParams.get('record_date');
+                record_date_query = Date.parse(urlParams.get('record_date'));
+
+                $("#pills-home-tab").attr("class", "nav-link");
+                $("#pills-home").attr("class", "tab-pane fade");
+                $("#pills-profile-tab").attr("class","nav-link active");
+                $("#pills-profile").attr("class","tab-pane fade show active");
+            }
+            else if(urlParams.get('chat_date')){
+                chat_date = urlParams.get('chat_date');
+                chat_date_query = Date.parse(urlParams.get('chat_date'));
+                chat_date_query = new Date(chat_date_query).toDateString();
+
+                $("#pills-home-tab").attr("class", "nav-link");
+                $("#pills-home").attr("class", "tab-pane fade");
+                $("#pills-contact-tab").attr("class","nav-link active");
+                $("#pills-contact").attr("class","tab-pane fade show active");
+            }
+            $("#record_date").attr("value", record_date);
+            $("#chat_date").attr("value", chat_date);
+
+            var database = firebase.database();
+            var patient_line_id = "";
+            var users = database.ref("users/"+patient.replace(" ","+"));
+            users.on('value', function(snapshot) {
+                user = snapshot.val();
+                patient_line_id = user.line_id;
+                //user
+                console.log(user);
+            });
+
+            var records = database.ref("records");
+            records.orderByChild('time').on('value', function(snapshot) {
+                var drinking_sum = 0;
+                var urine_sum = 0;
+                var cath_sum = 0;
+                snapshot.forEach(function(childSnapshot) {
+                    var childKey = childSnapshot.key;
+                    record = childSnapshot.val();
+                    var timestamp = new Date(record.timestamp);
+                    if((record.phoneNumber==patient.replace(" ","+")&&(record.date==record_date_query))){
+                        //record
+                        console.log(timestamp);
+                        console.log(record);
+                    }
+                });
+            });
+
+            var messages = database.ref("messages");
+            messages.orderByChild('time').on('value', function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
+                    var childKey = childSnapshot.key;
+                    message = childSnapshot.val();
+                    var time = new Date(message.time).getHours()+":"+new Date(message.time).getMinutes();
+                    if((message.user==patient_line_id)&&(new Date(message.time).toDateString()==chat_date_query)){
+                        //message and time
+                        console.log(time);
+                        console.log(message);
+                    }
+                });
+            });
+        });
+    </script>
     <div class="row">
         <div class="container col-3 container-profile">
             <br>
@@ -250,7 +385,7 @@
                             <h2 class="legend">ดื่มน้ำ</h2>
                             <span class="badge" style="background-color: #FFD0BB; width:20px; color: #FFD0BB">8</span>
                             <h2 class="legend">ปัสสาวะ</h2>
-                    </div>                 
+                    </div>
                 </div>
                 <div class='container-graph'>
                     <br>
@@ -612,11 +747,15 @@
                     <br>
             </div>
             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                <div class="container-date">   
+                <div class="container-date">
                     <div class="row row-date">
-                        <h1 class="topic">วันที่</h1>   
-                        <input class="date" type="date" id="date" name="trip-start">
-                    </div>               
+                        <form action="">
+                            <label for="record_date" class="topic">วันที่</label>
+                            <input type="hidden" name="patient" id="record_patient_id">
+                            <input class="date" type="date" id="record_date" name="record_date">
+                            <button type="submit" class="btn btn-default">ค้นหา</button>
+                        </form>
+                    </div>
                 </div>
                 <br>
                 <div class="container-table">
@@ -675,9 +814,13 @@
             <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
                 <div class="container-date">   
                     <div class="row row-date">
-                        <h1 class="topic">วันที่</h1>   
-                        <input class="date" type="date" id="date" name="trip-start">
-                    </div>               
+                        <form action="">
+                            <label for="chat_date2" class="topic">วันที่</label>
+                            <input type="hidden" name="patient" id="chat_patient_id">
+                            <input class="date" type="date" id="chat_date" name="chat_date">
+                            <button type="submit" class="btn btn-default">ค้นหา</button>
+                        </form>
+                    </div>
                 </div>
                 <br>
                 <div class="container-table">
@@ -752,6 +895,7 @@
             </div>
         </div>
     </div>
-    
+    <div id="phoneNumber"></div>
+    <div style="display:none" id="load">Loading...</div>
   </body>
 </html>
