@@ -231,9 +231,9 @@
                 var birth_day = date.getDate();
                 var birth_month = date.getMonth() + 1;
                 var birth_year = date.getFullYear();
-                if (birth_month < 10) month = "0" + birth_month;
-                if (birth_day < 10) day = "0" + birth_day;
-                var birthdate = year + "-" + month + "-" + day;
+                var months = ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
+                year = birth_year+543;
+                var birthdate = birth_day + " " + months[birth_month] + " " + year;
                 today_date = new Date();
                 today_year = today_date.getFullYear();
                 today_month = today_date.getMonth();
@@ -320,7 +320,7 @@
                         else if ((data.other == undefined) == false){
                             other_rec += '<h3 class="col 3.2">'+data.other+'</h3>';
                         }   
-                        drinking_all = '<div class="col">'+drinking_rec+'</div>'
+                        drinking_all = '<div class="col 0">'+drinking_rec+'</div>'
                         console.log(drinking_rec);
                         //record
                         console.log('other:'+record.data.other);
