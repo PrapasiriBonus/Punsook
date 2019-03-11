@@ -67,90 +67,6 @@
 
     <!-- scrip bar chart -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load("current", {packages:["corechart"]});
-      google.charts.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['ดื่มน้ำ', 'ปัสสาวะ'],
-          [0.5,null],
-          [0.5,0.12],
-          [0.59,0.59],
-          [1.30,1.30],
-          [2.55,2.55],
-          [2.45,2.45],
-          [2.35,2.35],
-          [2.5,2.5],
-          [2.51,3.15],
-          [2.34,2.44],
-          [2.55,2.11],
-          [3.00,3.00],
-          [4.00,17.00],
-          [4.21,7.21],
-          [4.55,4.55],
-          [5.00,5.00],
-          [6.00,null],
-          [10.21,20.21],
-          [12.55,null],
-          [14.00,3.00],
-          [23.00,14.00],
-          [14.21,16.21]
-          ]);
-
-        var options = {
-          height: 200,
-          legend: { position: 'none'},
-          histogram: {
-            hideBucketItems: true,
-            bucketSize: 3
-          },
-          colors: ['#A9BDD7','#FFD0BB'],
-          hAxis: {
-              viewWindowMode: 'explicit',
-              viewWindow: {
-                  max: 23.59
-          			},
-          },
-          chartArea: {
-                left: 10,
-                top: 20,
-                right: 10,
-                bottom: 30,
-                },
-        };
-
-        var chart = new google.visualization.Histogram(document.getElementById('count_time'));
-        chart.draw(data, options);
-      }
-    </script>
-    <script type="text/javascript">
-        google.charts.load('current', {'packages':['bar']});
-        google.charts.setOnLoadCallback(drawChart);
-
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['', 'จำนวนครั้งในเดือนนี้', 'จำนวนครั้งทั้งหมด', 'จำนวนครั้งโดยเฉลี่ยจากผู้ป่วยทั้งหมด'],
-          ['อุปกรณ์', 1000, 400, 200],
-          ['การดื่มน้ำ', 1170, 460, 250],
-          ['การปัสสาวะ ', 660, 1120, 300],
-          ['ปัญหาระหว่างสวน', 1030, 540, 350],
-          ['ภาวะผิดปกติ', 1030, 540, 350]
-        ]);
-                             
-        var options = {
-          legend: { position: 'none'},
-          bars: 'vertical',
-          vAxis: {format: 'decimal'},
-          height: 200,
-          colors: ['#A9BDD7', '#FFD0BB', '#CEA9D7']
-          
-        };
-
-        var chart = new google.charts.Bar(document.getElementById('type_count'));
-
-        chart.draw(data, google.charts.Bar.convertOptions(options));
-        }
-    </script>
   </head>
   <body>
     <nav class="navbar">
@@ -212,11 +128,12 @@
             $("#chat_date").attr("value", chat_date);
 
             var database = firebase.database();
-            var patient_line_id = "";
             var users = database.ref("users/"+patient.replace(" ","+"));
             users.on('value', function(snapshot) {
                 user = snapshot.val();
-                patient_line_id = user.line_id;
+                $("#patient_line_id").val(user.line_id);
+                //user
+                //console.log(user);
                 $("#pid").val(user.patient_id)
                 $("#firstname").val(user.firstname)
                 $("#lastname").val(user.lastname)
@@ -227,23 +144,19 @@
                     sex = '<img class="Select col-3" src="Picture/Select.png"><h2 class="Gender col-3 text-muted">ชาย</h2><img class="Select col-3" src="Picture/Not_Select.png"><h2 class="Gender col-3 text-muted">หญิง</h2>'
                 }
                 $("#sex").html(sex)
-                var date = new Date(user.birthdate);
-                var birth_day = date.getDate();
-                var birth_month = date.getMonth() + 1;
-                var birth_year = date.getFullYear();
+                var birthdate = new Date(user.birthdate);
+                var birth_day = birthdate.getDate();
+                var birth_month = birthdate.getMonth();
+                var birth_year = birthdate.getFullYear();
                 var months = ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
-                year = birth_year+543;
-                var birthdate = birth_day + " " + months[birth_month] + " " + year;
-                today_date = new Date();
-                today_year = today_date.getFullYear();
-                today_month = today_date.getMonth();
-                today_day = today_date.getDate();
-                age = today_year - birth_year;
-                if ( today_month < (birth_month - 1))
+                var birthdate = birth_day + " " + months[birth_month] + " " + (birth_year+543);
+                
+                age = year - birth_year;
+                if (month < birth_month)
                 {
                     age--;
                 }
-                if (((birth_month - 1) == today_month) && (today_day < birth_day))
+                else if ((birth_month == month) && (day < birth_day))
                 {
                     age--;
                 }
@@ -251,124 +164,262 @@
                 $("#birth").val(birthdate)
                 $("#weight").val(user.weight)
                 $("#height").val(user.height)
-                //user
-                console.log(user);
+                $("#phone").val(patient.replace(" 66","0"))
+
+                var pretests = database.ref("testing/pretest");
+                pretests.once('value', function(snapshot) {
+                    snapshot.forEach(function(childSnapshot) {
+                        var childKey = childSnapshot.key;
+                        pretest = childSnapshot.val();
+                        if(pretest[2]==user.patient_id){
+                            $("#pretest_score").html(pretest[1])
+                            $("#1").after('<td>'+pretest[3]+'</td><td>ไม่</td>');
+
+                            $("#timestamp").after('<td>'+pretest[0].replace("T"," ").slice(0,16)+'</td><td>ไม่</td>');
+                        }
+                    });
+                });
             });
 
             var records = database.ref("records");
-            // var time_rec = '';
             var rec = '';
-            records.orderByChild('time').on('value', function(snapshot) {
+            records.orderByChild('time').once('value', function(snapshot) {
+                var drinking_avg = 0;
+                var urine_avg = 0;
                 var drinking_sum = 0;
                 var urine_sum = 0;
                 var cath_sum = 0;
+                var array_date = [];
+                var voiding_chart = [['ดื่มน้ำ', 'ปัสสาวะ']];
                 snapshot.forEach(function(childSnapshot) {
                     var childKey = childSnapshot.key;
                     record = childSnapshot.val();
-                    var timestamp = new Date(record.timestamp);
-                    if((record.phoneNumber==patient.replace(" ","+")&&(record.date==record_date_query))){
-                        console.log(timestamp);
-                        console.log(record);
-                        var time = record.time;
-                        // console.log('timeeee  '+time);
-                        var time_rec = '<h3 class="col">'+time+'</h3>'
-                        var phone = record.phoneNumber;
-                        phoneNumber = '0'+phone.substr(3,2)+'-'+phone.substr(5,);
-                        $("#phone").val(phoneNumber)
-                        var date = new Date(timestamp);
-                        var day = date.getDate();
-                        var month = date.getMonth() + 1;
-                        var year = date.getFullYear();
-                        var hours = date.getHours();
-                        var minutes = date.getMinutes();
-                        var seconds = date.getSeconds();
-                        if (month < 10) month = "0" + month;
-                        if (day < 10) day = "0" + day;
-                        var daterecord = '<div class="col"><h3>'+ day + '/' + month + '/' + year+ '</h3><h3>'+hours+":"+minutes+":"+seconds+'</h3></div>';
-                        console.log(daterecord);
-                        var data = record.data;
-                        var drinking_rec = '';
-                        var other_rec = '';
-                        var catherization_rec = '';
-                        var urine_rec = '';
-                        var in_rec = '';
-                        if((data.drinking == undefined) == false){
-                            Object.keys(data.drinking).forEach(function (keys){
-                                console.log(keys); // key
-                                console.log(data.drinking[keys]); // value
-                                drinking_rec += '<h3>'+keys+' '+data.drinking[keys]+'</h3>';
-                            });
+                    var data = record.data;
+                    if(record.phoneNumber==patient.replace(" ","+")){
+                        //console.log(record.time);
+                        if($("#weight").val()){
+                            if(record.weight==$("#weight").val()){
+                                array_date.push(record.date);
+                                if(data.drinking){
+                                    Object.keys(data.drinking).forEach(function (keys){
+                                        drinking_avg += data.drinking[keys];
+                                    });
+                                }
+                                if(data.catheterization) urine_avg += data.catheterization;
+                                if(data.urine) urine_avg += data.urine;
+                            }
                         }
-                        else if ((data.drinking == undefined) == true){
-                            drinking_rec += '';
+                        else{
+                            array_date.push(record.date);
+                            if(data.drinking){
+                                Object.keys(data.drinking).forEach(function (keys){
+                                    drinking_avg += data.drinking[keys];
+                                });
+                            }
+                            if(data.catheterization) urine_avg += data.catheterization;
+                            if(data.urine) urine_avg += data.urine;
                         }
-                        if ((data.catherization == undefined) == true){
-                            other_rec += '<h3 class="col 1.1"></h3>';
+                        if(record.date==record_date_query){
+                            //console.log(record);
+                            if(data.drinking) voiding_chart.push([Number(record.time.replace(":",".")),null]);
+                            if(data.catheterization||data.urine) voiding_chart.push([null,Number(record.time.replace(":","."))]);
+                            var time_rec = '<h3 class="col">'+record.time+'</h3>'
+                            var date = new Date(record.timestamp);
+                            var day = date.getDate();
+                            var month = date.getMonth() + 1;
+                            var year = date.getFullYear();
+                            var hours = date.getHours();
+                            var minutes = date.getMinutes();
+                            var seconds = date.getSeconds();
+                            if (month < 10) month = "0" + month;
+                            if (day < 10) day = "0" + day;
+                            if (minutes < 10) minutes = "0" + minutes;
+                            if (seconds < 10) seconds = "0" + seconds;
+                            var daterecord = '<div class="col"><h3>'+ day + '/' + month + '/' + year+ '</h3><h3>'+hours+":"+minutes+":"+seconds+'</h3></div>';
+                            var drinking_rec = '';
+                            var other_rec = '';
+                            if(data.drinking){
+                                Object.keys(data.drinking).forEach(function (keys){
+                                    drinking_sum += data.drinking[keys];
+                                    drinking_rec += '<h3>'+keys+' '+data.drinking[keys]+'</h3>';
+                                });
+                            }
+                            if (data.catheterization){
+                                cath_sum += data.catheterization;
+                                other_rec += '<h3 class="col 1.1">'+data.catheterization+'</h3>';
+                            }
+                            else{
+                                other_rec += '<h3 class="col 1.2"></h3>';
+                            }
+                            if (data.urine){
+                                urine_sum += data.urine;
+                                other_rec += '<h3 class="col 2.1">'+data.urine+'</h3>';
+                            }
+                            else{
+                                other_rec += '<h3 class="col 2.2"></h3>';
+                            }
+                            if (data.other){
+                                other_rec += '<h3 class="col 3.1">'+data.other+'</h3>';
+                            }
+                            else{
+                                other_rec += '<h3 class="col 3.2"></h3>';
+                            }
+                            drinking_all = '<div class="col 0">'+drinking_rec+'</div>'
+                            rec += '<div class="row row-table patient-table" >'+time_rec+drinking_all+other_rec+daterecord+'</div>';
+                        }else{
+                            if(data.drinking) voiding_chart.push([Number(record.time.replace(":",".")),null]);
+                            if(data.catheterization||data.urine) voiding_chart.push([null,Number(record.time.replace(":","."))]);
                         }
-                        else if ((data.catherization == undefined) == false){
-                            other_rec += '<h3 class="col 1.2">'+data.catherization+'</h3>';
-                        }
-                        if ((data.urine == undefined) == true){
-                            other_rec += '<h3 class="col 2.1"></h3>';
-                        }
-                        else if ((data.urine == undefined) == false){
-                            other_rec += '<h3 class="col 2.2">'+data.urine+'</h3>';
-                        }
-                        if ((data.other == undefined) == true){
-                            other_rec += '<h3 class="col 3.1"></h3>';
-                        }
-                        else if ((data.other == undefined) == false){
-                            other_rec += '<h3 class="col 3.2">'+data.other+'</h3>';
-                        }   
-                        drinking_all = '<div class="col 0">'+drinking_rec+'</div>'
-                        console.log(drinking_rec);
-                        //record
-                        console.log('other:'+record.data.other);
-                        rec += '<div class="row row-table patient-table" >'+time_rec+drinking_all+other_rec+daterecord+'</div>';
-                        console.log(rec);
-                        patient_rec = rec
-                        $("#patient_rec").html(patient_rec)
-                        //record
-                        console.log(timestamp);
-                        console.log(record);
                     }
                 });
+                google.charts.load("current", {packages:["corechart"]});
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable(voiding_chart);
+
+                    var options = {
+                    height: 200,
+                    legend: { position: 'none'},
+                    histogram: {
+                        hideBucketItems: true,
+                        bucketSize: 3
+                    },
+                    colors: ['#A9BDD7','#FFD0BB'],
+                    hAxis: {
+                        viewWindowMode: 'explicit',
+                        viewWindow: {
+                            max: 23.59
+                                },
+                    },
+                    chartArea: {
+                            left: 10,
+                            top: 20,
+                            right: 10,
+                            bottom: 30,
+                            },
+                    };
+                    var chart = new google.visualization.Histogram(document.getElementById('count_time'));
+                    chart.draw(data, options);
+                }
+                rec += '<div class="row row-table patient-table"><h3 class="col">รวม</h3><h3 class="col">'+drinking_sum+'</h3><h3 class="col">'+cath_sum+'</h3><h3 class="col">'+urine_sum+'</h3><h3 class="col"></h3><h3 class="col"></h3></div>';
+                var distinctDate = [...new Set(array_date)];
+                if(distinctDate.length==0) var num=1;
+                else var num=distinctDate.length;
+                $("#drinking_avg").html((drinking_avg/num).toFixed(0)+" ซีซี/วัน");
+                $("#urine_avg").html((urine_avg/num).toFixed(0)+" ซีซี/วัน");
+                $("#patient_rec").html(rec)
             });
 
             var messages = database.ref("messages");
             var array_time = '';
             var old_time = '';
-            messages.orderByChild('time').on('value', function(snapshot) {
+            var equipment_month = 0;
+            var equipment = 0;
+            var equipment_array = [];
+            var equipment_avg = 0;
+            messages.orderByChild('time').once('value', function(snapshot) {
                 snapshot.forEach(function(childSnapshot) {
                     var childKey = childSnapshot.key;
                     message = childSnapshot.val();
-                    var time = new Date(message.time).getHours()+":"+new Date(message.time).getMinutes();
-                    if((message.user==patient_line_id)&&(new Date(message.time).toDateString()==chat_date_query)){
-                        //message and time
-                        // console.log(time);
-                        // console.log(message);
-                        var reply = '';
-                        var text = '';
-                        text += '<tbody><td class="card badge-chat d-inline-flex" style="text-align: left;">'+message.text+'</td><td></td></tbody>';
-                        for (i=0;i<message.reply.length;i++){
-                            reply += '<tbody><td></td><td class="card card-punsook punsook-chat d-inline-flex" style="text-align: left;">'+message.reply[i]+'</td></tbody>';
-                        }                 
-                        if (time != old_time){
-                            array_time += '<h1 class="middle_line-chat"></h1><center>'+time+'</center><table class="table table-borderless"><thead><tr><th scope="col" style="width:50%;"></th><th scope="col" style="width:50%;"></th></tr></thead>'+text+reply+'</table>';
+                    var minutes = new Date(message.time).getMinutes();
+                    if (minutes < 10) minutes = "0" + minutes;
+                    var time = new Date(message.time).getHours()+":"+minutes;
+                    if(message.user==$("#patient_line_id").val()){
+                        if((new Date(message.time).getMonth()+1)==month){
+                            //console.log(message);
+                            if(message.intent=="equipment") equipment_month += 1;
+
+                            if(new Date(message.time).toDateString()==chat_date_query){
+                                //message and time
+                                // console.log(time);
+                                //console.log(message.intent);
+                                var reply = '';
+                                var text = '';
+                                text += '<tbody><td class="card badge-chat d-inline-flex" style="text-align: left;">'+message.text+'</td><td></td></tbody>';
+                                for (i=0;i<message.reply.length;i++){
+                                    reply += '<tbody><td></td><td class="card card-punsook punsook-chat d-inline-flex" style="text-align: left;">'+message.reply[i]+'</td></tbody>';
+                                }
+                                if (time != old_time){
+                                    array_time += '<h1 class="middle_line-chat"></h1><center>'+time+'</center><table class="table table-borderless"><thead><tr><th scope="col" style="width:50%;"></th><th scope="col" style="width:50%;"></th></tr></thead>'+text+reply+'</table>';
+                                }
+                                else{
+                                    array_time += '<table class="table table-borderless"><thead><tr><th scope="col" style="width:50%;"></th><th scope="col" style="width:50%;"></th></tr></thead>'+text+reply+'</table>';
+                                }
+                                timechat = '<div class="record-chat">'+array_time+'</div>'
+                                $("#timechat").html(timechat)
+                                old_time = time;
+                            }
+                        }else{
+                            //console.log(message);
+                            if(message.intent=="equipment") equipment += 1;
                         }
-                        else{
-                            array_time += '<table class="table table-borderless"><thead><tr><th scope="col" style="width:50%;"></th><th scope="col" style="width:50%;"></th></tr></thead>'+text+reply+'</table>';
-                        }
-                        timechat = '<div class="record-chat">'+array_time+'</div>'
-                        $("#timechat").html(timechat)
-                        old_time = time;
-                        console.log(time);
-                        console.log(message);
+                    }else{
+                        if(message.intent=="equipment") equipment_array.push(message.user);
                     }
                 });
+                // var equipment_counts = {};
+                // var equipment_sum = 0;
+                // equipment_array.forEach(function(x) { equipment_counts[x] = (equipment_counts[x] || 0)+1; });
+                // Object.keys(equipment_counts).forEach(function (keys){
+                //     equipment_sum += equipment_counts[keys];
+                // });
+                // equipment_avg = (equipment_sum+equipment_month+equipment)/(Object.keys(equipment_counts).length+1);
+                var user_distinct = [...new Set(equipment_array)];
+                var equipment_avg = (equipment_month+equipment+equipment_array.length)/(user_distinct.length+1);
+                $("#equipment").after('<td>'+equipment_month+'</td><td>'+(equipment_month+equipment)+'</td><td>'+equipment_avg.toFixed(0)+'</td>');
+
+                google.charts.load('current', {'packages':['bar']});
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable([
+                    ['', 'จำนวนครั้งในเดือนนี้', 'จำนวนครั้งทั้งหมด', 'จำนวนครั้งโดยเฉลี่ยจากผู้ป่วยทั้งหมด'],
+                    ['อุปกรณ์', (equipment_month).toFixed(0), (equipment_month+equipment).toFixed(0), (equipment_avg).toFixed(0)],
+                    ['การดื่มน้ำ', 1170, 460, 250],
+                    ['การปัสสาวะ ', 660, 1120, 300],
+                    ['ปัญหาระหว่างสวน', 1030, 540, 350],
+                    ['ภาวะผิดปกติ', 1030, 540, 350]
+                    ]);
+
+                    var options = {
+                    legend: { position: 'none'},
+                    bars: 'vertical',
+                    vAxis: {format: 'decimal'},
+                    height: 200,
+                    colors: ['#A9BDD7', '#FFD0BB', '#CEA9D7']
+                    };
+
+                    var chart = new google.charts.Bar(document.getElementById('type_count'));
+
+                    chart.draw(data, google.charts.Bar.convertOptions(options));
+                }
+            });
+
+            var solutions = database.ref("disorder_solution");
+            succeed_avg = 0;
+            fail_avg = 0;
+            succeed = 0;
+            fail = 0;
+            solutions.once('value', function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
+                    var childKey = childSnapshot.key;
+                    solution = childSnapshot.val();
+                    if(solution.result){
+                        succeed_avg += 1;
+                        if(solution.line_id==$("#patient_line_id").val()) succeed += 1;
+                    }else{
+                        fail_avg += 1;
+                        if(solution.line_id==$("#patient_line_id").val()) fail += 1;
+                    }
+                });
+                $("#succeed").html(succeed)
+                $("#all").html("จาก "+(succeed+fail)+" ครั้ง")
+                $("#succeed_rate").html((succeed/(succeed+fail)*100).toFixed(0)+"%")
+                if(succeed+fail==0) $("#succeed_rate").html("-")
+                $("#avg").html((succeed_avg/(succeed_avg+fail_avg)*100).toFixed(0)+"%")
             });
         });
     </script>
+    <div id="container"></div>
     <div class="row">
         <div class="container col-3 container-profile">
             <br>
@@ -380,7 +431,7 @@
                 <div class="row">
                     <div class="col-3">                   
                         <h1 class="profile">รหัสผู้ป่วย</h1>   
-                    </div>       
+                    </div>
                     <div class="form-group col-7">
                         <input type="text" id="pid" class="form-control">
                     </div>    
@@ -481,13 +532,13 @@
                     <div class="container col">
                         <center>
                             <h1 class="drink-avg">ปริมาณน้ำดื่มโดยเฉลี่ย</h1>
-                            <h2>200 ซีซี/วัน</h2>
+                            <h2 id="drinking_avg"></h2>
                         </center>
                     </div>
                     <div class="container col">
                         <center>
                             <h1 class="urine-avg">ปริมาณปัสสาวะโดยเฉลี่ย</h1>
-                            <h2>200 ซีซี/วัน</h2>
+                            <h2 id="urine_avg"></h2>
                         </center>
                     </div>
                 </div>
@@ -499,205 +550,200 @@
                         <div id="count_time"></div>
                     </center>  
                     <div class="row legend_out"> 
-                            <span class="badge" style="background-color: #A9BDD7; width:20px; color: #A9BDD7">8</span>
-                            <h2 class="legend">ดื่มน้ำ</h2>
-                            <span class="badge" style="background-color: #FFD0BB; width:20px; color: #FFD0BB">8</span>
-                            <h2 class="legend">ปัสสาวะ</h2>
+                        <span class="badge" style="background-color: #A9BDD7; width:20px; color: #A9BDD7">8</span>
+                        <h2 class="legend">ดื่มน้ำ</h2>
+                        <span class="badge" style="background-color: #FFD0BB; width:20px; color: #FFD0BB">8</span>
+                        <h2 class="legend">ปัสสาวะ</h2>
                     </div>
                 </div>
                 <div class='container-graph'>
                     <br>
                     <div class="row">
                         <h1 class="topic col-9">จำนวนครั้งที่ถามแชทบอท โดยแบ่งตามหมวด</h1>
-                        <button class="btn btn-link col-2" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                            ดูเพิ่มเติม
-                        </button>
+                        <button class="btn btn-link col-2" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">ดูเพิ่มเติม</button>
                     </div>
-
                     <h1 class="middle_line-graph"></h1>
                     <center>
                         <div id="type_count"></div>
-                    </center>  
+                    </center>
                     <div class="row legend_out"> 
-                            <span class="badge" style="background-color: #A9BDD7; width:20px; color: #A9BDD7">8</span>
-                            <h2 class="legend">จำนวนครั้งในเดือนนี้</h2>
-                            <span class="badge" style="background-color: #FFD0BB; width:20px; color: #FFD0BB">8</span>
-                            <h2 class="legend">จำนวนครั้งทั้งหมด</h2>
-                            <span class="badge" style="background-color: #CEA9D7; width:20px; color: #CEA9D7">8</span>
-                            <h2 class="legend">จำนวนครั้งโดยเฉลี่ยจากผู้ป่วยทั้งหมด</h2>
+                        <span class="badge" style="background-color: #A9BDD7; width:20px; color: #A9BDD7">8</span>
+                        <h2 class="legend">จำนวนครั้งในเดือนนี้</h2>
+                        <span class="badge" style="background-color: #FFD0BB; width:20px; color: #FFD0BB">8</span>
+                        <h2 class="legend">จำนวนครั้งทั้งหมด</h2>
+                        <span class="badge" style="background-color: #CEA9D7; width:20px; color: #CEA9D7">8</span>
+                        <h2 class="legend">จำนวนครั้งโดยเฉลี่ยจากผู้ป่วยทั้งหมด</h2>
                     </div>               
                 </div>
                 <br>
                 <div class="collapse" id="collapseExample">
                     <div class="card card-body">
-                            <table class="table">
-                                    <thead>
-                                      <tr>
-                                        <th scope="col" style="font-weight: bold; color: #39588A; width: 40%;">คำถาม</th>
-                                        <th scope="col" style="font-weight: bold; color: #39588A; width: 15%;">เดื่อนนี้</th>
-                                        <th scope="col" style="font-weight: bold; color: #39588A; width: 15%;">ทั้งหมด</th>
-                                        <th scope="col" style="font-weight: bold; color: #39588A; width: 15%;">เฉลี่ย</th>
-                                        <th scope="col" style="font-weight: bold; color: #39588A; width: 15%;">ร้อยละ</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      <tr>
-                                        <th scope="row" style="font-weight: bold; color: #39588A" colspan="5">อุปกรณ์</th>
-                                      </tr>
-                                      <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">• อุปกรณ์สวนปัสสาวะ</th>
-                                        <td>3</td>
-                                        <td>8</td>
-                                        <td>5</td>
-                                        <td>99</td>
-                                      </tr>
-                                      <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">• น้ำยาฆ่าเชื้อ</th>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
-                                        <td>98</td>
-                                      </tr>
-                                      <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">• ประเภทสายสวนปัสสาวะ</th>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
-                                        <td>98</td>
-                                      </tr>
-                                      <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">• ประเภทสายสวนปัสสาวะ</th>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
-                                        <td>98</td>
-                                      </tr>
-                                      <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">• ประเภทสายสวนปัสสาวะ</th>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
-                                        <td>98</td>
-                                      </tr>
-                                      <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">• สายสวนปัสสาวะเสื่อม</th>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
-                                        <td>98</td>
-                                      </tr>
-                                      <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">• วิธีทำความสะอาดสายสวนปัสสาวะ</th>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
-                                        <td>98</td>
-                                      </tr>
-                                      <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">• วิธีใช้สารหล่อลื่น</th>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
-                                        <td>98</td>
-                                      </tr>
-                                      <tr>
-                                        <th scope="row" style="font-weight: bold; color: #39588A" colspan="5">การดื่มน้ำ</th>
-                                      </tr>
-                                      <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">• ปริมาณน้ำที่เหมาะสม</th>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
-                                        <td>98</td>
-                                      </tr>
-                                      <tr>
-                                        <th scope="row" style="font-weight: bold; color: #39588A" colspan="5">การสวนปัสสาวะ</th>
-                                      </tr>
-                                      <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">• ขั้นตอนสวนปัสสาวะ</th>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
-                                        <td>98</td>
-                                      </tr>
-                                      <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">• ปริมาณปัสสาวะที่เหมาะสม</th>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
-                                        <td>98</td>
-                                      </tr>
-                                      <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">• ความถี่ในการสวนปัสสาวะที่เหมาะสม</th>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
-                                        <td>98</td>
-                                      </tr>
-                                      <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">• วิธีแก้ไขหากลืมสวนปัสสาวะ</th>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
-                                        <td>98</td>
-                                      </tr>
-                                      <tr>
-                                        <th scope="row" style="font-weight: bold; color: #39588A" colspan="5">ปัญหาระหว่างสวนปัสสาวะ</th>
-                                      </tr>
-                                      <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">• ปัสสาวะไม่ออก</th>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
-                                        <td>98</td>
-                                      </tr>
-                                      <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">• ใส่สายสวนปัสสาวะติดขัด</th>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
-                                        <td>98</td>
-                                      </tr>
-                                      <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">• บาดเจ็บเมื่อสวนปัสสาวะ</th>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
-                                        <td>98</td>
-                                      </tr>
-                                      <tr>
-                                        <th scope="row" style="font-weight: bold; color: #39588A" colspan="5">ภาวะผิดปกติ</th>
-                                      </tr>
-                                      <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">• ภาวะรีเฟล็กซ์ระบบประสารทอัตโนมัติผิดปกติ</th>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
-                                        <td>98</td>
-                                      </tr>
-                                      <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">• ภาวะติดเชื้อทางเดินปัสสาวะ</th>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
-                                        <td>98</td>
-                                      </tr>
-                                      <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">• ภาวะท่อปัสสาวะกร่อน</th>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
-                                        <td>98</td>
-                                      </tr>
-                                      <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">• ผลข้างเคียงจากยา Paracetamol และ Tramadol</th>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
-                                        <td>98</td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="font-weight: bold; color: #39588A; width: 40%;">คำถาม</th>
+                                    <th scope="col" style="font-weight: bold; color: #39588A; width: 15%;">เดือนนี้</th>
+                                    <th scope="col" style="font-weight: bold; color: #39588A; width: 15%;">ทั้งหมด</th>
+                                    <th scope="col" style="font-weight: bold; color: #39588A; width: 15%;">เฉลี่ยจากผู้ป่วยทั้งหมด</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row" style="font-weight: bold; color: #39588A" colspan="5">อุปกรณ์</th>
+                                </tr>
+                                <tr>
+                                    <th id="equipment" scope="row" style="font-weight: normal; color: #39588A">• อุปกรณ์สวนปัสสาวะ</th>
+                                </tr>
+                                <!-- <tr>
+                                    <th id="equipment_basin" scope="row" style="font-weight: normal; color: #39588A">• กะละมัง</th>
+                                </tr>
+                                <tr>
+                                    <th id="equipment_clean_urinary_catheter" scope="row" style="font-weight: normal; color: #39588A">• วิธีทำความสะอาดสายสวนปัสสาวะ</th>
+                                </tr>
+                                <tr>
+                                    <th id="equipment-container" scope="row" style="font-weight: normal; color: #39588A">• วิธีทำความสะอาดสายสวนปัสสาวะ</th>
+                                </tr> -->
+                                <tr>
+                                <th scope="row" style="font-weight: normal; color: #39588A">• น้ำยาฆ่าเชื้อ</th>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>98</td>
+                                </tr>
+                                <tr>
+                                <th scope="row" style="font-weight: normal; color: #39588A">• ประเภทสายสวนปัสสาวะ</th>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>98</td>
+                                </tr>
+                                <tr>
+                                <th scope="row" style="font-weight: normal; color: #39588A">• ประเภทสายสวนปัสสาวะ</th>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>98</td>
+                                </tr>
+                                <tr>
+                                <th scope="row" style="font-weight: normal; color: #39588A">• ประเภทสายสวนปัสสาวะ</th>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>98</td>
+                                </tr>
+                                <tr>
+                                <th scope="row" style="font-weight: normal; color: #39588A">• สายสวนปัสสาวะเสื่อม</th>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>98</td>
+                                </tr>
+
+                                <tr>
+                                <th scope="row" style="font-weight: normal; color: #39588A">• วิธีใช้สารหล่อลื่น</th>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>98</td>
+                                </tr>
+                                <tr>
+                                <th scope="row" style="font-weight: bold; color: #39588A" colspan="5">การดื่มน้ำ</th>
+                                </tr>
+                                <tr>
+                                <th scope="row" style="font-weight: normal; color: #39588A">• ปริมาณน้ำที่เหมาะสม</th>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>98</td>
+                                </tr>
+                                <tr>
+                                <th scope="row" style="font-weight: bold; color: #39588A" colspan="5">การสวนปัสสาวะ</th>
+                                </tr>
+                                <tr>
+                                <th scope="row" style="font-weight: normal; color: #39588A">• ขั้นตอนสวนปัสสาวะ</th>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>98</td>
+                                </tr>
+                                <tr>
+                                <th scope="row" style="font-weight: normal; color: #39588A">• ปริมาณปัสสาวะที่เหมาะสม</th>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>98</td>
+                                </tr>
+                                <tr>
+                                <th scope="row" style="font-weight: normal; color: #39588A">• ความถี่ในการสวนปัสสาวะที่เหมาะสม</th>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>98</td>
+                                </tr>
+                                <tr>
+                                <th scope="row" style="font-weight: normal; color: #39588A">• วิธีแก้ไขหากลืมสวนปัสสาวะ</th>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>98</td>
+                                </tr>
+                                <tr>
+                                <th scope="row" style="font-weight: bold; color: #39588A" colspan="5">ปัญหาระหว่างสวนปัสสาวะ</th>
+                                </tr>
+                                <tr>
+                                <th scope="row" style="font-weight: normal; color: #39588A">• ปัสสาวะไม่ออก</th>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>98</td>
+                                </tr>
+                                <tr>
+                                <th scope="row" style="font-weight: normal; color: #39588A">• ใส่สายสวนปัสสาวะติดขัด</th>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>98</td>
+                                </tr>
+                                <tr>
+                                <th scope="row" style="font-weight: normal; color: #39588A">• บาดเจ็บเมื่อสวนปัสสาวะ</th>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>98</td>
+                                </tr>
+                                <tr>
+                                <th scope="row" style="font-weight: bold; color: #39588A" colspan="5">ภาวะผิดปกติ</th>
+                                </tr>
+                                <tr>
+                                <th scope="row" style="font-weight: normal; color: #39588A">• ภาวะรีเฟล็กซ์ระบบประสารทอัตโนมัติผิดปกติ</th>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>98</td>
+                                </tr>
+                                <tr>
+                                <th scope="row" style="font-weight: normal; color: #39588A">• ภาวะติดเชื้อทางเดินปัสสาวะ</th>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>98</td>
+                                </tr>
+                                <tr>
+                                <th scope="row" style="font-weight: normal; color: #39588A">• ภาวะท่อปัสสาวะกร่อน</th>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>98</td>
+                                </tr>
+                                <tr>
+                                <th scope="row" style="font-weight: normal; color: #39588A">• ผลข้างเคียงจากยา Paracetamol และ Tramadol</th>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>98</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                     <br>
                 </div>
@@ -706,24 +752,24 @@
                     <h1 class="topic">แก้ปัญหาระหว่างสวนปัสสาวะสำเร็จ</h1>
                     <h1 class="middle_line-graph"></h1>
                     <div class="row">                      
-                            <div class="col">
-                            <center>
-                                <h1 class="sol-value" style="color: #A9BDD7">4</h1>
-                                <h2 class="sol">จาก 8 ครั้ง</h2>
-                            </center>
-                            </div>
-                            <div class="col">
-                            <center>
-                                <h1 class="sol-value" style="color: #FFD0BB">50%</h1>
-                                <h2 class="sol">ร้อยละที่สำเร็จ</h2>
-                            </center>
-                            </div>
-                            <div class="col">
-                            <center>
-                                <h1 class="sol-value" style="color: #CEA9D7">23%</h1>
-                                <h2 class="sol">ร้อยละที่สำเร็จโดยเฉลี่ย</h2>
-                            </center>
-                            </div>
+                        <div class="col">
+                        <center>
+                            <h1 id="succeed" class="sol-value" style="color: #A9BDD7"></h1>
+                            <h2 id="all" class="sol"></h2>
+                        </center>
+                        </div>
+                        <div class="col">
+                        <center>
+                            <h1 id="succeed_rate" class="sol-value" style="color: #FFD0BB"></h1>
+                            <h2 class="sol">ร้อยละที่สำเร็จ</h2>
+                        </center>
+                        </div>
+                        <div class="col">
+                        <center>
+                            <h1 id="avg" class="sol-value" style="color: #CEA9D7"></h1>
+                            <h2 class="sol">ร้อยละที่สำเร็จโดยเฉลี่ย</h2>
+                        </center>
+                        </div>
                     </div>                
                 </div>
                 <br>
@@ -739,14 +785,14 @@
                     <div class="row row-sol">                      
                         <div class="col">
                         <center>
-                            <h1 class="sol-value" style="color: #A9BDD7">4</h1>
-                            <h2 class="sol">จาก 15 คะแนน</h2>
+                            <h1 id="pretest_score" class="sol-value" style="color: #A9BDD7"></h1>
+                            <h2 class="sol">จาก 17 คะแนน</h2>
                         </center>
                         </div>
                         <div class="col">
                         <center>
-                            <h1 class="sol-value" style="color: #FFD0BB">14</h1>
-                            <h2 class="sol">จาก 15 คะแนน</h2>
+                            <h1 class="sol-value" style="color: #FFD0BB">15</h1>
+                            <h2 class="sol">จาก 17 คะแนน</h2>
                         </center>
                         </div>
                     </div>  
@@ -764,9 +810,7 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">ล้างมือให้สะอาดด้วยสบู่ ก่อนสวนปัสสาวะทุกครั้ง</th>
-                                        <td>ใช่</td>
-                                        <td>ไม่</td>
+                                        <th id="1" scope="row" style="font-weight: normal; color: #39588A">ล้างมือให้สะอาดด้วยสบู่ ก่อนสวนปัสสาวะทุกครั้ง</th>
                                     </tr>
                                     <tr>
                                         <th scope="row" style="font-weight: normal; color: #39588A">ไม่ควรสวนปัสสาวะล่าช้ากว่ากำหนดเกิน 30 นาที</th>
@@ -871,6 +915,7 @@
                         <form action="">
                             <label for="record_date" class="topic">วันที่</label>
                             <input type="hidden" name="patient" id="record_patient_id">
+                            <input type="hidden" id="patient_line_id">
                             <input class="date" type="date" id="record_date" name="record_date">
                             <button type="submit" class="btn btn-default">ค้นหา</button>
                         </form>
@@ -884,58 +929,9 @@
                         <h3 class="col head-table">สวนปัสสาวะ(ซีซี)</h3>
                         <h3 class="col head-table">ปัสสาวะเอง(ซีซี) </h3>
                         <h3 class="col head-table">อื่น ๆ</h3>
-                        <h3 class="col head-table">เวลาที่ทำการบันทึก</h3>
+                        <h3 class="col head-table">เวลาที่บันทึก</h3>
                     </div>
-                    <div id='patient_rec'>
-                    <!-- <div class="row row-table patient-table" >
-                        <h3 class="col">6.00</h3>
-                        <div class="col">
-                            <h3>น้ำ 100</h3>
-                            <h3>แกงจืด 200</h3>
-                        </div>
-                        <h3 class="col">400</h3>
-                        <h3 class="col"></h3>
-                        <h3 class="col"></h3>
-                        <h3 class="col">12/01/2016 12:00</h3>
-                    </div>
-                    <div class="row row-table patient-table">
-                        <h3 class="col">6.00</h3>
-                        <div class="col">
-                            <h3>น้ำ 100</h3>
-                            <h3>แกงจืด 200</h3>
-                        </div>
-                        <h3 class="col">400</h3>
-                        <h3 class="col">100</h3>
-                        <h3 class="col"></h3>
-                        <h3 class="col">12/01/2016 12:00</h3>
-                    </div>
-                    <div class="row row-table patient-table">
-                        <h3 class="col">6.00</h3>
-                        <div class="col">
-                        </div>
-                        <h3 class="col">400</h3>
-                        <h3 class="col"></h3>
-                        <h3 class="col">เลือดออก</h3>
-                        <h3 class="col">12/01/2016 12:00</h3>
-                    </div>
-                    <div class="row row-table patient-table">
-                        <h3 class="col">6.00</h3>
-                        <div class="col">
-                        </div>
-                        <h3 class="col">400</h3>
-                        <h3 class="col">20</h3>
-                        <h3 class="col"></h3>
-                        <h3 class="col">12/01/2016 12:00</h3>
-                    </div>
-                    <div class="row row-table total">
-                        <h3 class="col col-total">รวม</h3>
-                        <h3 class="col col-total">400</h3>
-                        <h3 class="col col-total">400</h3>
-                        <h3 class="col col-total">20</h3>
-                        <h3 class="col col-total"></h3>
-                        <h3 class="col"></h3>
-                    </div> -->
-                    </div>
+                    <div id='patient_rec'></div>
                 </div>
             </div>
             <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
@@ -955,67 +951,7 @@
                         <h3 class="col col-chat" style="text-align: left;">ผู้ป่วย</h3>
                         <h3 class="col col-chat" style="text-align: right;">ปันสุข</h3>
                     </div>
-                    <div class="chat-list" id="timechat">
-                        <!-- <div class="record-chat" > -->
-                            <!-- <center>
-                            </center> -->
-                            <!-- <table class="table table-borderless"> -->
-                                <!-- <thead>
-                                    <tr>
-                                        <th scope="col" style="width:50%;"></th>
-                                        <th scope="col" style="width:50%;"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <td class="card badge-chat d-inline-flex" style="text-align: left;">สวัสดีครับ</td>
-                                    <td></td>
-                                </tbody>
-                                <tbody>
-                                    <td></td>
-                                    <td class="card card-punsook punsook-chat d-inline-flex" style="text-align: left;">สวัสดีคะ</td>
-                                </tbody>
-                                <tbody>
-                                    <td></td>
-                                    <td class="card card-punsook punsook-chat d-inline-flex" style="text-align: left;">อยากรู้เกี่ยวกับเรา ลองพิมพ์ "คุณทำอะไร" ดูสิ</td>
-                                </tbody> -->
-                            <!-- </table> -->
-                            <!-- <h1 class="middle_line-chat"></h1> -->
-                        <!-- </div> -->
-                        <!-- <div class="record-chat">
-                            <center>
-                                <h3 class="time-chat">8.01</h3>
-                            </center>
-                            <table class="table table-borderless">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" style="width:50%;"></th>
-                                        <th scope="col" style="width:50%;"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <td class="card badge-chat d-inline-flex" style="text-align: left;">ดื่มน้ำอย่างไร</td>
-                                    <td></td>
-                                </tbody>
-                                <tbody>
-                                    <td></td>
-                                    <td class="card card-punsook punsook-chat d-inline-flex" style="text-align: left;">1. ดื่มน้ำประมาณ 200-250 ซีซี ทุก 2 ชม. ตั้งแต่ 6.00-20.00 น. งดหลังจากนี้ เพราะจะไม่สวนปัสสาวะหลังเที่ยงคืน</td>
-                                </tbody>
-                                <tbody>
-                                    <td></td>
-                                    <td class="card card-punsook punsook-chat d-inline-flex" style="text-align: left;">2. ไม่ควรดื่มน้ำมากกว่า 500 ซีซี ใน 4 ชม.</td>
-                                </tbody>
-                                <tbody>
-                                    <td></td>
-                                    <td class="card card-punsook punsook-chat d-inline-flex" style="text-align: left;">3. หากดื่มน้ำผลไม้ นม เครื่องดื่มหรืออาหารที่ มีส่วนประกอบของน้ำ ต้องนำมาหักออกด้วย</td>
-                                </tbody>
-                                <tbody>
-                                    <td></td>
-                                    <td class="card card-punsook punsook-chat d-inline-flex" style="text-align: left;">4. ไม่ควรดื่มชา กาแฟ หรือน้ำอัดลม เพราะกระตุ้นให้ปัสสาวะมากขึ้น</td>
-                                </tbody>
-                            </table>
-                            <h1 class="middle_line-chat"></h1>
-                        </div> -->
-                    </div>
+                    <div class="chat-list" id="timechat"></div>
                 </div>
             </div>
             </div>
