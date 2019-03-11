@@ -13,6 +13,12 @@ body{
     height: 50px;
 }
 
+.exit {
+    width: auto;
+    height: 25px;
+    float: right;
+}
+
 .logo-return {
     width: auto;
     height: 20px;

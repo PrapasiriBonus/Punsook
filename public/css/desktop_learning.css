@@ -13,6 +13,12 @@ body{
     height: 50px;
 }
 
+.exit {
+    width: auto;
+    height: 25px;
+    float: right;
+}
+
 .logo-return {
     width: auto;
     height: 20px;
@@ -45,6 +51,10 @@ h1.topic {
     font-size:  20px;
     font-weight: bold;
     margin-right: 20PX;
+}
+
+label.topic {
+    margin-right: 20px;
 }
 
 h1.profile, h2.Gender {
@@ -420,7 +430,7 @@ button.btn-default {
         padding-left: 10px;  
         margin-left: 20px;
     } 
-    
+
     .form-group.col-4 {
         padding: 0px;
     }
