@@ -31,6 +31,10 @@ body{
     padding-right: 0px;
 }
 
+.col-3.unit {
+    padding-left: 0px;
+}
+
 h1.topic {
     color: #39588A;
     font-size:  20px;

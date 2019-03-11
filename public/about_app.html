@@ -15,6 +15,24 @@
 
   </head>
   <body>
+    <script>
+      // function change() // no ';' here
+      // {
+      //     var elem = document.getElementById("myButton1");
+      //     if (elem.value=="-") elem.value = "+";
+      //     else elem.value = "-";
+      // }
+      function changeImage() {
+          if (document.getElementById("imgClickAndChange").src == "https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fplus.png?alt=media&token=b3a7d91c-ec1a-4aed-af4d-1158c4aeabdd") 
+          {
+              document.getElementById("imgClickAndChange").src = "https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fremove.png?alt=media&token=cb80abf8-8510-47c0-b9f1-bf8578d76043";
+          }
+          else 
+          {
+              document.getElementById("imgClickAndChange").src = "https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fplus.png?alt=media&token=b3a7d91c-ec1a-4aed-af4d-1158c4aeabdd";
+          }
+      }
+    </script>
     <nav class="navbar">
       <div class="col">
         <a href="/home.html"><img class= "logo-return" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fback.png?alt=media&token=4b2dc79f-e33c-4f03-8520-29ce0cc6cb4d"></a>
@@ -29,21 +47,215 @@
     <div class="container">
       <br>
       <h1 class="step_cat">เกี่ยวกับแอพพลิเคชั่น</h1>
-      <div class="row justify-content-start">
-        <h2 class="step">บันทึกการดื่มน้ำและปัสสาวะ</h2>
-          <h3>- แสดงรายละเอียดการดื่มน้ำและปัสสาวะ สามารถค้นหาตามวันที่ต้องการได้</h3>
-          <h3>- กด <img class="add" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2FAdd%20Record.png?alt=media&token=f9012bce-fa36-43a1-99c6-cf0b22efece5"> เพื่อเริ่มบันทึกใหม่</h3>
-          <h3>- กด <img class="delete" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/Delete_record.PNG?alt=media&token=9e9887bd-cedc-418b-a066-2c40e7ce1985"> เพื่อลบบันทึกนี้ทิ้ง</h3>
-          <h3>- กด <img class="modify" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/Modify_record.PNG?alt=media&token=9cea41c1-19b6-4549-acbf-de4ce461ec08"> เพื่อแก้ไขบันทึกนี้</h3>
-        <br>
-        <div class="col-9 middle_line"></div>
-        <h2 class="step">คู่มือการดื่มน้ำและปัสสาวะ</h2>
-          <h3>- อุปกรณ์ในการสวนปัสสาวะ: แสดงรูปภาพอุปกรณ์การสวนปัสสาวะพร้อมรายละเอียด</h3>
-          <h3>- ขั้นตอนการสวนปัสสาวะ: แสดงขั้นตอนการสวนปัสสาวะพร้อมรายละเอียด</h3>
-        <div class="col-9 middle_line"></div>
-        <h2 class="step">ประวัติส่วนตัว</h2>
-          <h3>- แสดงประวัติส่วนตัว โดยสามารถแก้ไขน้ำหนักและส่วนสูงได้เท่านั้น</h3>
+      <small>*ต้องเข้าสู่ระบบถึงจะใช้เมนูนี้ได้</small>
+      <h1 class="middle_margin"></h1>
+      <div class="accordion" id="accordionExample">
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <div class="mb-0">
+              <div class="row justify-content-start">
+                <div class="col-2 logo">
+                  <img class="icons" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fsmartphone.png?alt=media&token=15ac840a-979a-4620-8cd7-3618e2213151">
+                </div>
+                <div class="col-8 topic">
+                  <h2>การใช้แชทบอท</h2>
+                </div>
+                <div class="col-2 add">
+                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseChat" aria-expanded="false" aria-controls="collapseOne">
+                      <img alt="" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fplus.png?alt=media&token=b3a7d91c-ec1a-4aed-af4d-1158c4aeabdd" 
+                      style="height: 25px; width: 25px" id="imgClickAndChange" onclick="changeImage()"  />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+      
+          <div id="collapseChat" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body">
+              <h3>เมื่อทำการเข้าใช้แชทบอทจะขึ้นหน้าจอดังรูป</h3>
+              <center>
+                <img src="/Picture/chat01.png" style="width:230px;height:auto;">
+              </center>
+              <h3>ถ้าต้องการแชทสนทนากับแชทบอทให้กดตรงที่ทำกรอบสีแดงไว้</h3>
+              <h3>เมื่อกดแล้วก็จะสามารถสนทนากับแชทบอทได้ตามปกติดังภาพ</h3>
+              <center>
+                  <img src="/Picture/chat02.png" style="width:230px;height:auto;">
+              </center>
+            </div>
+          </div>
+        </div>
+        <h1 class="middle_margin"></h1>
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <div class="mb-0">
+              <div class="row justify-content-start">
+                <div class="col-2 logo">
+                  <img class="icons" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fclipboard.png?alt=media&token=4c46cc5b-2ade-4860-ad85-1f7142b36c37">
+                </div>
+                <div class="col-8 topic">
+                  <h2>บันทึกการดื่มน้ำและปัสสาวะ*</h2>
+                </div>
+                <div class="col-2 add">
+                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseRecord" aria-expanded="false" aria-controls="collapseOne">
+                      <img alt="" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fplus.png?alt=media&token=b3a7d91c-ec1a-4aed-af4d-1158c4aeabdd" 
+                      style="height: 25px; width: 25px" id="imgClickAndChange" onclick="changeImage()"  />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="collapseRecord" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body">
+                <h3>เมื่อทำการเข้าสู่หน้าบันทึกการดื่มน้ำและปัสสาวะจะขึ้นหน้าจอ ดังรูป</h3>
+                <center>
+                  <img src="/Picture/record01.png" style="width:230px;height:auto;">
+                </center>
+                <h3>1. เลือกวันที่จะทำการบันทึกโดย กดที่วันที่ในกรอบสีแดง และกดค้นหาในกรอบสีชมพู</h3>
+                <h3>2. ให้กดเครื่องหมาย + ในกรอบสีเขียวเพื่อเริ่มการบันทึก</h3>
+                <h1 class="middle_line"></h1>
+                <h3>เมื่อทำการกดแล้วจะเข้าสู่หน้าการบันทึก ดังรูป</h3>
+                <center>
+                    <img src="/Picture/record02.png" style="width:230px;height:auto;">
+                </center>
+                <h3>1. การเลือกวันที่จะทำการบันทึกใหม่ โดยกดที่วันที่ในกรอบสีแดง แต่ถ้าไม่ต้องการก็สามารถใช้วันที่แสดงได้เลย</h3>
+                <h3>2. การเลือกเวลาที่จะทำการบันทึกใหม่ โดยกดที่เวลาในกรอบสีชมพู แต่ถ้าไม่ต้องการก็สามารถใช้เวลาที่แสดงได้เลย</h3>
+                <h3>3. การเปลี่ยนน้ำหนักที่จะทำการบันทึกใหม่ โดยกดที่น้ำหนักในกรอบสีเขียว แต่ถ้าไม่ต้องการก็สามารถใช้น้ำหนักที่แสดงได้เลย</h3>
+                <h3>4. เลื่อกประเภทการบันทึกโดยกดไปที่ปุ่มวงกลมในกรอบสีน้ำเงิน สามารถกดได้หลายประเภทในทีเดียว</h3>
+                <h1 class="middle_line"></h1>
+                <h3>เมื่อทำการกดประเภทดื่มน้ำจะแสดงผล ดังรูป</h3>
+                <center>
+                    <img src="/Picture/record03.png" style="width:230px;height:auto;">
+                </center>
+                <h3>1. ใส่ชนิดของน้ำที่ดื่มในกรอบสีแดง</h3>
+                <h3>2. ใส่ปริมาณของน้ำที่ดื่มในกรอบสีชมพู</h3>
+                <h3>3. ถ้ามีชนิดของน้ำมากกว่า 1 ปรเภทสามารถกดเพิ่มในกรอบสีน้ำเงิน</h3>
+                <h3>4. ถ้าต้องการลบบันทึกนั้นให้กด - ในกรอบสีเขียว</h3>
+                <h1 class="middle_line"></h1>
+                <h3>เมื่อทำการกดประเภทสวนปัสสาวะ ปัสสาวะด้วนตนเอง และอื่นๆ จะแสดงผล ดังรูป</h3>
+                <center>
+                    <img src="/Picture/record04.png" style="width:230px;height:auto;">
+                </center>
+                <h3>ประเภทสวนปัสสาวะ : ใส่ปริมาณของปัสสาวะที่ได้ในกรอบสีแดง</h3>
+                <h3>ประเภทปัสสาวะด้วยตนเอง : ใส่ปริมาณของปัสสาวะที่ได้ในกรอบสีชมพู</h3>
+                <h3>ประเภทอื่นๆ : ใส่ข้อความหรือหมายเหตุอื่นๆได้ในกรอบสีเขียว</h3>
+                <h3>เมื่อทำการบันทึกเสร็จสิ้นให้กด บันทึก ในกรอบสีน้ำเงิน</h3>
+                <h3>ถ้าต้องการยกเลิกการบันทึกนี้ให้กด ยกเลิก ในกรอบสีเหลือง</h3>
+                <h1 class="middle_line"></h1>
+                <h3>เมื่อทำการกดยืนยัน หรือ ยกเลิกจะทำการกลับสู่หน้าบันทึกการดื่มน้ำและปัสสาวะ ดังรูป</h3>
+                <center>
+                    <img src="/Picture/record05.png" style="width:230px;height:auto;">
+                </center>
+                <h3>กรอบสีดำ : แสดงปริมาณน้ำที่เข้าสู่ร่างกายทั้งหมด</h3>
+                <h3>กรอบสีเทา : แสดงปริมาณน้ำที่ออกจากร่างกายทั้งหมด</h3>
+                <h3>กรอบสีแดง : แสดงบันทึกของการสวนปัสสาวะ</h3>
+                <h3>กรอบสีชมพู : แสดงบันทึกของการปัสสาวะด้วยตนเอง</h3>
+                <h3>กรอบสีเขียว : แสดงบันทึกหมายเหตุอื่นๆ</h3>
+                <h3>กรอบสีน้ำเงิน : แสดงบันทึกของน้ำที่ดื่ม</h3>
+                <h3>กรอบสีฟ้า : แสดงเวลาบันทึกประเภทนั้นๆ โดยถ้าบันทึกในเวลาเดียวกันจะอยู่ด้วยกัน แต่ถ้าคนละเวลาจะแยกออกจากกัน</h3>
+                <h3>ถ้าต้องการลบบันทึกทั้งหมดของช่างเวลานั้นๆให้กด ลบ ในกรอบสีส้ม</h3>
+                <h3>ถ้าต้องการแก้ไขบันทึกทั้งหมดของช่างเวลานั้นๆให้กด แก้ใข ในกรอบสีม่วง โดยจะทำการย้อนกลับไปที่หน้าการบันทึก</h3>
+            </div>
+          </div>
+        </div>
+        <h1 class="middle_margin"></h1>
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <div class="mb-0">
+              <div class="row justify-content-start">
+                <div class="col-2 logo">
+                  <img class="icons" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fbook.png?alt=media&token=cdf5f868-7f38-4482-b25c-652f5837d9dc">
+                </div>
+                <div class="col-8 topic">
+                  <h2>คู่มือการสวนปัสสาวะ</h2>
+                </div>
+                <div class="col-2 add">
+                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseEquipment" aria-expanded="false" aria-controls="collapseOne">
+                      <img alt="" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fplus.png?alt=media&token=b3a7d91c-ec1a-4aed-af4d-1158c4aeabdd" 
+                      style="height: 25px; width: 25px" id="imgClickAndChange" onclick="changeImage()"  />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+          <div id="collapseEquipment" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body">
+              <h3>เมื่อทำการเข้าสู่หน้าคู่มือการสวนปัสสาวะจะขึ้นหน้าจอ ดังรูป</h3>
+              <center>
+                <img src="/Picture/cat01.png" style="width:230px;height:auto;">
+              </center>
+              <h3>มีให้เลือกกด 2 ส่วนคือ</h3>
+              <h3>1. อุปกรณ์สวนปัสสาวะ โดยให้ทำการกดในกรอบสีแดง</h3>
+              <h3>2. ขั้นตอนสวนปัสสาวะ โดยให้ทำการกดในกรอบสีชมพู</h3>
+              <h1 class="middle_line"></h1>
+              <h3>เมื่อทำการกด อุปกรณ์สวนปัสสาวะ จะแสดงหน้าจอดังรูป</h3>
+              <center>
+                  <img src="/Picture/cat03.png" style="width:230px;height:auto;">
+              </center>
+              <h3>ในหน้านี้จะแสดงรายละเอียดของอุปกรณทั้งหมดที่ใช้ในการสวนปัสสาวะ</h3>
+              <h1 class="middle_line"></h1>
+              <h3>เมื่อทำการกด ขั้นตอนสวนปัสสาวะ จะแสดงหน้าจอดังรูป</h3>
+              <center>
+                  <img src="/Picture/cat02.png" style="width:230px;height:auto;">
+              </center>
+              <h3>กดตรง เพศหญิง ในกรอบสีแดง เพื่อแสดงวิธีสวนปัสสาวะของเพศหญิง</h3>
+              <h3>กดตรง เพศชาย ในกรอบสีน้ำเงิน เพื่อแสดงวิธีสวนปัสสาวะของเพศชาย</h3>
+              <h3>*ถ้าเข้าสู่ระบบแล้วจะแสดงวิธีสวนปัสสาวะในเพศของผู้ใช้โดยอัตโนมัติ</h3>
+            </div>
+          </div>
+        </div>
+        <h1 class="middle_margin"></h1>
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <div class="mb-0">
+              <div class="row justify-content-start">
+                <div class="col-2 logo">
+                  <img class="icons" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Favatar.png?alt=media&token=4380945e-6a4c-47b5-9e7f-83478722fe09">
+                </div>
+                <div class="col-8 topic">
+                  <h2>ประวัติส่วนตัว</h2>
+                </div>
+                <div class="col-2 add">
+                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseProfile" aria-expanded="false" aria-controls="collapseOne">
+                      <img alt="" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fplus.png?alt=media&token=b3a7d91c-ec1a-4aed-af4d-1158c4aeabdd" 
+                      style="height: 25px; width: 25px" id="imgClickAndChange" onclick="changeImage()"  />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+      
+          <div id="collapseProfile" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body">
+              <h3>เมื่อทำการเข้าสู่หน้าประวัติส่วนตัวจะขึ้นหน้าจอ ดังรูป</h3>
+              <center>
+                <img src="/Picture/profile01.png" style="width:230px;height:auto;">
+              </center>
+              <h3>ในหน้านี้จะแสดงประวัติส่วนตัวของผู้ใช้โดยไม่สามารถทำการแก้ไขได้</h3>
+              <h3>ยกเว้นในส่วนของส่วนสูงและน้ำหนัก ที่สามารถแก้ไขได้ โดยการกรอกในกรอบสีแดง</h3>
+              <h3>เมื่อทำการแก้ไขแล้วให้กด บันทึกข้อมูล ในกรอบสีชมพู</h3>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </body>
 </html>
+
+
+
+<!-- <div class="row justify-content-start">
+  <h2 class="step">บันทึกการดื่มน้ำและปัสสาวะ</h2>
+    <h3>- แสดงรายละเอียดการดื่มน้ำและปัสสาวะ สามารถค้นหาตามวันที่ต้องการได้</h3>
+    <h3>- กด <img class="add" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2FAdd%20Record.png?alt=media&token=f9012bce-fa36-43a1-99c6-cf0b22efece5"> เพื่อเริ่มบันทึกใหม่</h3>
+    <h3>- กด <img class="delete" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/Delete_record.PNG?alt=media&token=9e9887bd-cedc-418b-a066-2c40e7ce1985"> เพื่อลบบันทึกนี้ทิ้ง</h3>
+    <h3>- กด <img class="modify" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/Modify_record.PNG?alt=media&token=9cea41c1-19b6-4549-acbf-de4ce461ec08"> เพื่อแก้ไขบันทึกนี้</h3>
+  <br>
+  <div class="col-9 middle_line"></div>
+  <h2 class="step">คู่มือการดื่มน้ำและปัสสาวะ</h2>
+    <h3>- อุปกรณ์ในการสวนปัสสาวะ: แสดงรูปภาพอุปกรณ์การสวนปัสสาวะพร้อมรายละเอียด</h3>
+    <h3>- ขั้นตอนการสวนปัสสาวะ: แสดงขั้นตอนการสวนปัสสาวะพร้อมรายละเอียด</h3>
+  <div class="col-9 middle_line"></div>
+  <h2 class="step">ประวัติส่วนตัว</h2>
+    <h3>- แสดงประวัติส่วนตัว โดยสามารถแก้ไขน้ำหนักและส่วนสูงได้เท่านั้น</h3>
+</div> -->

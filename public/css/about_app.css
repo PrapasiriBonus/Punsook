@@ -25,14 +25,14 @@ body {
     background-color: white;
     box-shadow: 0 2px 5px -1px gray;
     padding-bottom: 25px;
-    padding-left: 20px;
+    padding-left: 15px;
 }
 
 
 h2 {
+    margin-top: 7px;
     font-size: 18px;
     text-align: left;
-    margin-left: 20px;
 }
 
 
@@ -41,10 +41,11 @@ h2.step {
 }
 
 h3 {
-    font-size: 18px;
+    font-size: 16px;
     text-align: left;
-    margin-left: 20px;
-    margin-right: 10px;
+    margin-top: 5px;
+    margin-left: 0px;
+    margin-right: 0px;
 }
 
 img.step_img {
@@ -59,7 +60,7 @@ h1.step_cat {
     font-size:  20px;
     font-weight: bold;
     border-bottom: 2px solid #E5E5E5;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     padding-bottom: 10px;
 }
 
@@ -80,11 +81,53 @@ h1.step_cat {
     margin-right: auto;
 }
 
+img.icons {
+    width: 35px;
+    height: auto;
+}
+
+.col-8.topic {
+    padding-right: 0px;
+    padding-left: 5px;
+}
+
+.col-2.add {
+    padding-left: 0px;
+}
+
+button.collapsed {
+    border-color: white;
+}
+
+.middle_line {
+    border-bottom: 2px solid #E5E5E5;
+    margin-bottom: 7px;
+    margin-right: 20PX;
+}
+
+.middle_margin {
+    border-bottom: 2px solid white;
+    margin-bottom: 7px;
+    margin-right: 20PX;
+}
+
+.card-body {
+    padding-top: 7px;
+}
+
 @media (max-width: 600px) {
     .logo-img {
         width: auto;
         height: 40px;
-      }
+    }
+    h2 {
+        font-size: 16px;
+        padding-left: 5px;
+    }
+
+    div#headingOne.card-header {
+        padding-left: 10px;
+    }
 }
 
 @media (max-width: 400px) {
