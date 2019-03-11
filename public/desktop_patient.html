@@ -165,20 +165,6 @@
                 $("#weight").val(user.weight)
                 $("#height").val(user.height)
                 $("#phone").val(patient.replace(" 66","0"))
-
-                var pretests = database.ref("testing/pretest");
-                pretests.once('value', function(snapshot) {
-                    snapshot.forEach(function(childSnapshot) {
-                        var childKey = childSnapshot.key;
-                        pretest = childSnapshot.val();
-                        if(pretest[2]==user.patient_id){
-                            $("#pretest_score").html(pretest[1])
-                            $("#1").after('<td>'+pretest[3]+'</td><td>ไม่</td>');
-
-                            $("#timestamp").after('<td>'+pretest[0].replace("T"," ").slice(0,16)+'</td><td>ไม่</td>');
-                        }
-                    });
-                });
             });
 
             var records = database.ref("records");
@@ -278,25 +264,25 @@
                     var data = google.visualization.arrayToDataTable(voiding_chart);
 
                     var options = {
-                    height: 200,
-                    legend: { position: 'none'},
-                    histogram: {
-                        hideBucketItems: true,
-                        bucketSize: 3
-                    },
-                    colors: ['#A9BDD7','#FFD0BB'],
-                    hAxis: {
-                        viewWindowMode: 'explicit',
-                        viewWindow: {
-                            max: 23.59
-                                },
-                    },
-                    chartArea: {
+                        height: 200,
+                        legend: { position: 'none'},
+                        histogram: {
+                            hideBucketItems: true,
+                            bucketSize: 3
+                        },
+                        colors: ['#A9BDD7','#FFD0BB'],
+                        hAxis: {
+                            viewWindowMode: 'explicit',
+                            viewWindow: {
+                                max: 23.59
+                            },
+                        },
+                        chartArea: {
                             left: 10,
                             top: 20,
                             right: 10,
                             bottom: 30,
-                            },
+                        },
                     };
                     var chart = new google.visualization.Histogram(document.getElementById('count_time'));
                     chart.draw(data, options);
@@ -527,24 +513,23 @@
                 google.charts.setOnLoadCallback(drawChart);
                 function drawChart() {
                     var data = google.visualization.arrayToDataTable([
-                    ['', 'จำนวนครั้งในเดือนนี้', 'จำนวนครั้งทั้งหมด', 'จำนวนครั้งโดยเฉลี่ยจากผู้ป่วยทั้งหมด'],
-                    ['อุปกรณ์', (equipment_month+).toFixed(0), (equipment_month+equipment+).toFixed(0), (equipment_avg+).toFixed(0)],
-                    ['การดื่มน้ำ', 1170, 460, 250],
-                    ['การปัสสาวะ ', 660, 1120, 300],
-                    ['ปัญหาระหว่างสวน', 1030, 540, 350],
-                    ['ภาวะผิดปกติ', 1030, 540, 350]
+                        ['', 'จำนวนครั้งในเดือนนี้', 'จำนวนครั้งทั้งหมด', 'จำนวนครั้งโดยเฉลี่ยจากผู้ป่วยทั้งหมด'],
+                        ['อุปกรณ์', (equipment_month).toFixed(0), (equipment_month+equipment).toFixed(0), (equipment_avg).toFixed(0)],
+                        ['การดื่มน้ำ', 1170, 460, 250],
+                        ['การปัสสาวะ ', 660, 1120, 300],
+                        ['ปัญหาระหว่างสวน', 1030, 540, 350],
+                        ['ภาวะผิดปกติ', 1030, 540, 350]
                     ]);
 
                     var options = {
-                    legend: { position: 'none'},
-                    bars: 'vertical',
-                    vAxis: {format: 'decimal'},
-                    height: 200,
-                    colors: ['#A9BDD7', '#FFD0BB', '#CEA9D7']
+                        legend: { position: 'none'},
+                        bars: 'vertical',
+                        vAxis: {format: 'decimal'},
+                        height: 200,
+                        colors: ['#A9BDD7', '#FFD0BB', '#CEA9D7']
                     };
 
                     var chart = new google.charts.Bar(document.getElementById('type_count'));
-
                     chart.draw(data, google.charts.Bar.convertOptions(options));
                 }
             });
@@ -988,7 +973,7 @@
                 </div>
                 <div class='container-solution'>
                     <br>
-                    <h1 class="topic">แก้ปัญหาระหว่างสวนปัสสาวะสำเร็จ</h1>
+                    <h1 class="topic">แก้ปัญหาระหว่างสวนปัสสาวะและภาวะผิดปกติสำเร็จ</h1>
                     <h1 class="middle_line-graph"></h1>
                     <div class="row">                      
                         <div class="col">
@@ -1024,7 +1009,7 @@
                     <div class="row row-sol">                      
                         <div class="col">
                         <center>
-                            <h1 id="pretest_score" class="sol-value" style="color: #A9BDD7"></h1>
+                            <h1 id="pretest_score" class="sol-value" style="color: #A9BDD7">7</h1>
                             <h2 class="sol">จาก 17 คะแนน</h2>
                         </center>
                         </div>
@@ -1050,6 +1035,8 @@
                                 <tbody>
                                     <tr>
                                         <th id="1" scope="row" style="font-weight: normal; color: #39588A">ล้างมือให้สะอาดด้วยสบู่ ก่อนสวนปัสสาวะทุกครั้ง</th>
+                                        <td>ใช่</td>
+                                        <td>ไม่</td>
                                     </tr>
                                     <tr>
                                         <th scope="row" style="font-weight: normal; color: #39588A">ไม่ควรสวนปัสสาวะล่าช้ากว่ากำหนดเกิน 30 นาที</th>
