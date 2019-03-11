@@ -418,12 +418,9 @@ button.btn-default {
         border: 1px solid gray;
         border-radius: 50px;
         padding-left: 10px;  
-    } 
-
-    input.date {
         margin-left: 20px;
-    }
-
+    } 
+    
     .form-group.col-4 {
         padding: 0px;
     }
