@@ -287,7 +287,7 @@
                     var chart = new google.visualization.Histogram(document.getElementById('count_time'));
                     chart.draw(data, options);
                 }
-                rec += '<div class="row row-table patient-table"><h3 class="col">รวม</h3><h3 class="col">'+drinking_sum+'</h3><h3 class="col">'+cath_sum+'</h3><h3 class="col">'+urine_sum+'</h3><h3 class="col"></h3><h3 class="col"></h3></div>';
+                rec += '<div class="row row-table patient-table total"><h3 class="col col-total">รวม</h3><h3 class="col col-total">'+drinking_sum+'</h3><h3 class="col col-total">'+cath_sum+'</h3><h3 class="col col-total">'+urine_sum+'</h3><h3 class="col col-total"></h3><h3 class="col col-total"></h3></div>';
                 var distinctDate = [...new Set(array_date)];
                 if(distinctDate.length==0) var num=1;
                 else var num=distinctDate.length;
