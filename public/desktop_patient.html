@@ -319,6 +319,141 @@
             var equipment_array = [];
             var equipment_avg = 0;
 
+            var equipment_basin = 0;
+            var equipment_basin_month = 0;
+            var equipment_basin_array = [];
+            var equipment_basin_avg = 0;
+
+            var equipment_container = 0;
+            var equipment_container_month = 0;
+            var equipment_container_array = [];
+            var equipment_container_avg = 0;
+
+            var equipment_cotton = 0;
+            var equipment_cotton_month = 0;
+            var equipment_cotton_array = [];
+            var equipment_cotton_avg = 0;
+
+            var equipment_urinary_catheter = 0;
+            var equipment_urinary_catheter_month = 0;
+            var equipment_urinary_catheter_array = [];
+            var equipment_urinary_catheter_avg = 0;
+
+            var equipment_clean_urinary_catheter = 0;
+            var equipment_clean_urinary_catheter_month = 0;
+            var equipment_clean_urinary_catheter_array = [];
+            var equipment_clean_urinary_catheter_avg = 0;
+
+            var equipment_degenerated_catheter = 0;
+            var equipment_degenerated_catheter_month = 0;
+            var equipment_degenerated_catheter_array = [];
+            var equipment_degenerated_catheter_avg = 0;
+
+            var equipment_disinfectant = 0;
+            var equipment_disinfectant_month = 0;
+            var equipment_disinfectant_array = [];
+            var equipment_disinfectant_avg = 0;
+
+            var equipment_garbage_bag = 0;
+            var equipment_garbage_bag_month = 0;
+            var equipment_garbage_bag_array = [];
+            var equipment_garbage_bag_avg = 0;
+
+            var equipment_jelly = 0;
+            var equipment_jelly_month = 0;
+            var equipment_jelly_array = [];
+            var equipment_jelly_avg = 0;
+
+            var equipment_use_jelly = 0;
+            var equipment_use_jelly_month = 0;
+            var equipment_use_jelly_array = [];
+            var equipment_use_jelly_avg = 0;
+
+            var equipment_mirror = 0;
+            var equipment_mirror_month = 0;
+            var equipment_mirror_array = [];
+            var equipment_mirror_avg = 0;
+
+            var equipment_soap = 0;
+            var equipment_soap_month = 0;
+            var equipment_soap_array = [];
+            var equipment_soap_avg = 0;
+
+            var drinking_knowledge = 0;
+            var drinking_knowledge_month = 0;
+            var drinking_knowledge_array = [];
+            var drinking_knowledge_avg = 0;
+
+            var catheterization_type = 0;
+            var catheterization_type_month = 0;
+            var catheterization_type_array = [];
+            var catheterization_type_avg = 0;
+
+            var catheterization_how_to = 0;
+            var catheterization_how_to_month = 0;
+            var catheterization_how_to_array = [];
+            var catheterization_how_to_avg = 0;
+
+            var catheterization_quality = 0;
+            var catheterization_quality_month = 0;
+            var catheterization_quality_array = [];
+            var catheterization_quality_avg = 0;
+
+            var catheterization_frequent = 0;
+            var catheterization_frequent_month = 0;
+            var catheterization_frequent_array = [];
+            var catheterization_frequent_avg = 0;
+
+            var catheterization_forgot = 0;
+            var catheterization_forgot_month = 0;
+            var catheterization_forgot_array = [];
+            var catheterization_forgot_avg = 0;
+
+            var problem_urinary_catheter = 0;
+            var problem_urinary_catheter_month = 0;
+            var problem_urinary_catheter_array = [];
+            var problem_urinary_catheter_avg = 0;
+
+            var problem_urinate = 0;
+            var problem_urinate_month = 0;
+            var problem_urinate_array = [];
+            var problem_urinate_avg = 0;
+
+            var disorder_injury = 0;
+            var disorder_injury_month = 0;
+            var disorder_injury_array = [];
+            var disorder_injury_avg = 0;
+
+            var disorder = 0;
+            var disorder_month = 0;
+            var disorder_array = [];
+            var disorder_avg = 0;
+
+            var disorder_bladder_retraction = 0;
+            var disorder_bladder_retraction_month = 0;
+            var disorder_bladder_retraction_array = [];
+            var disorder_bladder_retraction_avg = 0;
+
+            var disorder_gallstones = 0;
+            var disorder_gallstones_month = 0;
+            var disorder_gallstones_array = [];
+            var disorder_gallstones_avg = 0;
+
+            var disorder_reflex = 0;
+            var disorder_reflex_month = 0;
+            var disorder_reflex_array = [];
+            var disorder_reflex_avg = 0;
+
+            var disorder_retraction = 0;
+            var disorder_retraction_month = 0;
+            var disorder_retraction_array = [];
+            var disorder_retraction_avg = 0;
+
+            var disorder_urethral_erosion = 0;
+            var disorder_urethral_erosion_month = 0;
+            var disorder_urethral_erosion_array = [];
+            var disorder_urethral_erosion_avg = 0;
+
             messages.orderByChild('time').once('value', function(snapshot) {
                 snapshot.forEach(function(childSnapshot) {
                     var childKey = childSnapshot.key;
@@ -330,6 +465,23 @@
                         if((new Date(message.time).getMonth()+1)==month){
                             //console.log(message);
                             if(message.intent=="equipment") equipment_month += 1;
+                            if(message.intent=="equipment_basin") equipment_basin_month += 1;
+                            if(message.intent=="equipment_container") equipment_container_month += 1;
+                            if(message.intent=="equipment_cotton") equipment_cotton_month += 1;
+                            if(message.intent=="equipment_urinary_catheter") equipment_urinary_catheter_month += 1;
+                            if(message.intent=="equipment_clean_urinary_catheter") equipment_clean_urinary_catheter_month += 1;
+                            if(message.intent=="equipment_degenerated_catheter") equipment_degenerated_catheter_month += 1;
+                            if(message.intent=="equipment_disinfectant") equipment_disinfectant_month += 1;
+                            if(message.intent=="equipment_garbage_bag") equipment_garbage_bag_month += 1;
+                            if(message.intent=="equipment_jelly") equipment_jelly_month += 1;
+                            if(message.intent=="equipment_use_jelly") equipment_use_jelly_month += 1;
+                            if(message.intent=="equipment_mirror") equipment_mirror_month += 1;
+                            if(message.intent=="equipment_soap") equipment_soap_month += 1;
+                            if(message.intent=="drinking_knowledge") drinking_knowledge_month += 1;
+                            if(message.intent=="catheterization_type") catheterization_type_month += 1;
+                            if(message.intent=="catheterization_how_to") catheterization_how_to_month += 1;
+                            if(message.intent=="catheterization_quality") catheterization_quality_month += 1;
+                            if(message.intent=="catheterization_frequent") catheterization_frequent_month += 1;
 
                             if(new Date(message.time).toDateString()==chat_date_query){
                                 //message and time
@@ -601,10 +753,94 @@
                                     <th id="equipment_basin" scope="row" style="font-weight: normal; color: #39588A">• กะละมัง</th>
                                 </tr>
                                 <tr>
+                                    <th id="equipment_container" scope="row" style="font-weight: normal; color: #39588A">• ภาชนะใส่ปัสสาวะ</th>
+                                </tr>
+                                <tr>
+                                    <th id="equipment_cotton" scope="row" style="font-weight: normal; color: #39588A">• สำลี</th>
+                                </tr>
+                                <tr>
+                                    <th id="equipment_urinary_catheter" scope="row" style="font-weight: normal; color: #39588A">• สายสวนปัสสาวะ</th>
+                                </tr>
+                                <tr>
                                     <th id="equipment_clean_urinary_catheter" scope="row" style="font-weight: normal; color: #39588A">• วิธีทำความสะอาดสายสวนปัสสาวะ</th>
                                 </tr>
                                 <tr>
-                                    <th id="equipment-container" scope="row" style="font-weight: normal; color: #39588A">• วิธีทำความสะอาดสายสวนปัสสาวะ</th>
+                                    <th id="equipment_degenerated_catheter" scope="row" style="font-weight: normal; color: #39588A">• สายสวนปัสสาวะเลื่อมสภาพ</th>
+                                </tr>
+                                <tr>
+                                    <th id="equipment_disinfectant" scope="row" style="font-weight: normal; color: #39588A">• น้ำยาฆ่าเชื้อ</th>
+                                </tr>
+                                <tr>
+                                    <th id="equipment_garbage_bag" scope="row" style="font-weight: normal; color: #39588A">• ถุงขยะ</th>
+                                </tr>
+                                <tr>
+                                    <th id="equipment_jelly" scope="row" style="font-weight: normal; color: #39588A">• สารหล่อลื่น</th>
+                                </tr>
+                                <tr>
+                                    <th id="equipment_use_jelly" scope="row" style="font-weight: normal; color: #39588A">• วิธีทาสารหล่อลื่น</th>
+                                </tr>
+                                <tr>
+                                    <th id="equipment_mirror" scope="row" style="font-weight: normal; color: #39588A">• กระจกเงา</th>
+                                </tr>
+                                <tr>
+                                    <th id="equipment_soap" scope="row" style="font-weight: normal; color: #39588A">• สบู่</th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="font-weight: bold; color: #39588A" colspan="5">การดื่มน้ำ</th>
+                                </tr>
+                                <tr>
+                                    <th id="drinking_knowledge" scope="row" style="font-weight: normal; color: #39588A">• ปริมาณน้ำที่เหมาะสม</th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="font-weight: bold; color: #39588A" colspan="5">การสวนปัสสาวะ</th>
+                                </tr>
+                                <tr>
+                                    <th id="catheterization_type" scope="row" style="font-weight: normal; color: #39588A">• ประเภทการสวนปัสสาวะ</th>
+                                </tr>
+                                <tr>
+                                    <th id="catheterization_how_to" scope="row" style="font-weight: normal; color: #39588A">• ขั้นตอนสวนปัสสาวะ</th>
+                                </tr>
+                                <tr>
+                                    <th id="catheterization_quality" scope="row" style="font-weight: normal; color: #39588A">• ปริมาณปัสสาวะที่เหมาะสม</th>
+                                </tr>
+                                <tr>
+                                    <th id="catheterization_frequent" scope="row" style="font-weight: normal; color: #39588A">• ความถี่ในการสวนปัสสาวะที่เหมาะสม</th>
+                                </tr>
+                                <tr>
+                                    <th id="catheterization_forgot" scope="row" style="font-weight: normal; color: #39588A">• วิธีแก้ไขหากลืมสวนปัสสาวะ</th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="font-weight: bold; color: #39588A" colspan="5">ปัญหาระหว่างสวนปัสสาวะ</th>
+                                </tr>
+                                <tr>
+                                    <th id="problem_urinary_catheter" scope="row" style="font-weight: normal; color: #39588A">• ใส่สายสวนปัสสาวะติดขัด</th>
+                                </tr>
+                                <tr>
+                                    <th id="problem_urinate" scope="row" style="font-weight: normal; color: #39588A">• ปัสสาวะไม่ออก</th>
+                                </tr>
+                                <tr>
+                                    <th id="disorder_injury" scope="row" style="font-weight: normal; color: #39588A">• เจ็บ-ปัสสาวะเป็นเลือด</th>
+                                </tr>
+                                <tr>
+                                    <th id="disorder" scope="row" style="font-weight: normal; color: #39588A">• ปัสสาวะเล็ด</th>
+                                </tr>
+                                <tr>
+                                    <th id="disorder_bladder_retraction" scope="row" style="font-weight: normal; color: #39588A">• ปัสสาวะบ่อย</th>
+                                </tr>
+                                <tr>
+                                    <th id="disorder_gallstones" scope="row" style="font-weight: normal; color: #39588A">• ปัสสาวะมีตะกอน-นิ่ว</th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="font-weight: bold; color: #39588A" colspan="5">ภาวะผิดปกติ</th>
+                                </tr>
+                                <tr>
+                                    <th id="disorder_reflex" scope="row" style="font-weight: normal; color: #39588A">• ภาวะรีเฟล็กซ์ระบบประสาทอัตโนมัติผิดปกติ</th>
+                                </tr>
+                                <tr>
+                                    <th id="disorder_retraction" scope="row" style="font-weight: normal; color: #39588A">• ภาวะติดเชื้อทางเดินปัสสาวะ</th>
+                                </tr>
+                                <tr>
+                                    <th id="disorder_urethral_erosion" scope="row" style="font-weight: normal; color: #39588A">• ภาวะคอปัสสาวะหรือท่อปัสสาวะกร่อน</th>
                                 </tr>
                                 <tr>
                                 <th scope="row" style="font-weight: normal; color: #39588A">• น้ำยาฆ่าเชื้อ</th>
