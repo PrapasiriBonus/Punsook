@@ -78,9 +78,19 @@
                 <a href="/desktop_home.html"><img class= "logo-img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/logo_white.png?alt=media&token=7ea16ae2-206b-41b9-90de-33799268daf4"></a>   
             </center>
         </div>
-        <div class="col">
-            <img class="exit" src="/Picture/exit.png">
+        <div class="col" align="right">
+            <img id="signOut" class="search-logo" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fexit.png?alt=media&token=051dab9d-efc7-49b9-9147-1ad9c158d64f">
         </div>
+        <script>
+            document.getElementById('signOut').addEventListener('click', function(event) {
+                firebase.auth().signOut().then(function() {
+                    // Sign-out successful.
+                    window.location.replace("/index.html");
+                }).catch(function(error) {
+                    // An error happened.
+                });
+            });
+        </script>
     </nav>      
     <br>
     <script>
@@ -178,7 +188,7 @@
                 var urine_sum = 0;
                 var cath_sum = 0;
                 var array_date = [];
-                var voiding_chart = [['ดื่มน้ำ', 'ปัสสาวะ']];
+                var voiding_chart = [[{v: [0,0,0], f: '00:00'}, 0, 0],[{v: [1,0,0], f: '01:00'}, 0, 0],[{v: [2,0,0], f: '02:00'}, 0, 0],[{v: [3,0,0], f: '03:00'}, 0, 0],[{v: [4,0,0], f: '04:00'}, 0, 0],[{v: [5,0,0], f: '05:00'}, 0, 0],[{v: [6,0,0], f: '06:00'}, 0, 0],[{v: [7,0,0], f: '07:00'}, 0, 0],[{v: [8,0,0], f: '08:00'}, 0, 0],[{v: [9,0,0], f: '09:00'}, 0, 0],[{v: [10,0,0], f:'10:00'}, 0, 0],[{v: [11,0,0], f: '11:00'}, 0, 0],[{v: [12,0,0], f: '12:00'}, 0, 0],[{v: [13,0,0], f: '13:00'}, 0, 0],[{v: [14,0,0], f: '14:00'}, 0, 0],[{v: [15,0,0], f: '15:00'}, 0, 0],[{v: [16,0,0], f: '16:00'}, 0, 0],[{v: [17,0,0], f: '17:00'}, 0, 0],[{v: [18,0,0], f: '18:00'}, 0, 0],[{v: [19,0,0], f: '19:00'}, 0, 0],[{v: [20,0,0], f: '20:00'}, 0, 0],[{v: [21,0,0], f: '21:00'}, 0, 0],[{v: [22,0,0], f: '22:00'}, 0, 0],[{v: [23,0,0], f: '23:00'}, 0, 0]];
                 snapshot.forEach(function(childSnapshot) {
                     var childKey = childSnapshot.key;
                     record = childSnapshot.val();
@@ -209,8 +219,9 @@
                         }
                         if(record.date==record_date_query){
                             //console.log(record);
-                            if(data.drinking) voiding_chart.push([Number(record.time.replace(":",".")),null]);
-                            if(data.catheterization||data.urine) voiding_chart.push([null,Number(record.time.replace(":","."))]);
+                            if(data.drinking) voiding_chart[Number(record.time.slice(0,2))][1]+=1;
+                            if(data.catheterization||data.urine) voiding_chart[Number(record.time.slice(0,2))][2]+=1;
+                            
                             var time_rec = '<h3 class="col">'+record.time+'</h3>'
                             var date = new Date(record.timestamp);
                             var day = date.getDate();
@@ -255,39 +266,52 @@
                             drinking_all = '<div class="col 0">'+drinking_rec+'</div>'
                             rec += '<div class="row row-table patient-table" >'+time_rec+drinking_all+other_rec+daterecord+'</div>';
                         }else{
-                            if(data.drinking) voiding_chart.push([Number(record.time.replace(":",".")),null]);
-                            if(data.catheterization||data.urine) voiding_chart.push([null,Number(record.time.replace(":","."))]);
+                            if(data.drinking) voiding_chart[Number(record.time.slice(0,2))][1]+=1;
+                            if(data.catheterization||data.urine) voiding_chart[Number(record.time.slice(0,2))][2]+=1;
+                            //if(data.drinking) voiding_chart.push([Number(record.time.replace(":",".")),null]);
+                            //if(data.catheterization||data.urine) voiding_chart.push([null,Number(record.time.replace(":","."))]);
                         }
                     }
                 });
-                google.charts.load("current", {packages:["corechart"]});
-                google.charts.setOnLoadCallback(drawChart);
-                function drawChart() {
-                    var data = google.visualization.arrayToDataTable(voiding_chart);
+                google.charts.load('current', {packages: ['corechart', 'bar']});
+                google.charts.setOnLoadCallback(drawMaterial);
+
+                function drawMaterial() {
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('timeofday', 'เวลาภายในหนึ่งวัน');
+                    data.addColumn('number', 'ดื่มน้ำ');
+                    data.addColumn('number', 'สวนปัสสาวะ');
+                    data.addRows(voiding_chart);
 
                     var options = {
+                        width: 900,
                         height: 200,
-                        legend: { position: 'none'},
-                        histogram: {
-                            hideBucketItems: true,
-                            bucketSize: 3
-                        },
                         colors: ['#A9BDD7','#FFD0BB'],
                         hAxis: {
-                            viewWindowMode: 'explicit',
-                            viewWindow: {
-                                max: 23.59
-                            },
-                        },
-                        chartArea: {
-                            left: 10,
-                            top: 20,
-                            right: 10,
-                            bottom: 30,
+                            // gridlines: {
+                            //     count: -1,
+                            //     units: {
+                            //         hours: {format: ['HH:mm', 'ha']},
+                            //     }
+                            // },
+                            // title: 'Time of Day',
+                            // format: 'hh:mm a',
+                            // viewWindowMode: 'pretty',
+                            // viewWindow: {
+                            //     min: [0, 0, 0],
+                            //     max: [23, 59, 59]
+                            // },
+                            // chartArea: {
+                            //     left: 10,
+                            //     top: 20,
+                            //     right: 10,
+                            //     bottom: 30,
+                            // }
                         },
                     };
-                    var chart = new google.visualization.Histogram(document.getElementById('count_time'));
-                    chart.draw(data, options);
+
+                    var materialChart = new google.charts.Bar(document.getElementById('count_time'));
+                    materialChart.draw(data, options);
                 }
                 rec += '<div class="row row-table patient-table total"><h3 class="col col-total">รวม</h3><h3 class="col col-total">'+drinking_sum+'</h3><h3 class="col col-total">'+cath_sum+'</h3><h3 class="col col-total">'+urine_sum+'</h3><h3 class="col col-total"></h3><h3 class="col col-total"></h3></div>';
                 var distinctDate = [...new Set(array_date)];
@@ -531,9 +555,10 @@
                             else if(message.intent=="disorder-reflex") disorder_reflex += 1;
                             else if(message.intent=="disorder-retraction") disorder_retraction += 1;
                             else if(message.intent=="disorder-urethral_erosion") disorder_urethral_erosion += 1;
-
                         }
                     }else{
+                        // if(message.user!="U559fbad8d7102f6f91eda2bbfdfe250d"&&message.intent=="Default Fallback Intent")
+                        //     console.log(message);
                         //
                         if(message.intent=="equipment") equipment_array.push(message.user);
                         else if(message.intent=="equipment-basin") equipment_basin_array.push(message.user);
@@ -685,29 +710,63 @@
                 var disorder_urethral_erosion_avg = (disorder_urethral_erosion_month+disorder_urethral_erosion+disorder_urethral_erosion_array.length)/(user_distinct.length+1);
                 $("#disorder_urethral_erosion").after('<td>'+disorder_urethral_erosion_month+'</td><td>'+(disorder_urethral_erosion_month+disorder_urethral_erosion)+'</td><td>'+disorder_urethral_erosion_avg.toFixed(0)+'</td>');
 
-                google.charts.load('current', {'packages':['bar']});
-                google.charts.setOnLoadCallback(drawChart);
-                function drawChart() {
-                    var data = google.visualization.arrayToDataTable([
-                        ['', 'จำนวนครั้งในเดือนนี้', 'จำนวนครั้งทั้งหมด', 'จำนวนครั้งโดยเฉลี่ยจากผู้ป่วยทั้งหมด'],
-                        ['อุปกรณ์', (equipment_month+equipment_basin_month+equipment_container_month+equipment_cotton_month+equipment_urinary_catheter_month+equipment_clean_urinary_catheter_month+equipment_degenerated_catheter_month+equipment_disinfectant_month+equipment_garbage_bag_month+equipment_jelly_month+equipment_use_jelly_month+equipment_mirror_month+equipment_soap_month).toFixed(0), (equipment_month+equipment+equipment_basin_month+equipment_basin+equipment_container_month+equipment_container+equipment_cotton_month+equipment_cotton+equipment_urinary_catheter_month+equipment_urinary_catheter+equipment_clean_urinary_catheter_month+equipment_clean_urinary_catheter+equipment_degenerated_catheter_month+equipment_degenerated_catheter+equipment_disinfectant_month+equipment_disinfectant+equipment_garbage_bag_month+equipment_garbage_bag+equipment_jelly_month+equipment_jelly+equipment_use_jelly_month+equipment_use_jelly+equipment_mirror_month+equipment_mirror+equipment_soap_month+equipment_soap).toFixed(0), (equipment_avg+equipment_basin_avg+equipment_container_avg+equipment_cotton_avg+equipment_clean_urinary_catheter_avg+equipment_urinary_catheter_avg+equipment_degenerated_catheter_avg+equipment_disinfectant_avg+equipment_garbage_bag_avg+equipment_jelly_avg+equipment_use_jelly_avg+equipment_mirror_avg+equipment_soap_avg).toFixed(0)],
-                        ['การดื่มน้ำ', (drinking_knowledge_month).toFixed(0), (drinking_knowledge_month+drinking_knowledge).toFixed(0), (drinking_knowledge_avg).toFixed(0)],
-                        ['การปัสสาวะ ', (catheterization_type_month+catheterization_how_to_month+catheterization_quality_month+catheterization_frequent_month+catheterization_forgot_month).toFixed(0), (catheterization_type_month+catheterization_type+catheterization_how_to_month+catheterization_how_to+catheterization_quality_month+catheterization_quality+catheterization_frequent_month+catheterization_frequent+catheterization_forgot_month+catheterization_forgot).toFixed(0), (catheterization_type_avg+catheterization_how_to_avg+catheterization_quality_avg+catheterization_frequent_avg+catheterization_forgot_avg).toFixed(0)],
-                        ['ปัญหาระหว่างสวน', (problem_urinary_catheter_month+problem_urinate_month+disorder_injury_month+disorder_month+disorder_bladder_retraction_month+disorder_gallstones_month).toFixed(0), (problem_urinary_catheter_month+problem_urinary_catheter+problem_urinate_month+problem_urinate+disorder_injury_month+disorder_injury+disorder_month+disorder+disorder_bladder_retraction_month+disorder_bladder_retraction+disorder_gallstones_month+disorder_gallstones).toFixed(0), (problem_urinary_catheter_avg+problem_urinate_avg+disorder_injury_avg+disorder_avg+disorder_bladder_retraction_avg+disorder_gallstones_avg).toFixed(0)],
-                        ['ภาวะผิดปกติ', (disorder_reflex_month+disorder_retraction_month+disorder_urethral_erosion_month).toFixed(0), (disorder_reflex_month+disorder_reflex+disorder_retraction_month+disorder_retraction+disorder_urethral_erosion_month+disorder_urethral_erosion).toFixed(0), (disorder_reflex_avg+disorder_retraction_avg+disorder_urethral_erosion_avg).toFixed(0)]
+                // google.charts.load('current', {'packages':['corechart']});
+                // google.charts.setOnLoadCallback(drawChart);
+                // function drawChart() {
+                //     var data = google.visualization.arrayToDataTable([
+                //         ['หมวด', 'จำนวนครั้งในเดือนนี้', 'จำนวนครั้งทั้งหมด', 'จำนวนครั้งโดยเฉลี่ยจากผู้ป่วยทั้งหมด'],
+                //         ['อุปกรณ์', (equipment_month+equipment_basin_month+equipment_container_month+equipment_cotton_month+equipment_urinary_catheter_month+equipment_clean_urinary_catheter_month+equipment_degenerated_catheter_month+equipment_disinfectant_month+equipment_garbage_bag_month+equipment_jelly_month+equipment_use_jelly_month+equipment_mirror_month+equipment_soap_month).toFixed(0), (equipment_month+equipment+equipment_basin_month+equipment_basin+equipment_container_month+equipment_container+equipment_cotton_month+equipment_cotton+equipment_urinary_catheter_month+equipment_urinary_catheter+equipment_clean_urinary_catheter_month+equipment_clean_urinary_catheter+equipment_degenerated_catheter_month+equipment_degenerated_catheter+equipment_disinfectant_month+equipment_disinfectant+equipment_garbage_bag_month+equipment_garbage_bag+equipment_jelly_month+equipment_jelly+equipment_use_jelly_month+equipment_use_jelly+equipment_mirror_month+equipment_mirror+equipment_soap_month+equipment_soap).toFixed(0), (equipment_avg+equipment_basin_avg+equipment_container_avg+equipment_cotton_avg+equipment_clean_urinary_catheter_avg+equipment_urinary_catheter_avg+equipment_degenerated_catheter_avg+equipment_disinfectant_avg+equipment_garbage_bag_avg+equipment_jelly_avg+equipment_use_jelly_avg+equipment_mirror_avg+equipment_soap_avg).toFixed(0)],
+                //         ['การดื่มน้ำ', (drinking_knowledge_month).toFixed(0), (drinking_knowledge_month+drinking_knowledge).toFixed(0), (drinking_knowledge_avg).toFixed(0)],
+                //         ['การปัสสาวะ', (catheterization_type_month+catheterization_how_to_month+catheterization_quality_month+catheterization_frequent_month+catheterization_forgot_month).toFixed(0), (catheterization_type_month+catheterization_type+catheterization_how_to_month+catheterization_how_to+catheterization_quality_month+catheterization_quality+catheterization_frequent_month+catheterization_frequent+catheterization_forgot_month+catheterization_forgot).toFixed(0), (catheterization_type_avg+catheterization_how_to_avg+catheterization_quality_avg+catheterization_frequent_avg+catheterization_forgot_avg).toFixed(0)],
+                //         ['ปัญหาระหว่างสวน', (problem_urinary_catheter_month+problem_urinate_month+disorder_injury_month+disorder_month+disorder_bladder_retraction_month+disorder_gallstones_month).toFixed(0), (problem_urinary_catheter_month+problem_urinary_catheter+problem_urinate_month+problem_urinate+disorder_injury_month+disorder_injury+disorder_month+disorder+disorder_bladder_retraction_month+disorder_bladder_retraction+disorder_gallstones_month+disorder_gallstones).toFixed(0), (problem_urinary_catheter_avg+problem_urinate_avg+disorder_injury_avg+disorder_avg+disorder_bladder_retraction_avg+disorder_gallstones_avg).toFixed(0)],
+                //         ['ภาวะผิดปกติ', (disorder_reflex_month+disorder_retraction_month+disorder_urethral_erosion_month).toFixed(0), (disorder_reflex_month+disorder_reflex+disorder_retraction_month+disorder_retraction+disorder_urethral_erosion_month+disorder_urethral_erosion).toFixed(0), (disorder_reflex_avg+disorder_retraction_avg+disorder_urethral_erosion_avg).toFixed(0)]
+                //     ]);
+
+                //     var options = {
+                //         bars: 'vertical',
+                //         hAxis: {},
+                //         vAxis: {format: 'decimal'},
+                //         height: 200,
+                //         width: 900,
+                //         colors: ['#A9BDD7', '#FFD0BB', '#CEA9D7']
+                //     };
+
+                //     var chart = new google.charts.Bar(document.getElementById('type_count'));
+                //     chart.draw(data, google.charts.Bar.convertOptions(options));
+                // }
+
+                google.charts.load('current', {packages: ['corechart', 'bar']});
+                google.charts.setOnLoadCallback(drawMaterial);
+
+                function drawMaterial() {
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'หมวด');
+                    data.addColumn('number', 'จำนวนครั้งในเดือนนี้');
+                    data.addColumn('number', 'จำนวนครั้งทั้งหมด');
+                    data.addColumn('number', 'จำนวนครั้งโดยเฉลี่ยจากผู้ป่วยทั้งหมด');
+
+                    data.addRows([
+                        // ['อุปกรณ์', 1, .25, 1],
+                        // ['การดื่มน้ำ', 2, .5, 1],
+                        // ['การปัสสาวะ', 3, 1, 1],
+                        // ['ปัญหาระหว่างสวน', 4, 2.25, 1],
+                        // ['ภาวะผิดปกติ', 5, 2.25, 1],
+                        ['อุปกรณ์', (equipment_month+equipment_basin_month+equipment_container_month+equipment_cotton_month+equipment_urinary_catheter_month+equipment_clean_urinary_catheter_month+equipment_degenerated_catheter_month+equipment_disinfectant_month+equipment_garbage_bag_month+equipment_jelly_month+equipment_use_jelly_month+equipment_mirror_month+equipment_soap_month), (equipment_month+equipment+equipment_basin_month+equipment_basin+equipment_container_month+equipment_container+equipment_cotton_month+equipment_cotton+equipment_urinary_catheter_month+equipment_urinary_catheter+equipment_clean_urinary_catheter_month+equipment_clean_urinary_catheter+equipment_degenerated_catheter_month+equipment_degenerated_catheter+equipment_disinfectant_month+equipment_disinfectant+equipment_garbage_bag_month+equipment_garbage_bag+equipment_jelly_month+equipment_jelly+equipment_use_jelly_month+equipment_use_jelly+equipment_mirror_month+equipment_mirror+equipment_soap_month+equipment_soap), (equipment_avg+equipment_basin_avg+equipment_container_avg+equipment_cotton_avg+equipment_clean_urinary_catheter_avg+equipment_urinary_catheter_avg+equipment_degenerated_catheter_avg+equipment_disinfectant_avg+equipment_garbage_bag_avg+equipment_jelly_avg+equipment_use_jelly_avg+equipment_mirror_avg+equipment_soap_avg)],
+                        ['การดื่มน้ำ', (drinking_knowledge_month), (drinking_knowledge_month+drinking_knowledge), (drinking_knowledge_avg)],
+                        ['การปัสสาวะ', (catheterization_type_month+catheterization_how_to_month+catheterization_quality_month+catheterization_frequent_month+catheterization_forgot_month), (catheterization_type_month+catheterization_type+catheterization_how_to_month+catheterization_how_to+catheterization_quality_month+catheterization_quality+catheterization_frequent_month+catheterization_frequent+catheterization_forgot_month+catheterization_forgot), (catheterization_type_avg+catheterization_how_to_avg+catheterization_quality_avg+catheterization_frequent_avg+catheterization_forgot_avg)],
+                        ['ปัญหาระหว่างสวน', (problem_urinary_catheter_month+problem_urinate_month+disorder_injury_month+disorder_month+disorder_bladder_retraction_month+disorder_gallstones_month), (problem_urinary_catheter_month+problem_urinary_catheter+problem_urinate_month+problem_urinate+disorder_injury_month+disorder_injury+disorder_month+disorder+disorder_bladder_retraction_month+disorder_bladder_retraction+disorder_gallstones_month+disorder_gallstones), (problem_urinary_catheter_avg+problem_urinate_avg+disorder_injury_avg+disorder_avg+disorder_bladder_retraction_avg+disorder_gallstones_avg)],
+                        ['ภาวะผิดปกติ', (disorder_reflex_month+disorder_retraction_month+disorder_urethral_erosion_month), (disorder_reflex_month+disorder_reflex+disorder_retraction_month+disorder_retraction+disorder_urethral_erosion_month+disorder_urethral_erosion), (disorder_reflex_avg+disorder_retraction_avg+disorder_urethral_erosion_avg)]
                     ]);
 
                     var options = {
-                        legend: { position: 'none'},
-                        bars: 'vertical',
-                        vAxis: {format: 'decimal'},
                         height: 200,
+                        width: 900,
                         colors: ['#A9BDD7', '#FFD0BB', '#CEA9D7']
                     };
 
-                    var chart = new google.charts.Bar(document.getElementById('type_count'));
-                    chart.draw(data, google.charts.Bar.convertOptions(options));
-                }
+                    var materialChart = new google.charts.Bar(document.getElementById('type_count'));
+                    materialChart.draw(data, options);
+                    }
             });
 
             var solutions = database.ref("disorder_solution");
@@ -862,15 +921,7 @@
                     <br>
                     <h1 class="topic">ช่วงเวลาที่ดื่มน้ำ-ปัสสาวะบ่อย</h1>
                     <h1 class="middle_line-graph"></h1>
-                    <center>
-                        <div id="count_time"></div>
-                    </center>  
-                    <div class="row legend_out"> 
-                        <span class="badge" style="background-color: #A9BDD7; width:20px; color: #A9BDD7">8</span>
-                        <h2 class="legend">ดื่มน้ำ</h2>
-                        <span class="badge" style="background-color: #FFD0BB; width:20px; color: #FFD0BB">8</span>
-                        <h2 class="legend">ปัสสาวะ</h2>
-                    </div>
+                    <div id="count_time"></div>
                 </div>
                 <div class='container-graph'>
                     <br>
@@ -879,17 +930,7 @@
                         <button class="btn btn-link col-2" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">ดูเพิ่มเติม</button>
                     </div>
                     <h1 class="middle_line-graph"></h1>
-                    <center>
-                        <div id="type_count"></div>
-                    </center>
-                    <div class="row legend_out"> 
-                        <span class="badge" style="background-color: #A9BDD7; width:20px; color: #A9BDD7">8</span>
-                        <h2 class="legend">จำนวนครั้งในเดือนนี้</h2>
-                        <span class="badge" style="background-color: #FFD0BB; width:20px; color: #FFD0BB">8</span>
-                        <h2 class="legend">จำนวนครั้งทั้งหมด</h2>
-                        <span class="badge" style="background-color: #CEA9D7; width:20px; color: #CEA9D7">8</span>
-                        <h2 class="legend">จำนวนครั้งโดยเฉลี่ยจากผู้ป่วยทั้งหมด</h2>
-                    </div>               
+                    <div id="type_count"></div>              
                 </div>
                 <br>
                 <div class="collapse" id="collapseExample">
@@ -1149,7 +1190,7 @@
                 </div>
                 <div class='container-solution'>
                     <br>
-                    <h1 class="topic">แก้ปัญหาระหว่างสวนปัสสาวะและภาวะผิดปกติสำเร็จ</h1>
+                    <h1 class="topic">แก้ปัญหาระหว่างสวนปัสสาวะ และภาวะผิดปกติสำเร็จ</h1>
                     <h1 class="middle_line-graph"></h1>
                     <div class="row">                      
                         <div class="col">
@@ -1282,27 +1323,27 @@
                                     <tr>
                                         <th scope="row" style="font-weight: normal; color: #39588A">• เช็ดทำความสะอาดบริเวณอวัยวะเพศ </th>
                                         <td>ขั้นตอนที่ 1</td>
-                                        <td>ขั้นตอนที่ 2</td>
+                                        <td>ขั้นตอนที่ </td>
                                     </tr>
                                     <tr>
                                         <th scope="row" style="font-weight: normal; color: #39588A">• เตรียมอุปกรณ์สำหรับการสวนปัสสาวะวางไว้ใกล้ตัว </th>
-                                        <td>ขั้นตอนที่ 1</td>
+                                        <td>ขั้นตอนที่ 2</td>
                                         <td>ขั้นตอนที่ 2</td>
                                     </tr>
                                     <tr>
                                         <th scope="row" style="font-weight: normal; color: #39588A">• ถอดกางเกงและม้วนชายเสื้อไว้ระดับสะดือ จัดท่าสำหรับการสวนปัสสาวะ </th>
-                                        <td>ขั้นตอนที่ 1</td>
-                                        <td>ขั้นตอนที่ 2</td>
+                                        <td>ขั้นตอนที่ 3</td>
+                                        <td>ขั้นตอนที่ 3</td>
                                     </tr>
                                     <tr>
                                         <th scope="row" style="font-weight: normal; color: #39588A">• ล้างมือด้วยด้วยสบู่ และล้างน้ำสะอาดในกะละมังใบแรก </th>
-                                        <td>ขั้นตอนที่ 1</td>
-                                        <td>ขั้นตอนที่ 2</td>
+                                        <td>ขั้นตอนที่ 4</td>
+                                        <td>ขั้นตอนที่ 4</td>
                                     </tr>
                                     <tr>
                                         <th scope="row" style="font-weight: normal; color: #39588A">• สอดสายสวนเข้าไปในรูเปิดท่อปัสสาวะอย่างนุ่มนวลจนสุดสาย แล้วค่อยๆถอยสายสวน</th>
-                                        <td>ขั้นตอนที่ 1</td>
-                                        <td>ขั้นตอนที่ 2</td>
+                                        <td>ขั้นตอนที่ 5</td>
+                                        <td>ขั้นตอนที่ 5</td>
                                     </tr>
                                 </tbody>
                             </table>

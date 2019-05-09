@@ -92,18 +92,24 @@
           <a href="/desktop_home.html"><img class= "logo-img" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/logo_white.png?alt=media&token=7ea16ae2-206b-41b9-90de-33799268daf4"></a>   
         </center>
       </div>
-      <div class="col">
-          <img class="exit" src="/Picture/exit.png">
+      <div class="col" align="right">
+        <img id="signOut" class="search-logo" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Fexit.png?alt=media&token=051dab9d-efc7-49b9-9147-1ad9c158d64f">
       </div>
+      <script>
+        document.getElementById('signOut').addEventListener('click', function(event) {
+          firebase.auth().signOut().then(function() {
+            // Sign-out successful.
+              window.location.replace("/index.html");
+          }).catch(function(error) {
+            // An error happened.
+          });
+        });
+      </script>
     </nav>
     <br>
-    <div class="nav row">
+    <div class="nav">
       <h1 class="title col">ประวัติผู้ป่วย</h1>
-      <h2 class="col-md-auto">ค้นหา</h2>
-        <!-- <input class="col-md-auto search-input" type="text" placeholder="รหัสผู้ป่วย" name="search">
-        <button class="col-md-auto" type="submit">
-            <img class="search-logo" src="https://firebasestorage.googleapis.com/v0/b/support-7fdcd.appspot.com/o/icons%2Favatar.png?alt=media&token=4380945e-6a4c-47b5-9e7f-83478722fe09">
-        </button> -->
+      <!-- <h2 class="col-md-auto">ค้นหา</h2>
       <div class="col-md-auto search-group">
         <div class="input-group">
             <input class="search-input" type="text" placeholder="รหัสผู้ป่วย">
@@ -113,7 +119,7 @@
                 </button>
             </div>
         </div>
-      </div> 
+      </div>  -->
     </div>
     <br>
     <div id="users"></div>
