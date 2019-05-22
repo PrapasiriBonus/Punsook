@@ -177,6 +177,55 @@
                 $("#weight").val(user.weight)
                 $("#height").val(user.height)
                 $("#phone").val(patient.replace(" 66","0"))
+
+                var pretest = database.ref("testing/pre/"+user.patient_id);
+                pretest.once('value', function(snapshot) {
+                    pre_ans = snapshot.val();
+                    //console.log(JSON.stringify(pre_ans));
+                    $("#pretest_score").html(pre_ans[1]);
+                    $("#pre1").html(pre_ans[3]);
+                    $("#pre2").html(pre_ans[4]);
+                    $("#pre3").html(pre_ans[5]);
+                    $("#pre4").html(pre_ans[6]);
+                    $("#pre5").html(pre_ans[7]);
+                    $("#pre6").html(pre_ans[8]);
+                    $("#pre7").html(pre_ans[9]);
+                    $("#pre8").html(pre_ans[10]);
+                    $("#pre9").html(pre_ans[11]);
+                    $("#pre10").html(pre_ans[12]);
+                    $("#pre11").html(pre_ans[13]);
+                    $("#pre12").html(pre_ans[14]);
+                    $("#pre13").html(pre_ans[15]);
+                    $("#pre14").html(pre_ans[16]);
+                    $("#pre15").html(pre_ans[17]);
+                    $("#pre16").html(pre_ans[18]);
+                    $("#pre17").html(pre_ans[19]);
+                    $("#pre_time").html(pre_ans[0]);
+                });
+                var posttest = database.ref("testing/post/"+user.patient_id);
+                posttest.once('value', function(snapshot) {
+                    post_ans = snapshot.val();
+                    //console.log(JSON.stringify(post_ans));
+                    $("#posttest_score").html(post_ans[1]);
+                    $("#post1").html(post_ans[3]);
+                    $("#post2").html(post_ans[4]);
+                    $("#post3").html(post_ans[5]);
+                    $("#post4").html(post_ans[6]);
+                    $("#post5").html(post_ans[7]);
+                    $("#post6").html(post_ans[8]);
+                    $("#post7").html(post_ans[9]);
+                    $("#post8").html(post_ans[10]);
+                    $("#post9").html(post_ans[11]);
+                    $("#post10").html(post_ans[12]);
+                    $("#post11").html(post_ans[13]);
+                    $("#post12").html(post_ans[14]);
+                    $("#post13").html(post_ans[15]);
+                    $("#post14").html(post_ans[16]);
+                    $("#post15").html(post_ans[17]);
+                    $("#post16").html(post_ans[18]);
+                    $("#post17").html(post_ans[19]);
+                    $("#post_time").html(post_ans[0]);
+                });
             });
 
             var records = database.ref("records");
@@ -209,8 +258,12 @@
                         }
                         else{
                             array_date.push(record.date);
+                            if (data==undefined)
+                                console.log(childKey);
                             if(data.drinking){
+                                //console.log(data.drinking);
                                 Object.keys(data.drinking).forEach(function (keys){
+                                    //console.log(data.drinking[keys]);
                                     drinking_avg += data.drinking[keys];
                                 });
                             }
@@ -466,6 +519,34 @@
             var disorder_urethral_erosion_array = [];
             var disorder_urethral_erosion_avg = 0;
 
+            succeed_avg = 0;
+            fail_avg = 0;
+            succeed = 0;
+            fail = 0;
+
+            // var solutions = database.ref("disorder_solution");
+            // succeed_avg = 0;
+            // fail_avg = 0;
+            // succeed = 0;
+            // fail = 0;
+            // solutions.once('value', function(snapshot) {
+            //     snapshot.forEach(function(childSnapshot) {
+            //         var childKey = childSnapshot.key;
+            //         solution = childSnapshot.val();
+            //         if(solution.result){
+            //             succeed_avg += 1;
+            //             if(solution.line_id==$("#patient_line_id").val()) succeed += 1;
+            //         }else{
+            //             fail_avg += 1;
+            //             if(solution.line_id==$("#patient_line_id").val()) fail += 1;
+            //         }
+            //     });
+            //     $("#succeed").html(succeed)
+            //     $("#all").html("จาก "+(succeed+fail)+" ครั้ง")
+            //     $("#succeed_rate").html((succeed/(succeed+fail)*100).toFixed(0)+"%")
+            //     if(succeed+fail==0) $("#succeed_rate").html("-")
+            //     $("#avg").html((succeed_avg/(succeed_avg+fail_avg)*100).toFixed(0)+"%")
+            // });
             messages.orderByChild('time').once('value', function(snapshot) {
                 snapshot.forEach(function(childSnapshot) {
                     var childKey = childSnapshot.key;
@@ -556,6 +637,9 @@
                             else if(message.intent=="disorder-retraction") disorder_retraction += 1;
                             else if(message.intent=="disorder-urethral_erosion") disorder_urethral_erosion += 1;
                         }
+                        console.log(message.intent);
+                        if(message.intent=="disorder-pain/blood - solution - yes") succeed += 1;
+                        else if(message.intent=="disorder-pain/blood - solution - no") fail += 1;
                     }else{
                         // if(message.user!="U559fbad8d7102f6f91eda2bbfdfe250d"&&message.intent=="Default Fallback Intent")
                         //     console.log(message);
@@ -589,6 +673,8 @@
                         else if(message.intent=="disorder-retraction") disorder_retraction_array.push(message.user);
                         else if(message.intent=="disorder-urethral_erosion") disorder_urethral_erosion_array.push(message.user);
 
+                        if(message.intent=="disorder-pain/blood - solution - yes") succeed_avg += 1;
+                        else if(message.intent=="disorder-pain/blood - solution - no") fail_avg += 1;
                     }
                 });
                 // var equipment_counts = {};
@@ -766,31 +852,14 @@
 
                     var materialChart = new google.charts.Bar(document.getElementById('type_count'));
                     materialChart.draw(data, options);
-                    }
-            });
-
-            var solutions = database.ref("disorder_solution");
-            succeed_avg = 0;
-            fail_avg = 0;
-            succeed = 0;
-            fail = 0;
-            solutions.once('value', function(snapshot) {
-                snapshot.forEach(function(childSnapshot) {
-                    var childKey = childSnapshot.key;
-                    solution = childSnapshot.val();
-                    if(solution.result){
-                        succeed_avg += 1;
-                        if(solution.line_id==$("#patient_line_id").val()) succeed += 1;
-                    }else{
-                        fail_avg += 1;
-                        if(solution.line_id==$("#patient_line_id").val()) fail += 1;
-                    }
-                });
-                $("#succeed").html(succeed)
-                $("#all").html("จาก "+(succeed+fail)+" ครั้ง")
-                $("#succeed_rate").html((succeed/(succeed+fail)*100).toFixed(0)+"%")
-                if(succeed+fail==0) $("#succeed_rate").html("-")
-                $("#avg").html((succeed_avg/(succeed_avg+fail_avg)*100).toFixed(0)+"%")
+                }
+                if(succeed+fail!=0){
+                    $("#succeed_rate").html((succeed/(succeed+fail)*100).toFixed(0)+"%")
+                    $("#succeed").html(succeed)
+                    $("#all").html("จาก "+(succeed+fail)+" ครั้ง")
+                }
+                if(succeed_avg+fail_avg!=0)
+                    $("#avg").html((succeed_avg/(succeed_avg+fail_avg)*100).toFixed(0)+"%")
             });
         });
     </script>
@@ -1045,144 +1114,6 @@
                                     <th id="disorder_urethral_erosion" scope="row" style="font-weight: normal; color: #39588A">• ภาวะคอปัสสาวะหรือท่อปัสสาวะกร่อน</th>
                                 </tr>
                                 <tr>
-                                <!-- <th scope="row" style="font-weight: normal; color: #39588A">• น้ำยาฆ่าเชื้อ</th>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>98</td>
-                                </tr>
-                                <tr>
-                                <th scope="row" style="font-weight: normal; color: #39588A">• ประเภทสายสวนปัสสาวะ</th>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>98</td>
-                                </tr>
-                                <tr>
-                                <th scope="row" style="font-weight: normal; color: #39588A">• ประเภทสายสวนปัสสาวะ</th>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>98</td>
-                                </tr>
-                                <tr>
-                                <th scope="row" style="font-weight: normal; color: #39588A">• ประเภทสายสวนปัสสาวะ</th>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>98</td>
-                                </tr>
-                                <tr>
-                                <th scope="row" style="font-weight: normal; color: #39588A">• สายสวนปัสสาวะเสื่อม</th>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>98</td>
-                                </tr>
-
-                                <tr>
-                                <th scope="row" style="font-weight: normal; color: #39588A">• วิธีใช้สารหล่อลื่น</th>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>98</td>
-                                </tr>
-                                <tr>
-                                <th scope="row" style="font-weight: bold; color: #39588A" colspan="5">การดื่มน้ำ</th>
-                                </tr>
-                                <tr>
-                                <th scope="row" style="font-weight: normal; color: #39588A">• ปริมาณน้ำที่เหมาะสม</th>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>98</td>
-                                </tr>
-                                <tr>
-                                <th scope="row" style="font-weight: bold; color: #39588A" colspan="5">การสวนปัสสาวะ</th>
-                                </tr>
-                                <tr>
-                                <th scope="row" style="font-weight: normal; color: #39588A">• ขั้นตอนสวนปัสสาวะ</th>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>98</td>
-                                </tr>
-                                <tr>
-                                <th scope="row" style="font-weight: normal; color: #39588A">• ปริมาณปัสสาวะที่เหมาะสม</th>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>98</td>
-                                </tr>
-                                <tr>
-                                <th scope="row" style="font-weight: normal; color: #39588A">• ความถี่ในการสวนปัสสาวะที่เหมาะสม</th>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>98</td>
-                                </tr>
-                                <tr>
-                                <th scope="row" style="font-weight: normal; color: #39588A">• วิธีแก้ไขหากลืมสวนปัสสาวะ</th>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>98</td>
-                                </tr>
-                                <tr>
-                                <th scope="row" style="font-weight: bold; color: #39588A" colspan="5">ปัญหาระหว่างสวนปัสสาวะ</th>
-                                </tr>
-                                <tr>
-                                <th scope="row" style="font-weight: normal; color: #39588A">• ปัสสาวะไม่ออก</th>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>98</td>
-                                </tr>
-                                <tr>
-                                <th scope="row" style="font-weight: normal; color: #39588A">• ใส่สายสวนปัสสาวะติดขัด</th>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>98</td>
-                                </tr>
-                                <tr>
-                                <th scope="row" style="font-weight: normal; color: #39588A">• บาดเจ็บเมื่อสวนปัสสาวะ</th>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>98</td>
-                                </tr>
-                                <tr>
-                                <th scope="row" style="font-weight: bold; color: #39588A" colspan="5">ภาวะผิดปกติ</th>
-                                </tr>
-                                <tr>
-                                <th scope="row" style="font-weight: normal; color: #39588A">• ภาวะรีเฟล็กซ์ระบบประสารทอัตโนมัติผิดปกติ</th>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>98</td>
-                                </tr>
-                                <tr>
-                                <th scope="row" style="font-weight: normal; color: #39588A">• ภาวะติดเชื้อทางเดินปัสสาวะ</th>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>98</td>
-                                </tr>
-                                <tr>
-                                <th scope="row" style="font-weight: normal; color: #39588A">• ภาวะท่อปัสสาวะกร่อน</th>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>98</td>
-                                </tr>
-                                <tr>
-                                <th scope="row" style="font-weight: normal; color: #39588A">• ผลข้างเคียงจากยา Paracetamol และ Tramadol</th>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>98</td>
-                                </tr> -->
                             </tbody>
                         </table>
                     </div>
@@ -1192,22 +1123,22 @@
                     <br>
                     <h1 class="topic">แก้ปัญหาระหว่างสวนปัสสาวะ และภาวะผิดปกติสำเร็จ</h1>
                     <h1 class="middle_line-graph"></h1>
-                    <div class="row">                      
+                    <div class="row">
                         <div class="col">
                         <center>
-                            <h1 id="succeed" class="sol-value" style="color: #A9BDD7"></h1>
-                            <h2 id="all" class="sol"></h2>
+                            <h1 id="succeed" class="sol-value" style="color: #A9BDD7">-</h1>
+                            <h2 id="all" class="sol">จาก - ครั้ง</h2>
                         </center>
                         </div>
                         <div class="col">
                         <center>
-                            <h1 id="succeed_rate" class="sol-value" style="color: #FFD0BB"></h1>
+                            <h1 id="succeed_rate" class="sol-value" style="color: #FFD0BB">-</h1>
                             <h2 class="sol">ร้อยละที่สำเร็จ</h2>
                         </center>
                         </div>
                         <div class="col">
                         <center>
-                            <h1 id="avg" class="sol-value" style="color: #CEA9D7"></h1>
+                            <h1 id="avg" class="sol-value" style="color: #CEA9D7">-</h1>
                             <h2 class="sol">ร้อยละที่สำเร็จโดยเฉลี่ย</h2>
                         </center>
                         </div>
@@ -1223,16 +1154,16 @@
                         </button>
                     </div>
                     <h1 class="middle_line-graph"></h1>
-                    <div class="row row-sol">                      
+                    <div class="row row-sol">
                         <div class="col">
                         <center>
-                            <h1 id="pretest_score" class="sol-value" style="color: #A9BDD7">7</h1>
+                            <h1 id="pretest_score" class="sol-value" style="color: #A9BDD7">-</h1>
                             <h2 class="sol">จาก 17 คะแนน</h2>
                         </center>
                         </div>
                         <div class="col">
                         <center>
-                            <h1 class="sol-value" style="color: #FFD0BB">15</h1>
+                            <h1 id="posttest_score" class="sol-value" style="color: #FFD0BB">-</h1>
                             <h2 class="sol">จาก 17 คะแนน</h2>
                         </center>
                         </div>
@@ -1241,115 +1172,113 @@
                 <br>
                 <div class="collapse" id="collapseExample2">
                     <div class="card card-body">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" style="font-weight: bold; color: #39588A;  width: 60%;">คำถาม</th>
-                                        <th scope="col" style="font-weight: bold; color: #39588A; text-align: center;  width: 20%;">ก่อน</th>
-                                        <th scope="col" style="font-weight: bold; color: #39588A; text-align: center;  width: 20%;">หลัง</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th id="1" scope="row" style="font-weight: normal; color: #39588A">ล้างมือให้สะอาดด้วยสบู่ ก่อนสวนปัสสาวะทุกครั้ง</th>
-                                        <td>ใช่</td>
-                                        <td>ไม่</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">ไม่ควรสวนปัสสาวะล่าช้ากว่ากำหนดเกิน 30 นาที</th>
-                                        <td>ใช่</td>
-                                        <td>ไม่</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">การจัดท่าในการสวนปัสสาวะที่ถูกต้อง คือควรอยู่ในท่านั่ง
-                                                เอนหลัง และพยายามห้อยขาลง</th>
-                                        <td>ใช่</td>
-                                        <td>ไม่</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">สวนปัสสาวะด้วยตัวผู้ป่วยเองเท่านั้น</th>
-                                        <td>ใช่</td>
-                                        <td>ไม่</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">หลังการสวนปัสสาวะทุกครั้ง ต้องเบ่งหรือกดหน้าท้อง
-                                                เพื่อไล่ปัสสาวะที่เหลือค้างออกให้หมด</th>
-                                        <td>ใช่</td>
-                                        <td>ไม่</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">หากสวนปัสสาวะไม่เข้า ให้ออกแรงดันสายสวนเข้ามากขึ้น</th>
-                                        <td>ใช่</td>
-                                        <td>ไม่</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">หากมีอาการเลือดออกจากการสวนปัสสาวะ ให้สวนปัสสาวะ
-                                                ด้วยสายสวนที่มีขนาดเล็กลง</th>
-                                        <td>ใช่</td>
-                                        <td>ไม่</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">ใช้น้ำยาฆ่าเชื้อในการแช่สายสวนปัสสาวะเท่านั้น</th>
-                                        <td>ใช่</td>
-                                        <td>ไม่</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">ผู้ป่วยสามารถดื่มน้ำได้ในปริมาณมากตามต้องการ 
-                                                ไม่ต้องจำกัดปริมาณน้ำในแต่ละมื้อ</th>
-                                        <td>ใช่</td>
-                                        <td>ไม่</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">บันทึกปริมาณของน้ำที่ดื่ม รวมถึงปริมาณและลักษณะของ
-                                                ปัสสาวะด้วยทุกครั้ง</th>
-                                        <td>ใช่</td>
-                                        <td>ไม่</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">อาการไข้ ปัสสาวะขุ่น ปวดท้องน้อย หรือปวดเอว  
-                                                เป็นสัญญาณของการติดเชื้อทางเดินปัสาวะ</th>
-                                        <td>ใช่</td>
-                                        <td>ไม่</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">เมื่อมีอาการปวดศีรษะ ตาพร่ามัว และตรวจพบความดันโลหิตสูง 
-                                                ให้จัดท่ายกศีรษะ ปลดเสื้อผ้าที่รัดแน่นออก และสวนปัสสาวะ</th>
-                                        <td>ใช่</td>
-                                        <td>ไม่</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A" colspan="3">จงเรียงลำดับขั้นตอนการสวนปัสสาวะ</th>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">• เช็ดทำความสะอาดบริเวณอวัยวะเพศ </th>
-                                        <td>ขั้นตอนที่ 1</td>
-                                        <td>ขั้นตอนที่ </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">• เตรียมอุปกรณ์สำหรับการสวนปัสสาวะวางไว้ใกล้ตัว </th>
-                                        <td>ขั้นตอนที่ 2</td>
-                                        <td>ขั้นตอนที่ 2</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">• ถอดกางเกงและม้วนชายเสื้อไว้ระดับสะดือ จัดท่าสำหรับการสวนปัสสาวะ </th>
-                                        <td>ขั้นตอนที่ 3</td>
-                                        <td>ขั้นตอนที่ 3</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">• ล้างมือด้วยด้วยสบู่ และล้างน้ำสะอาดในกะละมังใบแรก </th>
-                                        <td>ขั้นตอนที่ 4</td>
-                                        <td>ขั้นตอนที่ 4</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" style="font-weight: normal; color: #39588A">• สอดสายสวนเข้าไปในรูเปิดท่อปัสสาวะอย่างนุ่มนวลจนสุดสาย แล้วค่อยๆถอยสายสวน</th>
-                                        <td>ขั้นตอนที่ 5</td>
-                                        <td>ขั้นตอนที่ 5</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="font-weight: bold; color: #39588A;  width: 60%;">คำถาม</th>
+                                    <th scope="col" style="font-weight: bold; color: #39588A; text-align: center;  width: 20%;">ก่อน</th>
+                                    <th scope="col" style="font-weight: bold; color: #39588A; text-align: center;  width: 20%;">หลัง</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row" style="font-weight: normal; color: #39588A">ล้างมือให้สะอาดด้วยสบู่ ก่อนสวนปัสสาวะทุกครั้ง</th>
+                                    <td id="pre1">-</td>
+                                    <td id="post1">-</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="font-weight: normal; color: #39588A">ไม่ควรสวนปัสสาวะล่าช้ากว่ากำหนดเกิน 30 นาที</th>
+                                    <td id="pre2">-</td>
+                                    <td id="post2">-</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="font-weight: normal; color: #39588A">การจัดท่าในการสวนปัสสาวะที่ถูกต้อง คือควรอยู่ในท่านั่งเอนหลัง และพยายามห้อยขาลง</th>
+                                    <td id="pre3">-</td>
+                                    <td id="post3">-</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="font-weight: normal; color: #39588A">สวนปัสสาวะด้วยตัวผู้ป่วยเองเท่านั้น</th>
+                                    <td id="pre4">-</td>
+                                    <td id="post4">-</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="font-weight: normal; color: #39588A">หลังการสวนปัสสาวะทุกครั้ง ต้องเบ่งหรือกดหน้าท้อง เพื่อไล่ปัสสาวะที่เหลือค้างออกให้หมด</th>
+                                    <td id="pre5">-</td>
+                                    <td id="post5">-</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="font-weight: normal; color: #39588A">หากสวนปัสสาวะไม่เข้า ให้ออกแรงดันสายสวนเข้ามากขึ้น</th>
+                                    <td id="pre6">-</td>
+                                    <td id="post6">-</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="font-weight: normal; color: #39588A">หากมีอาการเลือดออกจากการสวนปัสสาวะ ให้สวนปัสสาวะด้วยสายสวนที่มีขนาดเล็กลง</th>
+                                    <td id="pre7">-</td>
+                                    <td id="post7">-</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="font-weight: normal; color: #39588A">ใช้น้ำยาฆ่าเชื้อในการแช่สายสวนปัสสาวะเท่านั้น</th>
+                                    <td id="pre8">-</td>
+                                    <td id="post8">-</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="font-weight: normal; color: #39588A">ผู้ป่วยสามารถดื่มน้ำได้ในปริมาณมากตามต้องการ ไม่ต้องจำกัดปริมาณน้ำในแต่ละมื้อ</th>
+                                    <td id="pre9">-</td>
+                                    <td id="post9">-</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="font-weight: normal; color: #39588A">บันทึกปริมาณของน้ำที่ดื่ม รวมถึงปริมาณและลักษณะของปัสสาวะด้วยทุกครั้ง</th>
+                                    <td id="pre10">-</td>
+                                    <td id="post10">-</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="font-weight: normal; color: #39588A">อาการไข้ ปัสสาวะขุ่น ปวดท้องน้อย หรือปวดเอว เป็นสัญญาณของการติดเชื้อทางเดินปัสาวะ</th>
+                                    <td id="pre11">-</td>
+                                    <td id="post11">-</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="font-weight: normal; color: #39588A">เมื่อมีอาการปวดศีรษะ ตาพร่ามัว และตรวจพบความดันโลหิตสูง ให้จัดท่ายกศีรษะ ปลดเสื้อผ้าที่รัดแน่นออก และสวนปัสสาวะ</th>
+                                    <td id="pre12">-</td>
+                                    <td id="post12">-</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="font-weight: normal; color: #39588A" colspan="3">จงเรียงลำดับขั้นตอนการสวนปัสสาวะ</th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="font-weight: normal; color: #39588A">• เช็ดทำความสะอาดบริเวณอวัยวะเพศ </th>
+                                    <td id="pre13">-</td>
+                                    <td id="post13">-</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="font-weight: normal; color: #39588A">• เตรียมอุปกรณ์สำหรับการสวนปัสสาวะวางไว้ใกล้ตัว </th>
+                                    <td id="pre14">-</td>
+                                    <td id="post14">-</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="font-weight: normal; color: #39588A">• ถอดกางเกงและม้วนชายเสื้อไว้ระดับสะดือ จัดท่าสำหรับการสวนปัสสาวะ </th>
+                                    <td id="pre15">-</td>
+                                    <td id="post15">-</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="font-weight: normal; color: #39588A">• ล้างมือด้วยด้วยสบู่ และล้างน้ำสะอาดในกะละมังใบแรก </th>
+                                    <td id="pre16">-</td>
+                                    <td id="post16">-</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="font-weight: normal; color: #39588A">• สอดสายสวนเข้าไปในรูเปิดท่อปัสสาวะอย่างนุ่มนวลจนสุดสาย แล้วค่อยๆถอยสายสวน</th>
+                                    <td id="pre17">-</td>
+                                    <td id="post17">-</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="font-weight: normal; color: #39588A">เวลาที่ทำแบบทดสอบ</th>
+                                    <td id="pre_time">-</td>
+                                    <td id="post_time">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                     <br>
-            </div>
+                </div>
             </div>
             <br>
             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
