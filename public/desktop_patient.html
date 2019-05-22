@@ -640,6 +640,18 @@
                         console.log(message.intent);
                         if(message.intent=="disorder-pain/blood - solution - yes") succeed += 1;
                         else if(message.intent=="disorder-pain/blood - solution - no") fail += 1;
+                        else if(message.intent=="disorder-reflex - yes - solution - yes") succeed += 1;
+                        else if(message.intent=="disorder-reflex - yes - solution - no - yes") fail += 1;
+                        else if(message.intent=="disorder-reflex - yes - solution - no - no") fail += 1;
+                        else if(message.intent=="disorder-urethral_erosion - solution - yes") succeed += 1;
+                        else if(message.intent=="disorder-urethral_erosion - solution - no") fail += 1;
+                        else if(message.intent=="disorder-urinalysis - solution - yes") succeed += 1;
+                        else if(message.intent=="disorder-urinalysis - solution - no") fail += 1;
+                        else if(message.intent=="disorder-urinary_tract_infection - solution - yes") succeed += 1;
+                        else if(message.intent=="disorder-urinary_tract_infection - solution - no") fail += 1;
+                        else if(message.intent=="problem-urinary_catheter - yes") succeed += 1;
+                        else if(message.intent=="problem-urinary_catheter - no") fail += 1;                    
+
                     }else{
                         // if(message.user!="U559fbad8d7102f6f91eda2bbfdfe250d"&&message.intent=="Default Fallback Intent")
                         //     console.log(message);
@@ -675,6 +687,17 @@
 
                         if(message.intent=="disorder-pain/blood - solution - yes") succeed_avg += 1;
                         else if(message.intent=="disorder-pain/blood - solution - no") fail_avg += 1;
+                        else if(message.intent=="disorder-reflex - yes - solution - yes") succeed_avg += 1;
+                        else if(message.intent=="disorder-reflex - yes - solution - no - yes") fail_avg += 1;
+                        else if(message.intent=="disorder-reflex - yes - solution - no - no") fail_avg += 1;
+                        else if(message.intent=="disorder-urethral_erosion - solution - yes") succeed_avg += 1;
+                        else if(message.intent=="disorder-urethral_erosion - solution - no") fail_avg += 1;
+                        else if(message.intent=="disorder-urinalysis - solution - yes") succeed_avg += 1;
+                        else if(message.intent=="disorder-urinalysis - solution - no") fail_avg += 1;
+                        else if(message.intent=="disorder-urinary_tract_infection - solution - yes") succeed_avg += 1;
+                        else if(message.intent=="disorder-urinary_tract_infection - solution - no") fail_avg += 1;
+                        else if(message.intent=="problem-urinary_catheter - yes") succeed_avg += 1;
+                        else if(message.intent=="problem-urinary_catheter - no") fail_avg += 1;                       
                     }
                 });
                 // var equipment_counts = {};
