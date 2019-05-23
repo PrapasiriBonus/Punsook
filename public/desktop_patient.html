@@ -242,7 +242,7 @@
                     var childKey = childSnapshot.key;
                     record = childSnapshot.val();
                     var data = record.data;
-                    if(record.phoneNumber==patient.replace(" ","+")){
+                    if((record.phoneNumber==patient.replace(" ","+"))&&(data)){
                         //console.log(record.time);
                         if($("#weight").val()){
                             if(record.weight==$("#weight").val()){

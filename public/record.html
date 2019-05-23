@@ -139,6 +139,7 @@
           var childKey = childSnapshot.key;
           record = childSnapshot.val();
           if((record.phoneNumber==current_phoneNumber)&&(record.date==query_date)){
+            console.log(record)
             rec_container = rec_container+'<div id="'+childKey+'"><div class="container container-record">';
             if(record.data.drinking){
               var drinking_keys = Object.keys(record.data.drinking)
